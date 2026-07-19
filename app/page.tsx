@@ -1,0 +1,226 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+type Project = {
+  id: string;
+  key: string;
+  category: string;
+  title: string;
+  subtitle: string;
+  cover: string;
+  intro: string;
+  role: string;
+  achievement?: string;
+  tags: string[];
+  images: { src: string; alt: string }[];
+};
+
+const projects: Project[] = [
+  {
+    id: "experience",
+    key: "A",
+    category: "体验 / 界面",
+    title: "从复杂系统到直觉体验",
+    subtitle: "Web3 聚合资产平台 × 品牌定制小程序",
+    cover: "/work/card-3.jpg",
+    intro:
+      "覆盖钱包、理财、社交聊天与品牌电商等场景，在复杂业务约束中建立清晰、可信且可扩展的产品体验。",
+    role:
+      "负责区块链钱包交易平台全站设计，独立完成从方案输出到项目落地，并与产品、研发及业务团队紧密协作；同时参与品牌小程序规划，完成交互原型、界面视觉与开发验收。",
+    achievement:
+      "完成钱包、理财、社交聊天等 10 项功能的全链路界面设计；APP 用户量 300,000+，月交易额千万+。",
+    tags: ["UX STRATEGY", "APP UI", "DESIGN SYSTEM"],
+    images: [
+      { src: "/work/project-3.jpg", alt: "AScoin Web3 聚合资产平台设计全案" },
+      { src: "/work/project-4.jpg", alt: "CHARLES & KEITH 品牌小程序设计全案" },
+    ],
+  },
+  {
+    id: "campaign",
+    key: "B",
+    category: "营销 / 运营",
+    title: "让品牌活动被看见、被参与",
+    subtitle: "伊利及旗下品牌 × 5 款营销互动游戏",
+    cover: "/work/card-5.jpg",
+    intro:
+      "围绕节点营销、会员运营与品牌传播，建立从活动机制、视觉概念到多触点物料的一致体验。",
+    role:
+      "配合运营及品牌商家完成日常与节日营销推广设计，覆盖互动小游戏、小程序 Banner、活动专题页、线上社群海报与线下宣传物料。",
+    tags: ["CAMPAIGN", "H5 GAME", "VISUAL DESIGN"],
+    images: [
+      { src: "/work/project-5.jpg", alt: "伊利冬奥主题互动营销设计" },
+      { src: "/work/project-6.jpg", alt: "伊利植选互动营销设计" },
+      { src: "/work/project-7.jpg", alt: "伊利红包与会员互动活动设计" },
+      { src: "/work/project-8.jpg", alt: "品牌运营与日常营销设计合集" },
+    ],
+  },
+  {
+    id: "enterprise",
+    key: "C",
+    category: "B 端 / 网页",
+    title: "把企业能力转译为清晰价值",
+    subtitle: "数字增长服务平台 × 企业官网体系",
+    cover: "/work/card-9.jpg",
+    intro:
+      "面向企业客户重新组织服务能力、产品价值与信任信息，用清晰的页面秩序支撑获客与品牌表达。",
+    role:
+      "梳理产品与服务信息架构，完成官网视觉体系、核心页面与多业务场景页面设计，并在设计规范下保持内容扩展的一致性。",
+    tags: ["B2B WEB", "INFORMATION ARCHITECTURE", "WEB UI"],
+    images: [
+      { src: "/work/project-9.jpg", alt: "企业数字增长与营销服务官网设计全案" },
+    ],
+  },
+];
+
+const jobs = [
+  ["2024.02 — 至今", "嗨希科技", "设计管理负责人", "产品体验与设计体系建设"],
+  ["2022.06 — 2024.01", "杭州燧人科技", "高级 UI 设计师", "复杂产品体验与视觉设计"],
+  ["2018.07 — 2022.05", "蘑菇街", "高级 UI 设计师", "电商、营销与品牌体验"],
+  ["2017.01 — 2018.04", "杭州博采网络科技股份有限公司", "UI 设计师", "企业官网与数字产品设计"],
+];
+
+const strengths = [
+  ["01", "跨业务设计经验", "拥有 9 年互联网产品设计经验，覆盖 B 端平台、企业管理系统、官网、电商与运营活动等多个业务方向。"],
+  ["02", "端到端产品能力", "具备完整的需求分析、用户研究与信息架构能力，可独立完成从需求到上线的全流程设计。"],
+  ["03", "设计体系建设", "具有设计规范建设经验，能够沉淀组件库、提升设计效率，并降低研发沟通成本。"],
+  ["04", "业务价值意识", "站在业务目标角度进行设计，通过体验优化推动转化率、效率与品牌价值提升。"],
+];
+
+const tools = ["Figma", "Sketch", "Photoshop", "Illustrator", "After Effects", "ChatGPT", "Codex", "Figma AI"];
+
+export default function Home() {
+  const [fixed, setFixed] = useState(false);
+  const [project, setProject] = useState<Project | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const update = () => setFixed(window.scrollY > window.innerHeight * 0.78);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  useEffect(() => {
+    if (!project) return;
+    const escape = (event: KeyboardEvent) => event.key === "Escape" && setProject(null);
+    const old = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", escape);
+    return () => {
+      document.body.style.overflow = old;
+      window.removeEventListener("keydown", escape);
+    };
+  }, [project]);
+
+  const copyWechat = async () => {
+    await navigator.clipboard.writeText("chenynii");
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
+  };
+
+  return (
+    <main>
+      <a className="skip" href="#content">跳到主要内容</a>
+      <nav className={`nav ${fixed ? "is-fixed" : ""}`} aria-label="主导航">
+        <a className="brand" href="#top" aria-label="回到首页">CY<i /></a>
+        <div className="navlinks">
+          <a href="#about">关于</a><a href="#work">作品</a><a href="#strengths">优势</a>
+        </div>
+        <a className="btn btn-sm" href="#contact">联系我 <span>↗</span></a>
+      </nav>
+
+      <header className="hero" id="top">
+        <video className="hero-video" autoPlay muted loop playsInline aria-hidden="true">
+          <source src="/media/hero-lines.mp4" type="video/mp4" />
+        </video>
+        <div className="veil" /><div className="grid" />
+        <div className="signal" aria-hidden="true"><span /></div>
+        <div className="hero-content shell">
+          <p className="eyebrow">UI / BRAND DESIGNER · HANGZHOU</p>
+          <h1><span>Designing clarity.</span><span>Creating impact.</span></h1>
+          <div className="hero-lower">
+            <p>为复杂产品建立秩序，<br />为品牌创造可感知的价值。</p>
+            <div><a className="btn" href="#work">查看精选作品 <span>↓</span></a><a className="text-link" href="#about">了解我的经历 ↘</a></div>
+          </div>
+        </div>
+        <div className="hero-meta shell" aria-hidden="true"><span>© 2026 CHENYNII</span><span>SCROLL TO EXPLORE</span><span>30°16&apos;N · 120°12&apos;E</span></div>
+      </header>
+
+      <div id="content">
+        <section className="about section shell" id="about">
+          <div className="heading"><p className="eyebrow">PROFILE / EXPERIENCE</p><h2>设计不是装饰，<br />而是解决问题的方式。</h2></div>
+          <div className="about-layout">
+            <aside className="id-card">
+              <div className="portrait"><div /><strong>CY</strong><span>DESIGNER ID / 09Y</span></div>
+              <div className="id-name"><div><strong>陈旖旎</strong><span>CHENYNII</span></div><b>30</b></div>
+              <div className="id-row"><span>杭州电子科技大学</span><span>产品设计</span></div>
+              <div className="id-row"><a href="tel:15988806213">159 8880 6213 ↗</a><button onClick={copyWechat}>{copied ? "微信已复制" : "微信 · chenynii"}</button></div>
+            </aside>
+            <div>
+              <p className="lead">我是一名兼具产品思维与品牌意识的设计师。过去 9 年，我持续在复杂业务中寻找清晰路径，将用户需求、商业目标与视觉表达连接起来。</p>
+              <div className="timeline">
+                {jobs.map(([period, company, role, detail]) => (
+                  <article key={period}><p>{period}</p><div><h3>{company}</h3><span>{detail}</span></div><strong>{role}</strong></article>
+                ))}
+              </div>
+              <div className="subrow"><p className="eyebrow">EDUCATION / 2013—2017</p><div><h3>杭州电子科技大学 · 产品设计</h3><p>学院文艺部学生会 · 科技创新奖 · 优秀毕业设计</p></div></div>
+              <div className="subrow"><p className="eyebrow">SELECTED TOOLS</p><div className="chips">{tools.map((x) => <span key={x}>{x}</span>)}</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="work section" id="work">
+          <div className="shell">
+            <div className="heading split"><div><p className="eyebrow">SELECTED WORK / 2023</p><h2>项目不是画面合集，<br />而是一段完整的推演。</h2></div><p>从产品体验到品牌活动，再到企业服务平台。<br />点击卡片，查看完整项目长图与设计说明。</p></div>
+            <div className="project-grid">
+              {projects.map((item) => (
+                <button className={`project-card ${item.id}`} key={item.id} onClick={() => setProject(item)} aria-label={`查看${item.category}项目详情`}>
+                  <img src={item.cover} alt="" /><span className="shade" />
+                  <span className="card-top"><i>{item.key}</i><span>{item.category}</span></span>
+                  <span className="card-copy"><strong>{item.title}</strong><small>{item.subtitle}</small></span>
+                  <span className="card-open">打开项目 ↗</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="strengths section shell" id="strengths">
+          <div className="heading split"><div><p className="eyebrow">WHY ME / CAPABILITIES</p><h2>从一张界面，<br />看到完整业务。</h2></div><p>不止交付视觉稿，也关注问题如何被定义、<br />方案如何落地，以及价值如何被验证。</p></div>
+          <div className="strength-grid">
+            {strengths.map(([n, title, text]) => <article key={n}><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div><i>+</i></article>)}
+          </div>
+        </section>
+
+        <section className="contact" id="contact">
+          <div className="grid" /><div className="orb" />
+          <div className="contact-content shell">
+            <p className="eyebrow">OPEN FOR A CONVERSATION</p><h2>期待您的联系<span>。</span></h2>
+            <p>如果你正在寻找一位理解产品、业务与品牌的设计伙伴，我们可以从一次对话开始。</p>
+            <div className="contact-actions">
+              <a href="tel:15988806213"><span>电话</span><strong>159 8880 6213</strong><i>↗</i></a>
+              <button onClick={copyWechat}><span>微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
+            </div>
+          </div>
+          <footer className="shell"><span>CHENYNII · UI / BRAND DESIGNER</span><span>Motion footage: FSFA · CC BY 4.0</span><span>© 2026 ALL RIGHTS RESERVED</span></footer>
+        </section>
+      </div>
+
+      {project && (
+        <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+          <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><span>关闭</span> ×</button>
+          <div className="modal-scroll">
+            <header className="modal-head shell">
+              <p className="eyebrow">PROJECT {project.key} / {project.category}</p><h2 id="modal-title">{project.title}</h2><p className="modal-intro">{project.intro}</p>
+              <div className="modal-meta"><div><span>项目职责</span><p>{project.role}</p></div>{project.achievement && <div><span>项目成就</span><p>{project.achievement}</p></div>}</div>
+              <div className="tags">{project.tags.map((x) => <span key={x}>{x}</span>)}</div>
+            </header>
+            <div className="gallery shell">{project.images.map((image) => <figure key={image.src}><img src={image.src} alt={image.alt} loading="lazy" /><figcaption>{image.alt}</figcaption></figure>)}</div>
+            <div className="modal-end shell"><span>END OF PROJECT</span><button onClick={() => setProject(null)}>返回精选作品 ↑</button></div>
+          </div>
+        </div>
+      )}
+    </main>
+  );
+}
