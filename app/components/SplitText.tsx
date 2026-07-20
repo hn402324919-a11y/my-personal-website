@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type ElementType } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText as GSAPSplitText } from "gsap/SplitText";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger, GSAPSplitText, useGSAP);
+import type { TweenVars } from "gsap";
 
 type SplitTextProps = {
   text: string;
@@ -15,8 +10,8 @@ type SplitTextProps = {
   duration?: number;
   ease?: string;
   splitType?: "chars" | "words" | "lines" | "words, chars";
-  from?: gsap.TweenVars;
-  to?: gsap.TweenVars;
+  from?: TweenVars;
+  to?: TweenVars;
   threshold?: number;
   rootMargin?: string;
   textAlign?: CSSProperties["textAlign"];
@@ -26,7 +21,7 @@ type SplitTextProps = {
 };
 
 type SplitElement = HTMLElement & {
-  _rbsplitInstance?: GSAPSplitText | null;
+  _rbsplitInstance?: { revert: () => void } | null;
 };
 
 export default function SplitText({
@@ -76,10 +71,23 @@ export default function SplitText({
     };
   }, []);
 
-  useGSAP(
-    () => {
+  useEffect(() => {
+    let cancelled = false;
+    let disposeAnimation: (() => void) | undefined;
+
+    const setupAnimation = async () => {
       const element = ref.current;
       if (!element || !text || !fontsLoaded || reduceMotion || animationCompletedRef.current) return;
+
+      const [{ gsap }, { ScrollTrigger }, { SplitText: GSAPSplitText }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+        import("gsap/SplitText"),
+      ]);
+
+      if (cancelled || !ref.current) return;
+
+      gsap.registerPlugin(ScrollTrigger, GSAPSplitText);
 
       if (element._rbsplitInstance) {
         element._rbsplitInstance.revert();
@@ -142,19 +150,22 @@ export default function SplitText({
 
       element._rbsplitInstance = splitInstance;
 
-      return () => {
+      disposeAnimation = () => {
         ScrollTrigger.getAll().forEach((trigger) => {
           if (trigger.trigger === element) trigger.kill();
         });
         splitInstance.revert();
         element._rbsplitInstance = null;
       };
-    },
-    {
-      dependencies: [text, delay, duration, ease, splitType, JSON.stringify(from), JSON.stringify(to), threshold, rootMargin, fontsLoaded, reduceMotion],
-      scope: ref,
-    },
-  );
+    };
+
+    void setupAnimation();
+
+    return () => {
+      cancelled = true;
+      disposeAnimation?.();
+    };
+  }, [text, delay, duration, ease, splitType, JSON.stringify(from), JSON.stringify(to), threshold, rootMargin, fontsLoaded, reduceMotion]);
 
   const Tag = tag;
   return (

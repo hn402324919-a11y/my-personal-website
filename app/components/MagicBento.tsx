@@ -1,7 +1,6 @@
 "use client";
 
 import { Children, cloneElement, isValidElement, useEffect, useRef, type ReactElement, type ReactNode } from "react";
-import { gsap } from "gsap";
 
 type MagicBentoProps = {
   children: ReactNode;
@@ -40,6 +39,10 @@ export default function MagicBento({
   const spotlightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let cancelled = false;
+    let disposeEffects: (() => void) | undefined;
+
+    const setupEffects = async () => {
     const grid = gridRef.current;
     const spotlight = spotlightRef.current;
     if (!grid || !spotlight) return;
@@ -47,6 +50,9 @@ export default function MagicBento({
     const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!canHover || reduceMotion) return;
+
+    const { gsap } = await import("gsap");
+    if (cancelled || !gridRef.current || !spotlightRef.current) return;
 
     const cards = Array.from(grid.querySelectorAll<HTMLElement>(".magic-bento-card"));
     const cleanups: Array<() => void> = [];
@@ -187,9 +193,17 @@ export default function MagicBento({
       });
     });
 
-    return () => {
+    disposeEffects = () => {
       cleanups.forEach((cleanup) => cleanup());
       gsap.killTweensOf(spotlight);
+    };
+    };
+
+    void setupEffects();
+
+    return () => {
+      cancelled = true;
+      disposeEffects?.();
     };
   }, [clickEffect, enableMagnetism, enableStars, glowColor, particleCount, spotlightRadius]);
 
