@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import PlasmaWave from "./components/PlasmaWave";
 
 type Project = {
   id: string;
@@ -131,9 +132,18 @@ export default function Home() {
       </nav>
 
       <header className="hero" id="top">
-        <video className="hero-video" autoPlay muted loop playsInline aria-hidden="true">
-          <source src="/media/hero-lines.mp4" type="video/mp4" />
-        </video>
+        <PlasmaWave
+          className="hero-plasma"
+          colors={["#029E5A", "#8EF0B7"]}
+          speed1={0.035}
+          speed2={0.048}
+          dir2={-1}
+          focalLength={0.86}
+          bend1={0.9}
+          bend2={0.46}
+          rotationDeg={-9}
+          xOffset={-120}
+        />
         <div className="veil" /><div className="grid" />
         <div className="hero-content shell">
           <div className="hero-kickers" aria-hidden="true">
@@ -217,7 +227,7 @@ export default function Home() {
               <button onClick={copyWechat}><span>微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
             </div>
           </div>
-          <footer className="shell"><span>CHENYNII · UI / BRAND DESIGNER</span><span>Motion footage: FSFA · CC BY 4.0</span><span>© 2026 ALL RIGHTS RESERVED</span></footer>
+          <footer className="shell"><span>CHENYNII · UI / BRAND DESIGNER</span><span>UI × BRAND × EXPERIENCE</span><span>© 2026 ALL RIGHTS RESERVED</span></footer>
         </section>
       </div>
 
