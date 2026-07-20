@@ -26,7 +26,7 @@ const projects: Project[] = [
     key: "1",
     category: "体验 / 界面",
     title: "从复杂系统到直觉体验",
-    subtitle: "Web3 聚合资产平台 × 品牌定制小程序",
+    subtitle: "品牌体验升级 × Web3 聚合资产平台 × 品牌定制小程序",
     cover: "/work/card-3.jpg",
     intro:
       "覆盖钱包、理财、社交聊天与品牌电商等场景，在复杂业务约束中建立清晰、可信且可扩展的产品体验。",
