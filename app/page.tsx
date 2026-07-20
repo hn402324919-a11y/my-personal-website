@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SplitText from "./components/SplitText";
 import TiltedCard from "./components/TiltedCard";
 import MagicBento from "./components/MagicBento";
+import SoftAurora from "./components/SoftAurora";
 
 type Project = {
   id: string;
@@ -22,7 +23,7 @@ type Project = {
 const projects: Project[] = [
   {
     id: "experience",
-    key: "A",
+    key: "1",
     category: "体验 / 界面",
     title: "从复杂系统到直觉体验",
     subtitle: "Web3 聚合资产平台 × 品牌定制小程序",
@@ -41,7 +42,7 @@ const projects: Project[] = [
   },
   {
     id: "campaign",
-    key: "B",
+    key: "2",
     category: "营销 / 运营",
     title: "让品牌活动被看见、被参与",
     subtitle: "伊利及旗下品牌 × 5 款营销互动游戏",
@@ -60,7 +61,7 @@ const projects: Project[] = [
   },
   {
     id: "enterprise",
-    key: "C",
+    key: "3",
     category: "B 端 / 网页",
     title: "把企业能力转译为清晰价值",
     subtitle: "数字增长服务平台 × 企业官网体系",
@@ -124,6 +125,23 @@ export default function Home() {
 
   return (
     <main>
+      <div className="site-aurora">
+        <SoftAurora
+          speed={0.22}
+          scale={1.7}
+          brightness={0.58}
+          color1="#029E5A"
+          color2="#20D17F"
+          noiseFrequency={2.1}
+          noiseAmplitude={0.78}
+          bandHeight={0.46}
+          bandSpread={0.72}
+          octaveDecay={0.16}
+          layerOffset={0.45}
+          colorSpeed={0.35}
+          mouseInfluence={0.1}
+        />
+      </div>
       <a className="skip" href="#content">跳到主要内容</a>
       <nav className={`nav ${fixed ? "is-fixed" : ""}`} aria-label="主导航">
         <a className="brand" href="#top" aria-label="回到首页">CY<i /></a>
@@ -145,7 +163,7 @@ export default function Home() {
             <p>HANGZHOU, CN<br />AVAILABLE FOR CONTACT</p>
           </div>
           <div className="hero-editorial">
-            <p className="hero-index" aria-hidden="true">©17—26</p>
+            <p className="hero-index" aria-hidden="true">2017-2026</p>
             <h1 className="hero-display" aria-label="Digital Designer">
               <SplitText tag="span" className="hero-digital" text="DIGITAL" delay={62} duration={0.9} rootMargin="0px" />
               <SplitText tag="span" className="hero-designer" text="Designer" delay={58} duration={0.9} rootMargin="0px" textAlign="right" />
@@ -171,7 +189,7 @@ export default function Home() {
           <div className="about-layout">
             <aside className="id-card">
               <div className="portrait">
-                <img src="/profile/chenynii-id.jpg" alt="陈旖旎个人照片" />
+                <img src="/profile/chenynii-id-black.png" alt="陈旖旎个人照片" />
               </div>
               <div className="id-name"><div><strong>陈旖旎</strong><span>CHENYNII</span></div><b>30</b></div>
               <div className="id-row"><span>杭州电子科技大学</span><span>产品设计</span></div>
