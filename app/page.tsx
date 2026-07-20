@@ -148,7 +148,7 @@ export default function Home() {
             <p className="hero-index" aria-hidden="true">©17—26</p>
             <h1 className="hero-display" aria-label="Digital Designer">
               <SplitText tag="span" className="hero-digital" text="DIGITAL" delay={62} duration={0.9} rootMargin="0px" />
-              <SplitText tag="span" className="hero-designer" text="DESIGNER" delay={58} duration={0.9} rootMargin="0px" textAlign="right" />
+              <SplitText tag="span" className="hero-designer" text="Designer" delay={58} duration={0.9} rootMargin="0px" textAlign="right" />
             </h1>
             <div className="hero-disciplines" aria-hidden="true">
               <span>UI/UX DESIGN</span>
@@ -170,7 +170,9 @@ export default function Home() {
           <div className="heading"><p className="eyebrow">PROFILE / EXPERIENCE</p><SplitText tag="h2" text={"设计不是装饰，\n而是解决问题的方式。"} /></div>
           <div className="about-layout">
             <aside className="id-card">
-              <div className="portrait"><div /><strong>CY</strong></div>
+              <div className="portrait">
+                <img src="/profile/chenynii-id.jpg" alt="陈旖旎个人照片" />
+              </div>
               <div className="id-name"><div><strong>陈旖旎</strong><span>CHENYNII</span></div><b>30</b></div>
               <div className="id-row"><span>杭州电子科技大学</span><span>产品设计</span></div>
               <div className="id-row"><a href="tel:15988806213">159 8880 6213 ↗</a><button onClick={copyWechat}>{copied ? "微信已复制" : "微信 · chenynii"}</button></div>
