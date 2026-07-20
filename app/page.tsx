@@ -238,7 +238,25 @@ export default function Home() {
         </section>
 
         <section className="contact" id="contact">
-          <div className="grid" /><div className="orb" />
+          <div className="contact-flow">
+            <ColorBends
+              colors={backgroundColors}
+              rotation={18}
+              autoRotate={0.55}
+              speed={0.18}
+              scale={1.08}
+              frequency={0.78}
+              warpStrength={0.92}
+              mouseInfluence={0.16}
+              parallax={0.12}
+              noise={0.035}
+              iterations={2}
+              intensity={0.92}
+              bandWidth={5}
+              transparent
+            />
+          </div>
+          <div className="grid" />
           <div className="contact-content shell">
             <p className="eyebrow">OPEN FOR A CONVERSATION</p>
             <h2><SplitText tag="span" text="期待您的联系" /><SplitText tag="span" className="split-accent" text="。" delay={0} /></h2>
