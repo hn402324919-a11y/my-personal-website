@@ -92,7 +92,7 @@ const strengths = [
 ];
 
 const tools = ["Figma", "Sketch", "Photoshop", "Illustrator", "After Effects", "ChatGPT", "Codex", "Figma AI"];
-const backgroundColors = ["#029E5A", "#20D17F", "#0B5C3C"];
+const backgroundColors = ["#00C26E"];
 
 export default function Home() {
   const [fixed, setFixed] = useState(false);
@@ -139,14 +139,14 @@ export default function Home() {
           parallax={0.18}
           noise={0.045}
           iterations={2}
-          intensity={0.78}
+          intensity={1.02}
           bandWidth={5.4}
           transparent
         />
       </div>
       <a className="skip" href="#content">跳到主要内容</a>
       <nav className={`nav ${fixed ? "is-fixed" : ""}`} aria-label="主导航">
-        <a className="brand" href="#top" aria-label="回到首页">CY<i /></a>
+        <a className="brand" href="#top" aria-label="回到首页">CHENYNII<i /></a>
         <div className="navlinks">
           <a href="#about">关于</a><a href="#work">作品</a><a href="#strengths">优势</a>
         </div>
