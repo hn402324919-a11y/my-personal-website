@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import SplitText from "./components/SplitText";
 import TiltedCard from "./components/TiltedCard";
 import MagicBento from "./components/MagicBento";
-import SoftAurora from "./components/SoftAurora";
+import ColorBends from "./components/ColorBends";
 
 type Project = {
   id: string;
@@ -92,6 +92,7 @@ const strengths = [
 ];
 
 const tools = ["Figma", "Sketch", "Photoshop", "Illustrator", "After Effects", "ChatGPT", "Codex", "Figma AI"];
+const backgroundColors = ["#029E5A", "#20D17F", "#0B5C3C"];
 
 export default function Home() {
   const [fixed, setFixed] = useState(false);
@@ -125,21 +126,22 @@ export default function Home() {
 
   return (
     <main>
-      <div className="site-aurora">
-        <SoftAurora
-          speed={0.22}
-          scale={1.7}
-          brightness={0.58}
-          color1="#029E5A"
-          color2="#20D17F"
-          noiseFrequency={2.1}
-          noiseAmplitude={0.78}
-          bandHeight={0.46}
-          bandSpread={0.72}
-          octaveDecay={0.16}
-          layerOffset={0.45}
-          colorSpeed={0.35}
-          mouseInfluence={0.1}
+      <div className="site-bends">
+        <ColorBends
+          colors={backgroundColors}
+          rotation={112}
+          autoRotate={0.35}
+          speed={0.13}
+          scale={1.15}
+          frequency={0.86}
+          warpStrength={0.74}
+          mouseInfluence={0.22}
+          parallax={0.18}
+          noise={0.045}
+          iterations={2}
+          intensity={0.78}
+          bandWidth={5.4}
+          transparent
         />
       </div>
       <a className="skip" href="#content">跳到主要内容</a>
@@ -189,7 +191,7 @@ export default function Home() {
           <div className="about-layout">
             <aside className="id-card">
               <div className="portrait">
-                <img src="/profile/chenynii-id-black.png" alt="陈旖旎个人照片" />
+                <img src="/profile/chenynii-photo-2843.jpg" alt="陈旖旎个人照片" />
               </div>
               <div className="id-name"><div><strong>陈旖旎</strong><span>CHENYNII</span></div><b>30</b></div>
               <div className="id-row"><span>杭州电子科技大学</span><span>产品设计</span></div>
