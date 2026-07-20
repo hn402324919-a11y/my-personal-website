@@ -74,7 +74,7 @@ const projects: Project[] = [
 ];
 
 const jobs = [
-  ["2024.02 — 至今", "嗨希科技", "设计管理负责人", "产品体验与设计体系建设"],
+  ["2024.02-2026.06", "嗨希科技", "设计管理负责人", "产品体验与设计体系建设"],
   ["2022.06 — 2024.01", "杭州燧人科技", "高级 UI 设计师", "复杂产品体验与视觉设计"],
   ["2018.07 — 2022.05", "蘑菇街", "高级 UI 设计师", "电商、营销与品牌体验"],
   ["2017.01 — 2018.04", "杭州博采网络科技股份有限公司", "UI 设计师", "企业官网与数字产品设计"],
@@ -135,10 +135,24 @@ export default function Home() {
           <source src="/media/hero-lines.mp4" type="video/mp4" />
         </video>
         <div className="veil" /><div className="grid" />
-        <div className="signal" aria-hidden="true"><span /></div>
         <div className="hero-content shell">
-          <p className="eyebrow">UI / BRAND DESIGNER · HANGZHOU</p>
-          <h1><span>Designing clarity.</span><span>Creating impact.</span></h1>
+          <div className="hero-kickers" aria-hidden="true">
+            <p>CHENYNII PORTFOLIO<br />SELECTED WORK 2017—2026</p>
+            <p>UI / BRAND DESIGNER<br />BASED IN HANGZHOU</p>
+          </div>
+          <div className="hero-stage">
+            <h1 className="hero-portfolio" aria-label="Portfolio"><span>PORT</span><span>FOLIO</span></h1>
+            <div className="hero-role" aria-hidden="true">
+              <span className="hero-year">2026</span>
+              <p><span>UI / UX</span><span>BRAND</span><span>DESIGN</span></p>
+            </div>
+            <div className="hero-orbit" aria-hidden="true">
+              <span className="orbit-copy">PRODUCT · EXPERIENCE · BRAND · SYSTEMS</span>
+              <div className="skill-map">
+                <span>UI / UX</span><span>WEB</span><span>BRAND</span><span>AI</span>
+              </div>
+            </div>
+          </div>
           <div className="hero-lower">
             <p>为复杂产品建立秩序，<br />为品牌创造可感知的价值。</p>
             <div><a className="btn" href="#work">查看精选作品 <span>↓</span></a><a className="text-link" href="#about">了解我的经历 ↘</a></div>
@@ -152,7 +166,7 @@ export default function Home() {
           <div className="heading"><p className="eyebrow">PROFILE / EXPERIENCE</p><h2>设计不是装饰，<br />而是解决问题的方式。</h2></div>
           <div className="about-layout">
             <aside className="id-card">
-              <div className="portrait"><div /><strong>CY</strong><span>DESIGNER ID / 09Y</span></div>
+              <div className="portrait"><div /><strong>CY</strong></div>
               <div className="id-name"><div><strong>陈旖旎</strong><span>CHENYNII</span></div><b>30</b></div>
               <div className="id-row"><span>杭州电子科技大学</span><span>产品设计</span></div>
               <div className="id-row"><a href="tel:15988806213">159 8880 6213 ↗</a><button onClick={copyWechat}>{copied ? "微信已复制" : "微信 · chenynii"}</button></div>
