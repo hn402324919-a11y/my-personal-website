@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import PlasmaWave from "./components/PlasmaWave";
+import SplitText from "./components/SplitText";
+import TiltedCard from "./components/TiltedCard";
 
 type Project = {
   id: string;
@@ -151,10 +153,17 @@ export default function Home() {
             <p>UI / BRAND DESIGNER<br />BASED IN HANGZHOU</p>
           </div>
           <div className="hero-stage">
-            <h1 className="hero-portfolio" aria-label="Portfolio"><span>PORT</span><span>FOLIO</span></h1>
+            <h1 className="hero-portfolio" aria-label="Portfolio">
+              <SplitText tag="span" text="PORT" delay={70} duration={0.9} rootMargin="0px" />
+              <SplitText tag="span" text="FOLIO" delay={70} duration={0.9} rootMargin="0px" />
+            </h1>
             <div className="hero-role" aria-hidden="true">
-              <span className="hero-year">2026</span>
-              <p><span>UI / UX</span><span>BRAND</span><span>DESIGN</span></p>
+              <SplitText tag="span" className="hero-year" text="2026" delay={60} duration={0.86} rootMargin="0px" textAlign="right" />
+              <p>
+                <SplitText tag="span" text="UI / UX" delay={46} duration={0.82} rootMargin="0px" textAlign="right" />
+                <SplitText tag="span" text="BRAND" delay={46} duration={0.82} rootMargin="0px" textAlign="right" />
+                <SplitText tag="span" text="DESIGN" delay={46} duration={0.82} rootMargin="0px" textAlign="right" />
+              </p>
             </div>
             <div className="hero-orbit" aria-hidden="true">
               <span className="orbit-copy">PRODUCT · EXPERIENCE · BRAND · SYSTEMS</span>
@@ -173,7 +182,7 @@ export default function Home() {
 
       <div id="content">
         <section className="about section shell" id="about">
-          <div className="heading"><p className="eyebrow">PROFILE / EXPERIENCE</p><h2>设计不是装饰，<br />而是解决问题的方式。</h2></div>
+          <div className="heading"><p className="eyebrow">PROFILE / EXPERIENCE</p><SplitText tag="h2" text={"设计不是装饰，\n而是解决问题的方式。"} /></div>
           <div className="about-layout">
             <aside className="id-card">
               <div className="portrait"><div /><strong>CY</strong></div>
@@ -196,22 +205,24 @@ export default function Home() {
 
         <section className="work section" id="work">
           <div className="shell">
-            <div className="heading split"><div><p className="eyebrow">SELECTED WORK / 2023</p><h2>项目不是画面合集，<br />而是一段完整的推演。</h2></div><p>从产品体验到品牌活动，再到企业服务平台。<br />点击卡片，查看完整项目长图与设计说明。</p></div>
+            <div className="heading split"><div><p className="eyebrow">SELECTED WORK / 2023</p><SplitText tag="h2" text={"项目不是画面合集，\n而是一段完整的推演。"} /></div><p>从产品体验到品牌活动，再到企业服务平台。<br />点击卡片，查看完整项目长图与设计说明。</p></div>
             <div className="project-grid">
               {projects.map((item) => (
-                <button className={`project-card ${item.id}`} key={item.id} onClick={() => setProject(item)} aria-label={`查看${item.category}项目详情`}>
-                  <img src={item.cover} alt="" /><span className="shade" />
-                  <span className="card-top"><i>{item.key}</i><span>{item.category}</span></span>
-                  <span className="card-copy"><strong>{item.title}</strong><small>{item.subtitle}</small></span>
-                  <span className="card-open">打开项目 ↗</span>
-                </button>
+                <TiltedCard className={item.id} key={item.id} rotateAmplitude={4.5} scaleOnHover={1.012}>
+                  <button className="project-card" onClick={() => setProject(item)} aria-label={`查看${item.category}项目详情`}>
+                    <img src={item.cover} alt="" /><span className="shade" />
+                    <span className="card-top"><i>{item.key}</i><span>{item.category}</span></span>
+                    <span className="card-copy"><strong>{item.title}</strong><small>{item.subtitle}</small></span>
+                    <span className="card-open">打开项目 ↗</span>
+                  </button>
+                </TiltedCard>
               ))}
             </div>
           </div>
         </section>
 
         <section className="strengths section shell" id="strengths">
-          <div className="heading split"><div><p className="eyebrow">WHY ME / CAPABILITIES</p><h2>从一张界面，<br />看到完整业务。</h2></div><p>不止交付视觉稿，也关注问题如何被定义、<br />方案如何落地，以及价值如何被验证。</p></div>
+          <div className="heading split"><div><p className="eyebrow">WHY ME / CAPABILITIES</p><SplitText tag="h2" text={"从一张界面，\n看到完整业务。"} /></div><p>不止交付视觉稿，也关注问题如何被定义、<br />方案如何落地，以及价值如何被验证。</p></div>
           <div className="strength-grid">
             {strengths.map(([n, title, text]) => <article key={n}><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div><i>+</i></article>)}
           </div>
@@ -220,7 +231,8 @@ export default function Home() {
         <section className="contact" id="contact">
           <div className="grid" /><div className="orb" />
           <div className="contact-content shell">
-            <p className="eyebrow">OPEN FOR A CONVERSATION</p><h2>期待您的联系<span>。</span></h2>
+            <p className="eyebrow">OPEN FOR A CONVERSATION</p>
+            <h2><SplitText tag="span" text="期待您的联系" /><SplitText tag="span" className="split-accent" text="。" delay={0} /></h2>
             <p>如果你正在寻找一位理解产品、业务与品牌的设计伙伴，我们可以从一次对话开始。</p>
             <div className="contact-actions">
               <a href="tel:15988806213"><span>电话</span><strong>159 8880 6213</strong><i>↗</i></a>
@@ -236,7 +248,7 @@ export default function Home() {
           <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><span>关闭</span> ×</button>
           <div className="modal-scroll">
             <header className="modal-head shell">
-              <p className="eyebrow">PROJECT {project.key} / {project.category}</p><h2 id="modal-title">{project.title}</h2><p className="modal-intro">{project.intro}</p>
+              <p className="eyebrow">PROJECT {project.key} / {project.category}</p><SplitText tag="h2" id="modal-title" text={project.title} rootMargin="0px" /><p className="modal-intro">{project.intro}</p>
               <div className="modal-meta"><div><span>项目职责</span><p>{project.role}</p></div>{project.achievement && <div><span>项目成就</span><p>{project.achievement}</p></div>}</div>
               <div className="tags">{project.tags.map((x) => <span key={x}>{x}</span>)}</div>
             </header>
