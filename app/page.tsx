@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import PlasmaWave from "./components/PlasmaWave";
 import SplitText from "./components/SplitText";
 import TiltedCard from "./components/TiltedCard";
+import MagicBento from "./components/MagicBento";
 
 type Project = {
   id: string;
@@ -223,9 +224,9 @@ export default function Home() {
 
         <section className="strengths section shell" id="strengths">
           <div className="heading split"><div><p className="eyebrow">WHY ME / CAPABILITIES</p><SplitText tag="h2" text={"从一张界面，\n看到完整业务。"} /></div><p>不止交付视觉稿，也关注问题如何被定义、<br />方案如何落地，以及价值如何被验证。</p></div>
-          <div className="strength-grid">
-            {strengths.map(([n, title, text]) => <article key={n}><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div><i>+</i></article>)}
-          </div>
+          <MagicBento className="strength-grid" spotlightRadius={320} particleCount={6}>
+            {strengths.map(([n, title, text]) => <article key={n}><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}
+          </MagicBento>
         </section>
 
         <section className="contact" id="contact">
@@ -234,10 +235,10 @@ export default function Home() {
             <p className="eyebrow">OPEN FOR A CONVERSATION</p>
             <h2><SplitText tag="span" text="期待您的联系" /><SplitText tag="span" className="split-accent" text="。" delay={0} /></h2>
             <p>如果你正在寻找一位理解产品、业务与品牌的设计伙伴，我们可以从一次对话开始。</p>
-            <div className="contact-actions">
+            <MagicBento className="contact-actions" spotlightRadius={360} particleCount={4} clickEffect>
               <a href="tel:15988806213"><span>电话</span><strong>159 8880 6213</strong><i>↗</i></a>
               <button onClick={copyWechat}><span>微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
-            </div>
+            </MagicBento>
           </div>
           <footer className="shell"><span>CHENYNII · UI / BRAND DESIGNER</span><span>UI × BRAND × EXPERIENCE</span><span>© 2026 ALL RIGHTS RESERVED</span></footer>
         </section>
