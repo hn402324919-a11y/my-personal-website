@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import PlasmaWave from "./components/PlasmaWave";
 import SplitText from "./components/SplitText";
 import TiltedCard from "./components/TiltedCard";
 import MagicBento from "./components/MagicBento";
@@ -135,42 +134,27 @@ export default function Home() {
       </nav>
 
       <header className="hero" id="top">
-        <PlasmaWave
-          className="hero-plasma"
-          colors={["#029E5A", "#8EF0B7"]}
-          speed1={0.035}
-          speed2={0.048}
-          dir2={-1}
-          focalLength={0.86}
-          bend1={0.9}
-          bend2={0.46}
-          rotationDeg={-9}
-          xOffset={-120}
-        />
-        <div className="veil" /><div className="grid" />
+        <div className="hero-portrait" aria-hidden="true">
+          <img src="/hero/chenynii-editorial-v2.png" alt="" />
+        </div>
+        <div className="veil" />
         <div className="hero-content shell">
           <div className="hero-kickers" aria-hidden="true">
-            <p>CHENYNII PORTFOLIO<br />SELECTED WORK 2017—2026</p>
-            <p>UI / BRAND DESIGNER<br />BASED IN HANGZHOU</p>
+            <p>CHENYNII PORTFOLIO<br />SELECTED WORK · 2017—2026</p>
+            <p>UI / UX DESIGN<br />BRAND EXPERIENCE</p>
+            <p>HANGZHOU, CN<br />AVAILABLE FOR CONTACT</p>
           </div>
-          <div className="hero-stage">
-            <h1 className="hero-portfolio" aria-label="Portfolio">
-              <SplitText tag="span" text="PORT" delay={70} duration={0.9} rootMargin="0px" />
-              <SplitText tag="span" text="FOLIO" delay={70} duration={0.9} rootMargin="0px" />
+          <div className="hero-editorial">
+            <p className="hero-index" aria-hidden="true">©17—26</p>
+            <h1 className="hero-display" aria-label="Digital Designer">
+              <SplitText tag="span" className="hero-digital" text="DIGITAL" delay={62} duration={0.9} rootMargin="0px" />
+              <SplitText tag="span" className="hero-designer" text="DESIGNER" delay={58} duration={0.9} rootMargin="0px" textAlign="right" />
             </h1>
-            <div className="hero-role" aria-hidden="true">
-              <SplitText tag="span" className="hero-year" text="2026" delay={60} duration={0.86} rootMargin="0px" textAlign="right" />
-              <p>
-                <SplitText tag="span" text="UI / UX" delay={46} duration={0.82} rootMargin="0px" textAlign="right" />
-                <SplitText tag="span" text="BRAND" delay={46} duration={0.82} rootMargin="0px" textAlign="right" />
-                <SplitText tag="span" text="DESIGN" delay={46} duration={0.82} rootMargin="0px" textAlign="right" />
-              </p>
-            </div>
-            <div className="hero-orbit" aria-hidden="true">
-              <span className="orbit-copy">PRODUCT · EXPERIENCE · BRAND · SYSTEMS</span>
-              <div className="skill-map">
-                <span>UI / UX</span><span>WEB</span><span>BRAND</span><span>AI</span>
-              </div>
+            <div className="hero-disciplines" aria-hidden="true">
+              <span>UI/UX DESIGN</span>
+              <span>PRODUCT EXPERIENCE</span>
+              <span>BRAND IDENTITY</span>
+              <span>DESIGN SYSTEM</span>
             </div>
           </div>
           <div className="hero-lower">
@@ -178,7 +162,7 @@ export default function Home() {
             <div><a className="btn" href="#work">查看精选作品 <span>↓</span></a><a className="text-link" href="#about">了解我的经历 ↘</a></div>
           </div>
         </div>
-        <div className="hero-meta shell" aria-hidden="true"><span>© 2026 CHENYNII</span><span>SCROLL TO EXPLORE</span><span>30°16&apos;N · 120°12&apos;E</span></div>
+        <div className="hero-meta shell" aria-hidden="true"><span>CHENYNII © 2026</span><span>SCROLL TO EXPLORE</span><span>30°16&apos;N · 120°12&apos;E</span></div>
       </header>
 
       <div id="content">
