@@ -5,6 +5,7 @@ import SplitText from "./components/SplitText";
 import TiltedCard from "./components/TiltedCard";
 import MagicBento from "./components/MagicBento";
 import ColorBends from "./components/ColorBends";
+import SpecularFrame from "./components/SpecularFrame";
 
 type Project = {
   id: string;
@@ -212,11 +213,12 @@ export default function Home() {
 
         <section className="work section" id="work">
           <div className="shell">
-            <div className="heading split"><div><p className="eyebrow">SELECTED WORK / 2023</p><SplitText tag="h2" text={"项目不是画面合集，\n而是一段完整的推演。"} /></div><p>从产品体验到品牌活动，再到企业服务平台。<br />点击卡片，查看完整项目长图与设计说明。</p></div>
+            <div className="heading split"><div><p className="eyebrow">SELECTED WORK</p><SplitText tag="h2" text={"项目不是画面合集，\n而是一段完整的推演。"} /></div><p>从产品体验到品牌活动，再到企业服务平台。<br />点击卡片，查看完整项目长图与设计说明。</p></div>
             <div className="project-grid">
               {projects.map((item) => (
                 <TiltedCard className={item.id} key={item.id} rotateAmplitude={4.5} scaleOnHover={1.012}>
                   <button className="project-card" onClick={() => setProject(item)} aria-label={`查看${item.category}项目详情`}>
+                    <SpecularFrame radius={5} proximity={220} intensity={1.35} />
                     <img src={item.cover} alt="" /><span className="shade" />
                     <span className="card-top"><i>{item.key}</i><span>{item.category}</span></span>
                     <span className="card-copy"><strong>{item.title}</strong><small>{item.subtitle}</small></span>
@@ -231,7 +233,7 @@ export default function Home() {
         <section className="strengths section shell" id="strengths">
           <div className="heading split"><div><p className="eyebrow">WHY ME / CAPABILITIES</p><SplitText tag="h2" text={"从一张界面，\n看到完整业务。"} /></div><p>不止交付视觉稿，也关注问题如何被定义、<br />方案如何落地，以及价值如何被验证。</p></div>
           <MagicBento className="strength-grid" spotlightRadius={320} particleCount={6}>
-            {strengths.map(([n, title, text]) => <article key={n}><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}
+            {strengths.map(([n, title, text]) => <article key={n}><SpecularFrame radius={3} /><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}
           </MagicBento>
         </section>
 
@@ -242,8 +244,8 @@ export default function Home() {
             <h2><SplitText tag="span" text="期待您的联系" /><SplitText tag="span" className="split-accent" text="。" delay={0} /></h2>
             <p>如果你正在寻找一位理解产品、业务与品牌的设计伙伴，我们可以从一次对话开始。</p>
             <MagicBento className="contact-actions" spotlightRadius={360} particleCount={4} clickEffect>
-              <a href="tel:15988806213"><span>电话</span><strong>159 8880 6213</strong><i>↗</i></a>
-              <button onClick={copyWechat}><span>微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
+              <a href="tel:15988806213"><SpecularFrame radius={3} /><span>电话</span><strong>159 8880 6213</strong><i>↗</i></a>
+              <button onClick={copyWechat}><SpecularFrame radius={3} /><span>微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
             </MagicBento>
           </div>
           <footer className="shell"><span>CHENYNII · UI / BRAND DESIGNER</span><span>UI × BRAND × EXPERIENCE</span><span>© 2026 ALL RIGHTS RESERVED</span></footer>
@@ -252,7 +254,7 @@ export default function Home() {
 
       {project && (
         <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-          <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><span>关闭</span> ×</button>
+          <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><SpecularFrame radius={3} /><span>关闭</span> ×</button>
           <div className="modal-scroll">
             <header className="modal-head shell">
               <p className="eyebrow">PROJECT {project.key} / {project.category}</p><SplitText tag="h2" id="modal-title" text={project.title} rootMargin="0px" /><p className="modal-intro">{project.intro}</p>
