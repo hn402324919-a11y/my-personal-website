@@ -18,7 +18,7 @@ type Project = {
   role: string;
   achievement?: string;
   tags: string[];
-  cases: { label: string; src: string; alt: string; focus?: number }[];
+  cases: { label: string; src: string | string[]; alt: string; focus?: number }[];
 };
 
 const projects: Project[] = [
@@ -80,9 +80,16 @@ const projects: Project[] = [
     tags: ["B2B WEB", "INFORMATION ARCHITECTURE", "WEB UI"],
     cases: [
       { label: "锐鲨企业官网", src: "/work/project-9.jpg", alt: "锐鲨企业官网设计" },
-      { label: "比亚迪电子官网设计方案", src: "/work/project-9.jpg", alt: "比亚迪电子官网设计方案", focus: 0.38 },
-      { label: "火星人集成灶官网", src: "/work/project-9.jpg", alt: "火星人集成灶官网设计", focus: 0.62 },
-      { label: "ESD 音响官网", src: "/work/project-9.jpg", alt: "ESD 音响官网设计", focus: 0.82 },
+      {
+        label: "比亚迪电子官网设计方案",
+        src: [
+          "/work/project-byd-electronics-01.jpg",
+          "/work/project-byd-electronics-02.jpg",
+          "/work/project-byd-electronics-03.jpg",
+        ],
+        alt: "比亚迪电子官网设计方案",
+      },
+      { label: "ESD 音响官网", src: "/work/project-esd-audio.jpg", alt: "ESD 音响官网设计全案" },
     ],
   },
 ];
@@ -159,6 +166,7 @@ function StrengthVisual({ type }: { type: string }) {
 
 const tools = ["Figma", "Sketch", "Photoshop", "Illustrator", "After Effects", "ChatGPT", "Codex", "Figma AI"];
 const backgroundColors = ["#00C26E"];
+const getCaseSources = (src: string | string[]) => Array.isArray(src) ? src : [src];
 
 export default function Home() {
   const [fixed, setFixed] = useState(false);
@@ -473,10 +481,19 @@ export default function Home() {
               ))}
             </nav>
             <div className="gallery shell" id="active-project-case" role="tabpanel" aria-labelledby={`case-tab-${project.id}-${activeCase}`}>
-              <figure key={project.cases[activeCase].label} ref={galleryFigureRef}>
-                <img src={project.cases[activeCase].src} alt={project.cases[activeCase].alt} loading="lazy" onLoad={revealSelectedCase} />
-                <figcaption>{project.cases[activeCase].label} / {project.cases[activeCase].alt}</figcaption>
-              </figure>
+              {getCaseSources(project.cases[activeCase].src).map((src, imageIndex, sources) => (
+                <figure key={`${project.cases[activeCase].label}-${src}`} ref={imageIndex === 0 ? galleryFigureRef : undefined}>
+                  <img
+                    src={src}
+                    alt={`${project.cases[activeCase].alt}${sources.length > 1 ? ` ${imageIndex + 1}` : ""}`}
+                    loading="lazy"
+                    onLoad={imageIndex === 0 ? revealSelectedCase : undefined}
+                  />
+                  <figcaption>
+                    {project.cases[activeCase].label}{sources.length > 1 ? ` · ${String(imageIndex + 1).padStart(2, "0")}` : ""} / {project.cases[activeCase].alt}
+                  </figcaption>
+                </figure>
+              ))}
             </div>
             <div className="modal-end shell"><span>END OF PROJECT</span><button onClick={() => setProject(null)}>返回精选作品 ↑</button></div>
           </div>
