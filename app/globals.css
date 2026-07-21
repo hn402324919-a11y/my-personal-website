@@ -117,3 +117,48 @@
   .campaign-tile{top:36%;width:40%;height:34%}
   .flow-frame span{flex-basis:51px;min-width:51px}
 }
+
+/* Project cover revisions: exact campaign screens and a BYD desktop presentation. */
+.campaign-composite{background:radial-gradient(circle at 50% 42%,rgba(3,232,133,.1),transparent 42%),#070a09}
+.campaign-phone{top:5%;width:40%;height:76%;border:0;border-radius:0;background:transparent;box-shadow:none}
+.campaign-phone:before{display:none}
+.campaign-screen{inset:0;border-radius:0;background-image:url("/work/campaign-cover-main-phone.png");background-position:center;background-size:contain;filter:drop-shadow(0 26px 38px rgba(0,0,0,.54))}
+.campaign-tile{top:27%;width:31%;height:49%;border-radius:18px;background-color:transparent;background-position:center;background-size:contain;box-shadow:none;filter:drop-shadow(0 24px 30px rgba(0,0,0,.42))}
+.tile-left{left:-1%;background-image:url("/work/campaign-cover-side-medal.png");transform:rotate(-3deg)}
+.tile-right{right:-1%;background-image:url("/work/campaign-cover-side-treasure.png");transform:rotate(3deg)}
+.enterprise-composite{background:radial-gradient(circle at 54% 42%,rgba(3,232,133,.1),transparent 38%),linear-gradient(145deg,#101713,#050706 72%)}
+.enterprise-composite:before{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 42px,rgba(3,232,133,.025) 43px),repeating-linear-gradient(0deg,transparent 0 42px,rgba(3,232,133,.025) 43px);content:""}
+.enterprise-monitor{position:absolute;top:10%;left:8%;width:84%;aspect-ratio:1.5;border:7px solid #111513;border-radius:9px;background:#050706;box-shadow:0 24px 55px rgba(0,0,0,.62),0 0 32px rgba(3,232,133,.08)}
+.enterprise-monitor:before{position:absolute;z-index:-1;bottom:-25%;left:50%;width:22%;height:25%;background:linear-gradient(90deg,#111513,#3c4440 52%,#101311);content:"";transform:translateX(-50%);clip-path:polygon(36% 0,64% 0,76% 82%,100% 100%,0 100%,24% 82%)}
+.enterprise-monitor:after{position:absolute;z-index:-1;bottom:-28%;left:50%;width:44%;height:5%;border-radius:50%;background:#2d3430;box-shadow:0 7px 18px rgba(0,0,0,.48);content:"";transform:translateX(-50%)}
+.enterprise-screen{position:absolute;inset:2px;display:block;border-radius:3px;background-image:url("/work/project-byd-electronics-01.jpg");background-position:center top;background-size:cover}
+
+/* Value awareness: disperse the four labels around readable orbital paths. */
+.visual-value{position:relative;isolation:isolate;background:#070a09!important}
+.visual-value:before,.visual-value:after{position:absolute;z-index:0;inset:0;background:radial-gradient(circle at 16% 68%,rgba(3,232,133,.95) 0 1.5px,transparent 2px),radial-gradient(circle at 78% 29%,rgba(3,232,133,.8) 0 1px,transparent 2px),radial-gradient(circle at 70% 77%,rgba(3,232,133,.6) 0 1.5px,transparent 2px),radial-gradient(circle at 29% 24%,rgba(255,255,255,.45) 0 1px,transparent 2px);content:"";opacity:.4;animation:value-twinkle 2.6s ease-in-out infinite alternate}
+.visual-value:after{background:radial-gradient(circle at 37% 72%,rgba(3,232,133,.9) 0 1px,transparent 2px),radial-gradient(circle at 84% 55%,rgba(255,255,255,.38) 0 1px,transparent 2px),radial-gradient(circle at 55% 18%,rgba(3,232,133,.7) 0 1.5px,transparent 2px);animation-delay:-1.3s}
+@keyframes value-twinkle{to{opacity:1;filter:drop-shadow(0 0 7px rgba(3,232,133,.85))}}
+.value-orbit{position:relative;z-index:1;display:block;width:100%;height:100%;max-width:none;aspect-ratio:auto}
+.value-ring{top:50%;left:50%;width:clamp(138px,17vw,248px);height:clamp(138px,17vw,248px);transform:translate(-50%,-50%)}
+.ring-one{inset:auto}
+.ring-two{inset:auto;width:clamp(104px,13vw,190px);height:clamp(104px,13vw,190px)}
+.ring-three{inset:auto;width:clamp(70px,8.8vw,128px);height:clamp(70px,8.8vw,128px)}
+.value-orbit>b{position:absolute;z-index:3;top:50%;left:50%;width:72px;height:72px;border-color:rgba(3,232,133,.7);font-size:10px;transform:translate(-50%,-50%);box-shadow:0 0 32px rgba(3,232,133,.18)}
+.value-node{z-index:4;width:54px;height:54px;border-color:rgba(3,232,133,.42);background:#0a100d;box-shadow:0 0 0 7px rgba(3,232,133,.025),0 12px 30px rgba(0,0,0,.38)}
+.node-one{top:14%;left:18%}
+.node-two{top:22%;right:16%}
+.node-three{right:24%;bottom:10%}
+.node-four{bottom:16%;left:26%}
+
+@media(max-width:760px){
+  .campaign-phone{width:52%;height:74%}
+  .campaign-tile{top:31%;width:38%;height:43%}
+  .enterprise-monitor{top:16%;left:6%;width:88%}
+  .value-ring{width:218px;height:218px}
+  .ring-two{width:164px;height:164px}
+  .ring-three{width:108px;height:108px}
+  .node-one{top:10%;left:8%}
+  .node-two{top:17%;right:7%}
+  .node-three{right:12%;bottom:8%}
+  .node-four{bottom:12%;left:14%}
+}

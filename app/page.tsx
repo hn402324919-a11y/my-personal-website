@@ -130,6 +130,14 @@ function ProjectVisual({ item }: { item: Project }) {
     );
   }
 
+  if (item.id === "enterprise") {
+    return (
+      <div className="project-composite enterprise-composite" aria-hidden="true">
+        <div className="enterprise-monitor"><span className="enterprise-screen" /></div>
+      </div>
+    );
+  }
+
   return <img src={item.cover} alt="" />;
 }
 
@@ -167,7 +175,7 @@ function StrengthVisual({ type }: { type: string }) {
     <div className="strength-visual visual-value" aria-hidden="true">
       <div className="value-orbit">
         <i className="value-ring ring-one" /><i className="value-ring ring-two" /><i className="value-ring ring-three" />
-        <b>VALUE</b>
+        <b>业务目标</b>
         <span className="value-node node-one">体验</span><span className="value-node node-two">效率</span>
         <span className="value-node node-three">转化</span><span className="value-node node-four">品牌</span>
       </div>
