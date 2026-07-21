@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import SplitText from "./components/SplitText";
 import TiltedCard from "./components/TiltedCard";
 import MagicBento from "./components/MagicBento";
@@ -101,6 +101,8 @@ const strengths = [
   { number: "04", title: "业务价值意识", text: "站在业务目标角度进行设计，通过体验优化推动转化率、效率与品牌价值提升。", visual: "value" },
 ];
 
+const orbitCopy = "PRODUCT · BRAND · SYSTEM · EXPERIENCE · ";
+
 function StrengthVisual({ type }: { type: string }) {
   if (type === "collage") {
     return (
@@ -129,9 +131,15 @@ function StrengthVisual({ type }: { type: string }) {
     return (
       <div className="strength-visual visual-system" aria-hidden="true">
         <div className="component-board">
-          <span className="component-wide">DESIGN SYSTEM / V1.0</span>
-          <span>AA</span><span>16</span><span className="component-green">CTA</span>
-          <span className="component-tall">GRID<br />12 COL</span><span className="component-wide">COMPONENT LIBRARY</span>
+          <span className="component-empty" />
+          <span className="component-active icon-tv"><i /></span>
+          <span className="component-empty" />
+          <span className="component-empty" />
+          <span className="component-active icon-chat"><i /></span>
+          <span className="component-empty" />
+          <span className="component-active icon-image"><i /></span>
+          <span className="component-empty" />
+          <span className="component-empty" />
         </div>
       </div>
     );
@@ -154,6 +162,7 @@ const backgroundColors = ["#00C26E"];
 
 export default function Home() {
   const [fixed, setFixed] = useState(false);
+  const [contactActive, setContactActive] = useState(false);
   const [project, setProject] = useState<Project | null>(null);
   const [activeCase, setActiveCase] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -166,6 +175,17 @@ export default function Home() {
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  useEffect(() => {
+    const contact = document.getElementById("contact");
+    if (!contact) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setContactActive(entry.isIntersecting),
+      { threshold: 0.05 },
+    );
+    observer.observe(contact);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -354,7 +374,7 @@ export default function Home() {
                   <button className="project-card" data-reveal="scale" data-reveal-order={item.key} onClick={() => openProject(item)} aria-label={`查看${item.category}项目详情`}>
                     <SpecularFrame radius={5} proximity={220} intensity={1.35} />
                     <img src={item.cover} alt="" /><span className="shade" />
-                    <span className="card-top"><i>{item.key}</i><span>{item.category}</span></span>
+                    <span className="card-top"><span>{item.category}</span></span>
                     <span className="card-copy"><strong>{item.title}</strong><small>{item.subtitle}</small></span>
                     <span className="card-open">打开项目 ↗</span>
                   </button>
@@ -368,12 +388,19 @@ export default function Home() {
               </a>
               <article className="work-orbit" data-reveal="scale" data-reveal-order="3">
                 <SpecularFrame radius={5} proximity={220} intensity={1.2} />
-                <div className="orbit-mark" aria-hidden="true">
-                  <span className="orbit-top">PRODUCT</span><span className="orbit-right">BRAND</span>
-                  <span className="orbit-bottom">SYSTEM</span><span className="orbit-left">EXPERIENCE</span>
-                  <b>CY</b>
+                <div className="orbit-mark" aria-label="Product, Brand, System, Experience">
+                  <div className="orbit-copy" aria-hidden="true">
+                    {[...orbitCopy].map((letter, index) => (
+                      <span
+                        key={`${letter}-${index}`}
+                        style={{ "--orbit-angle": `${index * (360 / orbitCopy.length)}deg` } as CSSProperties}
+                      >
+                        {letter === " " ? "\u00A0" : letter}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="orbit-globe" aria-hidden="true" />
                 </div>
-                <p><strong>09 YEARS</strong><span>FULL-CYCLE DESIGN</span></p>
               </article>
             </div>
           </div>
@@ -386,7 +413,7 @@ export default function Home() {
           </MagicBento>
         </section>
 
-        <section className="contact" id="contact">
+        <section className={`contact ${contactActive ? "is-active" : ""}`} id="contact">
           <div className="contact-flow">
             <ColorBends
               colors={backgroundColors}
