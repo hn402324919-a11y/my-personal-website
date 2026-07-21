@@ -95,11 +95,59 @@ const jobs = [
 ];
 
 const strengths = [
-  ["01", "跨业务设计经验", "拥有 9 年互联网产品设计经验，覆盖 B 端平台、企业管理系统、官网、电商与运营活动等多个业务方向。"],
-  ["02", "端到端产品能力", "具备完整的需求分析、用户研究与信息架构能力，可独立完成从需求到上线的全流程设计。"],
-  ["03", "设计体系建设", "具有设计规范建设经验，能够沉淀组件库、提升设计效率，并降低研发沟通成本。"],
-  ["04", "业务价值意识", "站在业务目标角度进行设计，通过体验优化推动转化率、效率与品牌价值提升。"],
+  { number: "01", title: "跨业务设计经验", text: "拥有 9 年互联网产品设计经验，覆盖 B 端平台、企业管理系统、官网、电商与运营活动等多个业务方向。", visual: "collage" },
+  { number: "02", title: "端到端产品能力", text: "具备完整的需求分析、用户研究与信息架构能力，可独立完成从需求到上线的全流程设计。", visual: "flow" },
+  { number: "03", title: "设计体系建设", text: "具有设计规范建设经验，能够沉淀组件库、提升设计效率，并降低研发沟通成本。", visual: "system" },
+  { number: "04", title: "业务价值意识", text: "站在业务目标角度进行设计，通过体验优化推动转化率、效率与品牌价值提升。", visual: "value" },
 ];
+
+function StrengthVisual({ type }: { type: string }) {
+  if (type === "collage") {
+    return (
+      <div className="strength-visual visual-collage" aria-hidden="true">
+        <img className="collage-a" src="/work/card-3.jpg" alt="" />
+        <img className="collage-b" src="/work/card-5.jpg" alt="" />
+        <img className="collage-c" src="/work/card-9.jpg" alt="" />
+        <span>PRODUCT · CAMPAIGN · WEB</span>
+      </div>
+    );
+  }
+
+  if (type === "flow") {
+    return (
+      <div className="strength-visual visual-flow" aria-hidden="true">
+        <div className="flow-frame">
+          <span><b>01</b>洞察</span><span><b>02</b>架构</span><span><b>03</b>视觉</span><span><b>04</b>落地</span>
+          <i className="flow-line" />
+        </div>
+        <p>INSIGHT → DELIVERY</p>
+      </div>
+    );
+  }
+
+  if (type === "system") {
+    return (
+      <div className="strength-visual visual-system" aria-hidden="true">
+        <div className="component-board">
+          <span className="component-wide">DESIGN SYSTEM / V1.0</span>
+          <span>AA</span><span>16</span><span className="component-green">CTA</span>
+          <span className="component-tall">GRID<br />12 COL</span><span className="component-wide">COMPONENT LIBRARY</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="strength-visual visual-value" aria-hidden="true">
+      <div className="value-orbit">
+        <i className="value-ring ring-one" /><i className="value-ring ring-two" /><i className="value-ring ring-three" />
+        <b>VALUE</b>
+        <span className="value-node node-one">体验</span><span className="value-node node-two">效率</span>
+        <span className="value-node node-three">转化</span><span className="value-node node-four">品牌</span>
+      </div>
+    </div>
+  );
+}
 
 const tools = ["Figma", "Sketch", "Photoshop", "Illustrator", "After Effects", "ChatGPT", "Codex", "Figma AI"];
 const backgroundColors = ["#00C26E"];
@@ -315,7 +363,7 @@ export default function Home() {
               <a className="work-manifesto" href="#contact" data-reveal="scale" data-reveal-order="2">
                 <SpecularFrame radius={5} proximity={220} intensity={1.2} />
                 <span className="manifesto-kicker">DESIGN POSITION / 09Y</span>
-                <h3>为复杂业务建立秩序，<br />让体验转化为品牌价值。</h3>
+                <h3>Building clarity for complex products,<br />creating value <em>years ahead.</em></h3>
                 <span className="manifesto-foot">PRODUCT × EXPERIENCE × BRAND <b>↗</b></span>
               </a>
               <article className="work-orbit" data-reveal="scale" data-reveal-order="3">
@@ -334,7 +382,7 @@ export default function Home() {
         <section className="strengths section shell" id="strengths">
           <div className="heading split"><div><p className="eyebrow" data-reveal="fade">WHY ME / CAPABILITIES</p><SplitText tag="h2" text={"从一张界面，\n看到完整业务。"} /></div><p data-reveal="right">不止交付视觉稿，也关注问题如何被定义、<br />方案如何落地，以及价值如何被验证。</p></div>
           <MagicBento className="strength-grid" spotlightRadius={320} particleCount={6}>
-            {strengths.map(([n, title, text], index) => <div className="strength-card-shell" key={n}><article data-reveal="scale" data-reveal-order={index + 1}><SpecularFrame radius={3} /><span className="strength-index">{n}</span><div><h3>{title}</h3><p>{text}</p></div></article></div>)}
+            {strengths.map((item, index) => <div className={`strength-card-shell strength-${item.number}`} key={item.number}><article data-reveal="scale" data-reveal-order={index + 1}><SpecularFrame radius={14} /><span className="strength-index">{item.number}</span><StrengthVisual type={item.visual} /><div className="strength-copy"><h3>{item.title}</h3><p>{item.text}</p></div></article></div>)}
           </MagicBento>
         </section>
 
