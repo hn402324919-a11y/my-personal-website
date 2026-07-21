@@ -57,11 +57,11 @@ const projects: Project[] = [
       "独立完成 5+ 小程序营销活动；完成 50+ 个伊利、美素佳儿、贝亲日常运营活动海报支持。",
     tags: ["CAMPAIGN", "H5 GAME", "VISUAL DESIGN"],
     cases: [
-      { label: "伊利冬奥新春拉新促活", src: "/work/project-5.jpg", alt: "伊利冬奥新春拉新促活设计" },
-      { label: "伊利植选扫码抽奖活动", src: "/work/project-6.jpg", alt: "伊利植选扫码抽奖活动设计" },
-      { label: "伊利拉新抽红包活动", src: "/work/project-7.jpg", alt: "伊利拉新抽红包活动设计" },
-      { label: "伊利 QQ 星亲子打卡", src: "/work/project-7.jpg", alt: "伊利 QQ 星亲子打卡设计", focus: 0.48 },
-      { label: "日常运营推广海报", src: "/work/project-8.jpg", alt: "品牌日常运营推广海报合集" },
+      { label: "伊利冬奥新春拉新促活", src: "/work/project-campaign-01-winter-olympics.jpg", alt: "伊利冬奥新春拉新促活设计" },
+      { label: "伊利植选扫码抽奖活动", src: "/work/project-campaign-02-zhixuan.jpg", alt: "伊利植选扫码抽奖活动设计" },
+      { label: "伊利拉新抽红包活动", src: "/work/project-campaign-03-red-packet.jpg", alt: "伊利拉新抽红包活动设计" },
+      { label: "伊利 QQ 星亲子打卡", src: "/work/project-campaign-04-qq-star.jpg", alt: "伊利 QQ 星亲子打卡设计" },
+      { label: "日常UI及运营海报", src: "/work/project-campaign-05-daily-ui.jpg", alt: "日常 UI 及运营海报合集" },
     ],
   },
   {
@@ -117,7 +117,6 @@ function StrengthVisual({ type }: { type: string }) {
         <img className="collage-a" src="/work/card-3.jpg" alt="" />
         <img className="collage-b" src="/work/card-5.jpg" alt="" />
         <img className="collage-c" src="/work/card-9.jpg" alt="" />
-        <span>PRODUCT · CAMPAIGN · WEB</span>
       </div>
     );
   }
@@ -129,7 +128,6 @@ function StrengthVisual({ type }: { type: string }) {
           <span><b>01</b>洞察</span><span><b>02</b>架构</span><span><b>03</b>视觉</span><span><b>04</b>落地</span>
           <i className="flow-line" />
         </div>
-        <p>INSIGHT → DELIVERY</p>
       </div>
     );
   }
@@ -137,17 +135,7 @@ function StrengthVisual({ type }: { type: string }) {
   if (type === "system") {
     return (
       <div className="strength-visual visual-system" aria-hidden="true">
-        <div className="component-board">
-          <span className="component-empty" />
-          <span className="component-active icon-tv"><i /></span>
-          <span className="component-empty" />
-          <span className="component-empty" />
-          <span className="component-active icon-chat"><i /></span>
-          <span className="component-empty" />
-          <span className="component-active icon-image"><i /></span>
-          <span className="component-empty" />
-          <span className="component-empty" />
-        </div>
+        <img src="/work/strength-design-system-green.png" alt="" />
       </div>
     );
   }
