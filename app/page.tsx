@@ -312,6 +312,21 @@ export default function Home() {
                   </button>
                 </TiltedCard>
               ))}
+              <a className="work-manifesto" href="#contact" data-reveal="scale" data-reveal-order="2">
+                <SpecularFrame radius={5} proximity={220} intensity={1.2} />
+                <span className="manifesto-kicker">DESIGN POSITION / 09Y</span>
+                <h3>为复杂业务建立秩序，<br />让体验转化为品牌价值。</h3>
+                <span className="manifesto-foot">PRODUCT × EXPERIENCE × BRAND <b>↗</b></span>
+              </a>
+              <article className="work-orbit" data-reveal="scale" data-reveal-order="3">
+                <SpecularFrame radius={5} proximity={220} intensity={1.2} />
+                <div className="orbit-mark" aria-hidden="true">
+                  <span className="orbit-top">PRODUCT</span><span className="orbit-right">BRAND</span>
+                  <span className="orbit-bottom">SYSTEM</span><span className="orbit-left">EXPERIENCE</span>
+                  <b>CY</b>
+                </div>
+                <p><strong>09 YEARS</strong><span>FULL-CYCLE DESIGN</span></p>
+              </article>
             </div>
           </div>
         </section>
