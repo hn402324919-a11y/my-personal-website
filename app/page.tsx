@@ -110,6 +110,29 @@ const strengths = [
 
 const orbitCopy = "PRODUCT · BRAND · SYSTEM · EXPERIENCE · ";
 
+function ProjectVisual({ item }: { item: Project }) {
+  if (item.id === "experience") {
+    return (
+      <div className="project-composite experience-composite" aria-hidden="true">
+        <div className="laptop laptop-back"><span className="laptop-screen" /></div>
+        <div className="laptop laptop-front"><span className="laptop-screen" /></div>
+      </div>
+    );
+  }
+
+  if (item.id === "campaign") {
+    return (
+      <div className="project-composite campaign-composite" aria-hidden="true">
+        <span className="campaign-tile tile-left" />
+        <span className="campaign-tile tile-right" />
+        <div className="campaign-phone"><span className="campaign-screen" /></div>
+      </div>
+    );
+  }
+
+  return <img src={item.cover} alt="" />;
+}
+
 function StrengthVisual({ type }: { type: string }) {
   if (type === "collage") {
     return (
@@ -153,7 +176,7 @@ function StrengthVisual({ type }: { type: string }) {
 }
 
 const tools = ["Figma", "Sketch", "Photoshop", "Illustrator", "After Effects", "ChatGPT", "Codex", "Figma AI"];
-const backgroundColors = ["#00C26E"];
+const backgroundColors = ["#03E885"];
 const getCaseSources = (src: string | string[]) => Array.isArray(src) ? src : [src];
 
 export default function Home() {
@@ -369,7 +392,7 @@ export default function Home() {
                 <TiltedCard className={item.id} key={item.id} rotateAmplitude={4.5} scaleOnHover={1.012}>
                   <button className="project-card" data-reveal="scale" data-reveal-order={item.key} onClick={() => openProject(item)} aria-label={`查看${item.category}项目详情`}>
                     <SpecularFrame radius={5} proximity={220} intensity={1.35} />
-                    <img src={item.cover} alt="" /><span className="shade" />
+                    <ProjectVisual item={item} /><span className="shade" />
                     <span className="card-top"><span>{item.category}</span></span>
                     <span className="card-copy"><strong>{item.title}</strong><small>{item.subtitle}</small></span>
                     <span className="card-open">打开项目 ↗</span>

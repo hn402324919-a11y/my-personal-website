@@ -28,7 +28,7 @@ function createParticle(card: HTMLElement, glowColor: string) {
 export default function MagicBento({
   children,
   className = "",
-  glowColor = "0, 194, 110",
+  glowColor = "3, 232, 133",
   spotlightRadius = 300,
   particleCount = 6,
   enableStars = true,

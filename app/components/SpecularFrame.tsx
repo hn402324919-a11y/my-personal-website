@@ -147,7 +147,7 @@ export default function SpecularFrame({
     };
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
 
-    const lineColor = new Color("#00C26E");
+    const lineColor = new Color("#03E885");
     const baseColor = new Color("#26302B");
     program.uniforms.uLineColor.value = [lineColor.r, lineColor.g, lineColor.b];
     program.uniforms.uBaseColor.value = [baseColor.r, baseColor.g, baseColor.b];
