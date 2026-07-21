@@ -114,7 +114,7 @@ function ProjectVisual({ item }: { item: Project }) {
   if (item.id === "experience") {
     return (
       <div className="project-composite experience-composite" aria-hidden="true">
-        <div className="laptop laptop-back"><span className="laptop-screen" /></div>
+        <div className="experience-phone-empty"><span /></div>
         <div className="laptop laptop-front"><span className="laptop-screen" /></div>
       </div>
     );

@@ -162,3 +162,136 @@
   .node-three{right:12%;bottom:8%}
   .node-four{bottom:12%;left:14%}
 }
+
+/* Final card separation and contact-flow refinements. */
+.experience-composite{
+  background:
+    radial-gradient(circle at 0 0,rgba(3,232,133,.16),transparent 29%),
+    radial-gradient(circle at 100% 0,rgba(3,232,133,.14),transparent 28%),
+    radial-gradient(circle at 0 100%,rgba(3,232,133,.12),transparent 30%),
+    radial-gradient(circle at 100% 100%,rgba(3,232,133,.14),transparent 30%),
+    radial-gradient(circle at 48% 48%,rgba(3,232,133,.15),transparent 36%),
+    linear-gradient(145deg,#111713,#050706 72%);
+  box-shadow:inset 0 0 44px rgba(3,232,133,.07)
+}
+.laptop-front{z-index:2;top:16%;left:7%;width:79%}
+.experience-phone-empty{
+  position:absolute;
+  z-index:1;
+  top:4%;
+  right:5%;
+  width:22%;
+  height:43%;
+  border:5px solid #252d29;
+  border-radius:28px;
+  background:linear-gradient(145deg,#2d3531,#070908 64%);
+  box-shadow:0 28px 64px rgba(0,0,0,.58),0 0 36px rgba(3,232,133,.11);
+  transform:rotate(9deg)
+}
+.experience-phone-empty:before{
+  position:absolute;
+  z-index:2;
+  top:7px;
+  left:50%;
+  width:38%;
+  height:11px;
+  border-radius:10px;
+  background:#050706;
+  content:"";
+  transform:translateX(-50%)
+}
+.experience-phone-empty span{
+  position:absolute;
+  inset:4px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:22px;
+  background:linear-gradient(145deg,#0d120f,#030504 76%);
+  box-shadow:inset 0 0 26px rgba(3,232,133,.045)
+}
+
+.campaign-tile{top:32%;width:24%;height:40%;border-radius:14px}
+.tile-left{left:5%;transform:none}
+.tile-right{right:5%;transform:none}
+
+.enterprise-composite{
+  background:
+    radial-gradient(circle at 0 0,rgba(3,232,133,.15),transparent 28%),
+    radial-gradient(circle at 100% 0,rgba(3,232,133,.13),transparent 27%),
+    radial-gradient(circle at 0 100%,rgba(3,232,133,.11),transparent 29%),
+    radial-gradient(circle at 100% 100%,rgba(3,232,133,.14),transparent 29%),
+    radial-gradient(circle at 54% 42%,rgba(3,232,133,.075),transparent 38%),
+    linear-gradient(145deg,#101713,#050706 72%);
+  box-shadow:inset 0 0 36px rgba(3,232,133,.065)
+}
+
+.visual-system>img{
+  width:90%;
+  height:90%;
+  border-radius:10px;
+  object-fit:contain;
+  object-position:center;
+  filter:saturate(1.08) contrast(1.04)
+}
+
+.contact-flow{
+  -webkit-mask-image:linear-gradient(102deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.48) 28%,#000 64%);
+  mask-image:linear-gradient(102deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.48) 28%,#000 64%)
+}
+.contact-flow canvas{transform:translateX(8%) scale(1.08);transform-origin:70% 70%}
+.contact-flow:before{
+  right:-28%;
+  bottom:-36%;
+  left:12%;
+  height:82%;
+  border-radius:62% 44% 0 0/86% 62% 0 0;
+  background:
+    radial-gradient(ellipse at 74% 42%,rgba(3,232,133,.94),transparent 46%),
+    radial-gradient(ellipse at 44% 78%,rgba(3,232,133,.42),transparent 34%);
+  filter:blur(62px);
+  opacity:.88;
+  transform:translate3d(0,8%,0) rotate(-7deg) scale(1.04);
+  animation:contact-aurora 8s cubic-bezier(.45,0,.55,1) infinite alternate;
+  animation-play-state:paused
+}
+.contact-flow:after{
+  position:absolute;
+  z-index:2;
+  right:-14%;
+  bottom:-47%;
+  display:block;
+  width:104%;
+  height:84%;
+  border-top:3px solid rgba(3,232,133,.48);
+  border-radius:50%;
+  box-shadow:0 -24px 76px rgba(3,232,133,.26);
+  content:"";
+  filter:blur(12px);
+  opacity:.72;
+  transform:rotate(-7deg);
+  animation:contact-arc 7s ease-in-out infinite alternate;
+  animation-play-state:paused
+}
+.contact.is-active .contact-flow:after{animation-play-state:running}
+@keyframes contact-aurora{
+  from{opacity:.78;transform:translate3d(0,8%,0) rotate(-7deg) scale(1.04)}
+  to{opacity:1;transform:translate3d(8%,-3%,0) rotate(-3deg) scale(1.12)}
+}
+@keyframes contact-arc{
+  to{opacity:1;transform:translate3d(5%,-5%,0) rotate(-3deg) scale(1.04)}
+}
+
+@media(max-width:760px){
+  .laptop-front{top:20%;left:-5%;width:102%}
+  .experience-phone-empty{top:7%;right:-2%;width:29%;height:35%;border-width:4px;border-radius:20px}
+  .experience-phone-empty span{border-radius:15px}
+  .campaign-tile{top:34%;width:30%;height:36%}
+  .tile-left{left:2%}
+  .tile-right{right:2%}
+  .visual-system>img{width:88%;height:88%}
+  .contact-flow{-webkit-mask-image:linear-gradient(104deg,rgba(0,0,0,.12),rgba(0,0,0,.42) 32%,#000 70%);mask-image:linear-gradient(104deg,rgba(0,0,0,.12),rgba(0,0,0,.42) 32%,#000 70%)}
+  .contact-flow:before{right:-62%;bottom:-20%;left:8%;height:68%;filter:blur(46px)}
+  .contact-flow:after{right:-54%;bottom:-35%;width:142%;height:62%}
+}
+@media(prefers-reduced-motion:reduce){
+  .contact-flow:before,.contact-flow:after{animation:none!important}
+}
