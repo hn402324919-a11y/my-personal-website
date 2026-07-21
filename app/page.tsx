@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import SplitText from "./components/SplitText";
 import TiltedCard from "./components/TiltedCard";
 import MagicBento from "./components/MagicBento";
@@ -18,7 +18,7 @@ type Project = {
   role: string;
   achievement?: string;
   tags: string[];
-  images: { src: string; alt: string }[];
+  cases: { label: string; src: string; alt: string; focus?: number }[];
 };
 
 const projects: Project[] = [
@@ -30,15 +30,16 @@ const projects: Project[] = [
     subtitle: "品牌体验升级 × Web3 聚合资产平台 × 品牌定制小程序",
     cover: "/work/card-3.jpg",
     intro:
-      "覆盖钱包、理财、社交聊天与品牌电商等场景，在复杂业务约束中建立清晰、可信且可扩展的产品体验。",
+      "覆盖多种行业场景，在复杂业务约束中建立清晰、可信且可扩展的产品体验。",
     role:
-      "负责区块链钱包交易平台全站设计，独立完成从方案输出到项目落地，并与产品、研发及业务团队紧密协作；同时参与品牌小程序规划，完成交互原型、界面视觉与开发验收。",
+      "独立负责金融行业、女装行业等全站设计，为提升界面美观与用户体验，独立完成方案输出到项目落地工作，并与各方团队保持紧密协作，高效协调资源分配。",
     achievement:
-      "完成钱包、理财、社交聊天等 10 项功能的全链路界面设计；APP 用户量 300,000+，月交易额千万+。",
+      "主导整体设计方向与体验策略，搭建 Web & App 双端体验体系；完成 AScoin 钱包、理财、社交聊天等 10 项功能的全链路设计，推动 APP 用户增长至 300,000+，月交易额千万+。",
     tags: ["UX STRATEGY", "APP UI", "DESIGN SYSTEM"],
-    images: [
-      { src: "/work/project-3.jpg", alt: "AScoin Web3 聚合资产平台设计全案" },
-      { src: "/work/project-4.jpg", alt: "CHARLES & KEITH 品牌小程序设计全案" },
+    cases: [
+      { label: "Heychic 品牌体验升级", src: "/work/project-heychic.jpg", alt: "Heychic 品牌体验升级设计全案" },
+      { label: "AScoin 区块链交易平台", src: "/work/project-3.jpg", alt: "AScoin 区块链交易平台设计全案" },
+      { label: "小 CK 小程序商城方案", src: "/work/project-4.jpg", alt: "CHARLES & KEITH 小程序商城设计全案" },
     ],
   },
   {
@@ -52,12 +53,15 @@ const projects: Project[] = [
       "围绕节点营销、会员运营与品牌传播，建立从活动机制、视觉概念到多触点物料的一致体验。",
     role:
       "配合运营及品牌商家完成日常与节日营销推广设计，覆盖互动小游戏、小程序 Banner、活动专题页、线上社群海报与线下宣传物料。",
+    achievement:
+      "独立完成 5+ 小程序营销活动；完成 50+ 个伊利、美素佳儿、贝亲日常运营活动海报支持。",
     tags: ["CAMPAIGN", "H5 GAME", "VISUAL DESIGN"],
-    images: [
-      { src: "/work/project-5.jpg", alt: "伊利冬奥主题互动营销设计" },
-      { src: "/work/project-6.jpg", alt: "伊利植选互动营销设计" },
-      { src: "/work/project-7.jpg", alt: "伊利红包与会员互动活动设计" },
-      { src: "/work/project-8.jpg", alt: "品牌运营与日常营销设计合集" },
+    cases: [
+      { label: "伊利冬奥新春拉新促活", src: "/work/project-5.jpg", alt: "伊利冬奥新春拉新促活设计" },
+      { label: "伊利植选扫码抽奖活动", src: "/work/project-6.jpg", alt: "伊利植选扫码抽奖活动设计" },
+      { label: "伊利拉新抽红包活动", src: "/work/project-7.jpg", alt: "伊利拉新抽红包活动设计" },
+      { label: "伊利 QQ 星亲子打卡", src: "/work/project-7.jpg", alt: "伊利 QQ 星亲子打卡设计", focus: 0.48 },
+      { label: "日常运营推广海报", src: "/work/project-8.jpg", alt: "品牌日常运营推广海报合集" },
     ],
   },
   {
@@ -71,9 +75,14 @@ const projects: Project[] = [
       "面向企业客户重新组织服务能力、产品价值与信任信息，用清晰的页面秩序支撑获客与品牌表达。",
     role:
       "梳理产品与服务信息架构，完成官网视觉体系、核心页面与多业务场景页面设计，并在设计规范下保持内容扩展的一致性。",
+    achievement:
+      "ESD 官网获得《亚洲网页设计奖》；完成火星人集成灶官网设计；通过设计方案的产出，与比亚迪电子达成项目合作。",
     tags: ["B2B WEB", "INFORMATION ARCHITECTURE", "WEB UI"],
-    images: [
-      { src: "/work/project-9.jpg", alt: "企业数字增长与营销服务官网设计全案" },
+    cases: [
+      { label: "锐鲨企业官网", src: "/work/project-9.jpg", alt: "锐鲨企业官网设计" },
+      { label: "比亚迪电子官网设计方案", src: "/work/project-9.jpg", alt: "比亚迪电子官网设计方案", focus: 0.38 },
+      { label: "火星人集成灶官网", src: "/work/project-9.jpg", alt: "火星人集成灶官网设计", focus: 0.62 },
+      { label: "ESD 音响官网", src: "/work/project-9.jpg", alt: "ESD 音响官网设计", focus: 0.82 },
     ],
   },
 ];
@@ -98,7 +107,11 @@ const backgroundColors = ["#00C26E"];
 export default function Home() {
   const [fixed, setFixed] = useState(false);
   const [project, setProject] = useState<Project | null>(null);
+  const [activeCase, setActiveCase] = useState(0);
   const [copied, setCopied] = useState(false);
+  const modalScrollRef = useRef<HTMLDivElement>(null);
+  const galleryFigureRef = useRef<HTMLElement>(null);
+  const caseChangeRequested = useRef(false);
 
   useEffect(() => {
     const update = () => setFixed(window.scrollY > window.innerHeight * 0.78);
@@ -154,6 +167,48 @@ export default function Home() {
     await navigator.clipboard.writeText("chenynii");
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1800);
+  };
+
+  const openProject = (item: Project) => {
+    caseChangeRequested.current = false;
+    setActiveCase(0);
+    setProject(item);
+  };
+
+  const selectCase = (index: number) => {
+    if (index === activeCase) return;
+    caseChangeRequested.current = true;
+    setActiveCase(index);
+  };
+
+  const handleCaseKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const lastIndex = project ? project.cases.length - 1 : 0;
+    let nextIndex = index;
+    if (event.key === "ArrowRight") nextIndex = index === lastIndex ? 0 : index + 1;
+    if (event.key === "ArrowLeft") nextIndex = index === 0 ? lastIndex : index - 1;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = lastIndex;
+    if (nextIndex === index) return;
+
+    event.preventDefault();
+    selectCase(nextIndex);
+    const buttons = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>("button");
+    buttons?.[nextIndex]?.focus();
+  };
+
+  const revealSelectedCase = () => {
+    if (!caseChangeRequested.current || !project) return;
+    const scroll = modalScrollRef.current;
+    const figure = galleryFigureRef.current;
+    if (!scroll || !figure) return;
+
+    caseChangeRequested.current = false;
+    const selected = project.cases[activeCase];
+    const scrollRect = scroll.getBoundingClientRect();
+    const figureRect = figure.getBoundingClientRect();
+    const focusOffset = figureRect.height * (selected.focus ?? 0);
+    const top = scroll.scrollTop + figureRect.top - scrollRect.top + focusOffset - 96;
+    scroll.scrollTo({ top, behavior: "smooth" });
   };
 
   return (
@@ -248,7 +303,7 @@ export default function Home() {
             <div className="project-grid">
               {projects.map((item) => (
                 <TiltedCard className={item.id} key={item.id} rotateAmplitude={4.5} scaleOnHover={1.012}>
-                  <button className="project-card" data-reveal="scale" data-reveal-order={item.key} onClick={() => setProject(item)} aria-label={`查看${item.category}项目详情`}>
+                  <button className="project-card" data-reveal="scale" data-reveal-order={item.key} onClick={() => openProject(item)} aria-label={`查看${item.category}项目详情`}>
                     <SpecularFrame radius={5} proximity={220} intensity={1.35} />
                     <img src={item.cover} alt="" /><span className="shade" />
                     <span className="card-top"><i>{item.key}</i><span>{item.category}</span></span>
@@ -304,13 +359,35 @@ export default function Home() {
       {project && (
         <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
           <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><SpecularFrame radius={3} /><span>关闭</span> ×</button>
-          <div className="modal-scroll">
+          <div className="modal-scroll" ref={modalScrollRef}>
             <header className="modal-head shell">
               <p className="eyebrow">PROJECT {project.key} / {project.category}</p><SplitText tag="h2" id="modal-title" text={project.title} rootMargin="0px" /><p className="modal-intro">{project.intro}</p>
               <div className="modal-meta"><div><span>项目职责</span><p>{project.role}</p></div>{project.achievement && <div><span>项目成就</span><p>{project.achievement}</p></div>}</div>
               <div className="tags">{project.tags.map((x) => <span key={x}>{x}</span>)}</div>
             </header>
-            <div className="gallery shell">{project.images.map((image) => <figure key={image.src}><img src={image.src} alt={image.alt} loading="lazy" /><figcaption>{image.alt}</figcaption></figure>)}</div>
+            <nav className="case-tabs shell" aria-label={`${project.title}案例切换`} role="tablist">
+              {project.cases.map((item, index) => (
+                <button
+                  key={item.label}
+                  id={`case-tab-${project.id}-${index}`}
+                  className={activeCase === index ? "is-active" : ""}
+                  onClick={() => selectCase(index)}
+                  onKeyDown={(event) => handleCaseKeyDown(event, index)}
+                  role="tab"
+                  aria-selected={activeCase === index}
+                  aria-controls="active-project-case"
+                  tabIndex={activeCase === index ? 0 : -1}
+                >
+                  <span>{String(index + 1).padStart(2, "0")}</span>{item.label}
+                </button>
+              ))}
+            </nav>
+            <div className="gallery shell" id="active-project-case" role="tabpanel" aria-labelledby={`case-tab-${project.id}-${activeCase}`}>
+              <figure key={project.cases[activeCase].label} ref={galleryFigureRef}>
+                <img src={project.cases[activeCase].src} alt={project.cases[activeCase].alt} loading="lazy" onLoad={revealSelectedCase} />
+                <figcaption>{project.cases[activeCase].label} / {project.cases[activeCase].alt}</figcaption>
+              </figure>
+            </div>
             <div className="modal-end shell"><span>END OF PROJECT</span><button onClick={() => setProject(null)}>返回精选作品 ↑</button></div>
           </div>
         </div>
