@@ -108,6 +108,37 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const root = document.documentElement;
+    const revealItems = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    if (!revealItems.length) return;
+
+    root.classList.add("reveal-ready");
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+      return () => root.classList.remove("reveal-ready");
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+
+    return () => {
+      observer.disconnect();
+      root.classList.remove("reveal-ready");
+    };
+  }, []);
+
+  useEffect(() => {
     if (!project) return;
     const escape = (event: KeyboardEvent) => event.key === "Escape" && setProject(null);
     const old = document.body.style.overflow;
@@ -160,7 +191,7 @@ export default function Home() {
         </div>
         <div className="veil" />
         <div className="hero-content shell">
-          <div className="hero-kickers" aria-hidden="true">
+          <div className="hero-kickers" aria-hidden="true" data-reveal="fade">
             <p>CHENYNII PORTFOLIO<br />SELECTED WORK · 2017—2026</p>
             <p>UI / UX DESIGN<br />BRAND EXPERIENCE</p>
             <p>HANGZHOU, CN<br />AVAILABLE FOR CONTACT</p>
@@ -171,26 +202,26 @@ export default function Home() {
               <SplitText tag="span" className="hero-digital" text="DIGITAL" delay={62} duration={0.9} rootMargin="0px" />
               <SplitText tag="span" className="hero-designer" text="Designer" delay={58} duration={0.9} rootMargin="0px" textAlign="right" />
             </h1>
-            <div className="hero-disciplines" aria-hidden="true">
+            <div className="hero-disciplines" aria-hidden="true" data-reveal="right" data-reveal-order="1">
               <span>UI/UX DESIGN</span>
               <span>PRODUCT EXPERIENCE</span>
               <span>BRAND IDENTITY</span>
               <span>DESIGN SYSTEM</span>
             </div>
           </div>
-          <div className="hero-lower">
+          <div className="hero-lower" data-reveal data-reveal-order="2">
             <p>为复杂产品建立秩序，<br />为品牌创造可感知的价值。</p>
             <div><a className="btn" href="#work">查看精选作品 <span>↓</span></a><a className="text-link" href="#about">了解我的经历 ↘</a></div>
           </div>
         </div>
-        <div className="hero-meta shell" aria-hidden="true"><span>CHENYNII © 2026</span><span>SCROLL TO EXPLORE</span><span>30°16&apos;N · 120°12&apos;E</span></div>
+        <div className="hero-meta shell" aria-hidden="true" data-reveal="fade" data-reveal-order="3"><span>CHENYNII © 2026</span><span>SCROLL TO EXPLORE</span><span>30°16&apos;N · 120°12&apos;E</span></div>
       </header>
 
       <div id="content">
         <section className="about section shell" id="about">
-          <div className="heading"><p className="eyebrow">PROFILE / EXPERIENCE</p><SplitText tag="h2" text={"设计不是装饰，\n而是解决问题的方式。"} /></div>
+          <div className="heading"><p className="eyebrow" data-reveal="fade">PROFILE / EXPERIENCE</p><SplitText tag="h2" text={"设计不是装饰，\n而是解决问题的方式。"} /></div>
           <div className="about-layout">
-            <aside className="id-card">
+            <aside className="id-card" data-reveal="left">
               <div className="portrait">
                 <img src="/profile/chenynii-photo-2843.jpg" alt="陈旖旎个人照片" />
               </div>
@@ -199,25 +230,25 @@ export default function Home() {
               <div className="id-row"><a href="tel:15988806213">159 8880 6213 ↗</a><button onClick={copyWechat}>{copied ? "微信已复制" : "微信 · chenynii"}</button></div>
             </aside>
             <div>
-              <p className="lead">我是一名兼具产品思维与品牌意识的设计师。过去 9 年，我持续在复杂业务中寻找清晰路径，将用户需求、商业目标与视觉表达连接起来。</p>
+              <p className="lead" data-reveal="right">我是一名兼具产品思维与品牌意识的设计师。过去 9 年，我持续在复杂业务中寻找清晰路径，将用户需求、商业目标与视觉表达连接起来。</p>
               <div className="timeline">
-                {jobs.map(([period, company, role, detail]) => (
-                  <article key={period}><p>{period}</p><div><h3>{company}</h3><span>{detail}</span></div><strong>{role}</strong></article>
+                {jobs.map(([period, company, role, detail], index) => (
+                  <article key={period} data-reveal data-reveal-order={index + 1}><p>{period}</p><div><h3>{company}</h3><span>{detail}</span></div><strong>{role}</strong></article>
                 ))}
               </div>
-              <div className="subrow"><p className="eyebrow">EDUCATION / 2013—2017</p><div><h3>杭州电子科技大学 · 产品设计</h3><p>学院文艺部学生会 · 科技创新奖 · 优秀毕业设计</p></div></div>
-              <div className="subrow"><p className="eyebrow">SELECTED TOOLS</p><div className="chips">{tools.map((x) => <span key={x}>{x}</span>)}</div></div>
+              <div className="subrow" data-reveal><p className="eyebrow">EDUCATION / 2013—2017</p><div><h3>杭州电子科技大学 · 产品设计</h3><p>学院文艺部学生会 · 科技创新奖 · 优秀毕业设计</p></div></div>
+              <div className="subrow" data-reveal data-reveal-order="1"><p className="eyebrow">SELECTED TOOLS</p><div className="chips">{tools.map((x) => <span key={x}>{x}</span>)}</div></div>
             </div>
           </div>
         </section>
 
         <section className="work section" id="work">
           <div className="shell">
-            <div className="heading split"><div><p className="eyebrow">SELECTED WORK</p><SplitText tag="h2" text={"项目不是画面合集，\n而是一段完整的推演。"} /></div><p>从产品体验到品牌活动，再到企业服务平台。<br />点击卡片，查看完整项目长图与设计说明。</p></div>
+            <div className="heading split"><div><p className="eyebrow" data-reveal="fade">SELECTED WORK</p><SplitText tag="h2" text={"项目不是画面合集，\n而是一段完整的推演。"} /></div><p data-reveal="right">从产品体验到品牌活动，再到企业服务平台。<br />点击卡片，查看完整项目长图与设计说明。</p></div>
             <div className="project-grid">
               {projects.map((item) => (
                 <TiltedCard className={item.id} key={item.id} rotateAmplitude={4.5} scaleOnHover={1.012}>
-                  <button className="project-card" onClick={() => setProject(item)} aria-label={`查看${item.category}项目详情`}>
+                  <button className="project-card" data-reveal="scale" data-reveal-order={item.key} onClick={() => setProject(item)} aria-label={`查看${item.category}项目详情`}>
                     <SpecularFrame radius={5} proximity={220} intensity={1.35} />
                     <img src={item.cover} alt="" /><span className="shade" />
                     <span className="card-top"><i>{item.key}</i><span>{item.category}</span></span>
@@ -231,9 +262,9 @@ export default function Home() {
         </section>
 
         <section className="strengths section shell" id="strengths">
-          <div className="heading split"><div><p className="eyebrow">WHY ME / CAPABILITIES</p><SplitText tag="h2" text={"从一张界面，\n看到完整业务。"} /></div><p>不止交付视觉稿，也关注问题如何被定义、<br />方案如何落地，以及价值如何被验证。</p></div>
+          <div className="heading split"><div><p className="eyebrow" data-reveal="fade">WHY ME / CAPABILITIES</p><SplitText tag="h2" text={"从一张界面，\n看到完整业务。"} /></div><p data-reveal="right">不止交付视觉稿，也关注问题如何被定义、<br />方案如何落地，以及价值如何被验证。</p></div>
           <MagicBento className="strength-grid" spotlightRadius={320} particleCount={6}>
-            {strengths.map(([n, title, text]) => <article key={n}><SpecularFrame radius={3} /><span className="strength-index">{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}
+            {strengths.map(([n, title, text], index) => <div className="strength-card-shell" key={n}><article data-reveal="scale" data-reveal-order={index + 1}><SpecularFrame radius={3} /><span className="strength-index">{n}</span><div><h3>{title}</h3><p>{text}</p></div></article></div>)}
           </MagicBento>
         </section>
 
@@ -258,15 +289,15 @@ export default function Home() {
           </div>
           <div className="grid" />
           <div className="contact-content shell">
-            <p className="eyebrow">OPEN FOR A CONVERSATION</p>
+            <p className="eyebrow" data-reveal="fade">OPEN FOR A CONVERSATION</p>
             <h2><SplitText tag="span" text="期待您的联系" /><SplitText tag="span" className="split-accent" text="。" delay={0} /></h2>
-            <p>如果你正在寻找一位理解产品、业务与品牌的设计伙伴，我们可以从一次对话开始。</p>
+            <p data-reveal data-reveal-order="1">如果你正在寻找一位理解产品、业务与品牌的设计伙伴，我们可以从一次对话开始。</p>
             <MagicBento className="contact-actions" spotlightRadius={360} particleCount={4} clickEffect>
-              <a href="tel:15988806213"><SpecularFrame radius={3} /><span className="contact-label">电话</span><strong>159 8880 6213</strong><i>↗</i></a>
-              <button onClick={copyWechat}><SpecularFrame radius={3} /><span className="contact-label">微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
+              <a href="tel:15988806213" data-reveal="fade" data-reveal-order="2"><SpecularFrame radius={3} /><span className="contact-label">电话</span><strong>159 8880 6213</strong><i>↗</i></a>
+              <button onClick={copyWechat} data-reveal="fade" data-reveal-order="3"><SpecularFrame radius={3} /><span className="contact-label">微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
             </MagicBento>
           </div>
-          <footer className="shell"><span>CHENYNII · UI / BRAND DESIGNER</span><span>UI × BRAND × EXPERIENCE</span><span>© 2026 ALL RIGHTS RESERVED</span></footer>
+          <footer className="shell" data-reveal="fade" data-reveal-order="4"><span>CHENYNII · UI / BRAND DESIGNER</span><span>UI × BRAND × EXPERIENCE</span><span>© 2026 ALL RIGHTS RESERVED</span></footer>
         </section>
       </div>
 
