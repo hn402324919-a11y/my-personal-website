@@ -146,9 +146,11 @@ function StrengthVisual({ type }: { type: string }) {
   if (type === "collage") {
     return (
       <div className="strength-visual visual-collage" aria-hidden="true">
-        <img className="collage-a" src="/work/card-3.jpg" alt="" />
-        <img className="collage-b" src="/work/card-5.jpg" alt="" />
-        <img className="collage-c" src="/work/card-9.jpg" alt="" />
+        <div className="collage-group">
+          <img className="collage-a" src="/work/card-3.jpg" alt="" />
+          <img className="collage-b" src="/work/card-5.jpg" alt="" />
+          <img className="collage-c" src="/work/card-9.jpg" alt="" />
+        </div>
       </div>
     );
   }
@@ -471,8 +473,8 @@ export default function Home() {
             <h2><SplitText tag="span" text="期待您的联系" /><SplitText tag="span" className="split-accent" text="。" delay={0} /></h2>
             <p data-reveal data-reveal-order="1">如果你正在寻找一位理解产品、业务与品牌的设计伙伴，我们可以从一次对话开始。</p>
             <MagicBento className="contact-actions" spotlightRadius={360} particleCount={4} clickEffect>
-              <a href="tel:15988806213" data-reveal="fade" data-reveal-order="2"><SpecularFrame radius={3} /><span className="contact-label">电话</span><strong>159 8880 6213</strong><i>↗</i></a>
-              <button onClick={copyWechat} data-reveal="fade" data-reveal-order="3"><SpecularFrame radius={3} /><span className="contact-label">微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
+              <a href="tel:15988806213" data-reveal="fade" data-reveal-order="2"><SpecularFrame radius={14} /><span className="contact-label">电话</span><strong>159 8880 6213</strong><i>↗</i></a>
+              <button onClick={copyWechat} data-reveal="fade" data-reveal-order="3"><SpecularFrame radius={14} /><span className="contact-label">微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
             </MagicBento>
           </div>
           <footer className="shell" data-reveal="fade" data-reveal-order="4"><span>CHENYNII · UI / BRAND DESIGNER</span><span>UI × BRAND × EXPERIENCE</span><span>© 2026 ALL RIGHTS RESERVED</span></footer>
@@ -481,7 +483,7 @@ export default function Home() {
 
       {project && (
         <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-          <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><SpecularFrame radius={3} /><span>关闭</span> ×</button>
+          <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><SpecularFrame radius={14} /><span>关闭</span> ×</button>
           <div className="modal-scroll" ref={modalScrollRef}>
             <header className="modal-head shell">
               <p className="eyebrow">PROJECT {project.key} / {project.category}</p><SplitText tag="h2" id="modal-title" text={project.title} rootMargin="0px" /><p className="modal-intro">{project.intro}</p>

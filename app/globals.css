@@ -813,3 +813,23 @@
     transform:none!important
   }
 }
+
+/* Final visual polish: keep the specular rim on the unified radius and scale the collage as one composition. */
+.close>.specular-frame,
+.contact-actions>a>.specular-frame,
+.contact-actions>button>.specular-frame{
+  border-radius:var(--radius-rect)
+}
+.collage-group{
+  position:absolute;
+  inset:0;
+  transform:scale(.82);
+  transform-origin:center;
+}
+.visual-collage .collage-group>img{
+  position:absolute
+}
+
+@media(max-width:760px){
+  .collage-group{transform:scale(.84)}
+}
