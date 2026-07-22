@@ -688,3 +688,52 @@
   .campaign-composite .tile-right{right:3%}
   .contact-flow:before{right:-82%;bottom:-13%;left:2%;height:52%;opacity:.24}
 }
+
+/* Campaign cover correction: use three independent, uncropped artwork slots. */
+.campaign-phone,
+.campaign-tile{
+  top:34%;
+  width:22%;
+  height:38%;
+  aspect-ratio:auto;
+  overflow:visible;
+  border-radius:0;
+  background-size:contain
+}
+.campaign-phone{
+  left:50%;
+  width:31%;
+  height:62%;
+  transform:translate(-50%,-50%)
+}
+.campaign-screen{
+  inset:0;
+  border-radius:0;
+  background-image:url("/work/campaign-cover-main-final.png");
+  background-size:contain;
+  filter:drop-shadow(0 22px 30px rgba(0,0,0,.48))
+}
+.campaign-composite .tile-left{
+  left:7%;
+  aspect-ratio:auto;
+  border-radius:0
+}
+.campaign-composite .tile-right{
+  right:7%;
+  aspect-ratio:auto;
+  border-radius:0;
+  background-image:url("/work/campaign-cover-side-treasure-final.png")
+}
+
+@media(max-width:760px){
+  .campaign-phone{top:33%;width:34%;height:56%}
+  .campaign-tile{top:33%;width:23%;height:34%}
+  .campaign-composite .tile-left{left:5%}
+  .campaign-composite .tile-right{right:5%}
+}
+
+/* Capabilities cards keep a neutral dark surface on hover. */
+.strength-grid>.bento-spotlight,
+.strength-grid article:before{
+  display:none
+}
