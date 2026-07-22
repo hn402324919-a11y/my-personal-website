@@ -6,6 +6,7 @@ import TiltedCard from "./components/TiltedCard";
 import MagicBento from "./components/MagicBento";
 import ColorBends from "./components/ColorBends";
 import SpecularFrame from "./components/SpecularFrame";
+import LineSidebar from "./components/LineSidebar";
 
 type Project = {
   id: string;
@@ -290,7 +291,9 @@ export default function Home() {
 
     event.preventDefault();
     selectCase(nextIndex, false);
-    const buttons = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>("button");
+    const buttons = event.currentTarget
+      .closest('[role="tablist"]')
+      ?.querySelectorAll<HTMLButtonElement>('[role="tab"]');
     buttons?.[nextIndex]?.focus();
   };
 
@@ -486,23 +489,28 @@ export default function Home() {
               <div className="tags">{project.tags.map((x) => <span key={x}>{x}</span>)}</div>
             </header>
             <div className="case-study-layout shell" data-motion={caseMotion ? "on" : "off"}>
-              <nav className="case-tabs" aria-label={`${project.title}案例切换`} role="tablist">
-                {project.cases.map((item, index) => (
-                  <button
-                    key={item.label}
-                    id={`case-tab-${project.id}-${index}`}
-                    className={activeCase === index ? "is-active" : ""}
-                    onClick={() => selectCase(index, true)}
-                    onKeyDown={(event) => handleCaseKeyDown(event, index)}
-                    role="tab"
-                    aria-selected={activeCase === index}
-                    aria-controls="active-project-case"
-                    tabIndex={activeCase === index ? 0 : -1}
-                  >
-                    <span>{String(index + 1).padStart(2, "0")}</span>{item.label}
-                  </button>
-                ))}
-              </nav>
+              <LineSidebar
+                className="project-case-sidebar"
+                items={project.cases.map((item) => item.label)}
+                activeIndex={activeCase}
+                ariaLabel={`${project.title}案例切换`}
+                panelId="active-project-case"
+                tabIdPrefix={`case-tab-${project.id}`}
+                motionEnabled={caseMotion}
+                accentColor="#03E885"
+                textColor="#929b96"
+                markerColor="#33423b"
+                proximityRadius={110}
+                maxShift={18}
+                markerLength={52}
+                markerGap={12}
+                tickScale={0.25}
+                itemGap={14}
+                fontSize={0.96}
+                smoothing={90}
+                onItemClick={(index) => selectCase(index, true)}
+                onItemKeyDown={handleCaseKeyDown}
+              />
               <div className="case-stage">
                 <div
                   key={`${project.id}-${activeCase}`}
