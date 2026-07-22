@@ -192,6 +192,7 @@ export default function Home() {
   const [contactActive, setContactActive] = useState(false);
   const [project, setProject] = useState<Project | null>(null);
   const [activeCase, setActiveCase] = useState(0);
+  const [caseMotion, setCaseMotion] = useState(false);
   const [copied, setCopied] = useState(false);
   const modalScrollRef = useRef<HTMLDivElement>(null);
   const galleryFigureRef = useRef<HTMLElement>(null);
@@ -266,13 +267,15 @@ export default function Home() {
 
   const openProject = (item: Project) => {
     caseChangeRequested.current = false;
+    setCaseMotion(false);
     setActiveCase(0);
     setProject(item);
   };
 
-  const selectCase = (index: number) => {
+  const selectCase = (index: number, animate = true) => {
     if (index === activeCase) return;
-    caseChangeRequested.current = true;
+    caseChangeRequested.current = animate;
+    setCaseMotion(animate);
     setActiveCase(index);
   };
 
@@ -286,7 +289,7 @@ export default function Home() {
     if (nextIndex === index) return;
 
     event.preventDefault();
-    selectCase(nextIndex);
+    selectCase(nextIndex, false);
     const buttons = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>("button");
     buttons?.[nextIndex]?.focus();
   };
@@ -482,37 +485,47 @@ export default function Home() {
               <div className="modal-meta"><div><span>项目职责</span><p>{project.role}</p></div>{project.achievement && <div><span>项目成就</span><p>{project.achievement}</p></div>}</div>
               <div className="tags">{project.tags.map((x) => <span key={x}>{x}</span>)}</div>
             </header>
-            <nav className="case-tabs shell" aria-label={`${project.title}案例切换`} role="tablist">
-              {project.cases.map((item, index) => (
-                <button
-                  key={item.label}
-                  id={`case-tab-${project.id}-${index}`}
-                  className={activeCase === index ? "is-active" : ""}
-                  onClick={() => selectCase(index)}
-                  onKeyDown={(event) => handleCaseKeyDown(event, index)}
-                  role="tab"
-                  aria-selected={activeCase === index}
-                  aria-controls="active-project-case"
-                  tabIndex={activeCase === index ? 0 : -1}
+            <div className="case-study-layout shell" data-motion={caseMotion ? "on" : "off"}>
+              <nav className="case-tabs" aria-label={`${project.title}案例切换`} role="tablist">
+                {project.cases.map((item, index) => (
+                  <button
+                    key={item.label}
+                    id={`case-tab-${project.id}-${index}`}
+                    className={activeCase === index ? "is-active" : ""}
+                    onClick={() => selectCase(index, true)}
+                    onKeyDown={(event) => handleCaseKeyDown(event, index)}
+                    role="tab"
+                    aria-selected={activeCase === index}
+                    aria-controls="active-project-case"
+                    tabIndex={activeCase === index ? 0 : -1}
+                  >
+                    <span>{String(index + 1).padStart(2, "0")}</span>{item.label}
+                  </button>
+                ))}
+              </nav>
+              <div className="case-stage">
+                <div
+                  key={`${project.id}-${activeCase}`}
+                  className="gallery"
+                  id="active-project-case"
+                  role="tabpanel"
+                  aria-labelledby={`case-tab-${project.id}-${activeCase}`}
                 >
-                  <span>{String(index + 1).padStart(2, "0")}</span>{item.label}
-                </button>
-              ))}
-            </nav>
-            <div className="gallery shell" id="active-project-case" role="tabpanel" aria-labelledby={`case-tab-${project.id}-${activeCase}`}>
-              {getCaseSources(project.cases[activeCase].src).map((src, imageIndex, sources) => (
-                <figure key={`${project.cases[activeCase].label}-${src}`} ref={imageIndex === 0 ? galleryFigureRef : undefined}>
-                  <img
-                    src={src}
-                    alt={`${project.cases[activeCase].alt}${sources.length > 1 ? ` ${imageIndex + 1}` : ""}`}
-                    loading="lazy"
-                    onLoad={imageIndex === 0 ? revealSelectedCase : undefined}
-                  />
-                  <figcaption>
-                    {project.cases[activeCase].label}{sources.length > 1 ? ` · ${String(imageIndex + 1).padStart(2, "0")}` : ""} / {project.cases[activeCase].alt}
-                  </figcaption>
-                </figure>
-              ))}
+                  {getCaseSources(project.cases[activeCase].src).map((src, imageIndex, sources) => (
+                    <figure key={`${project.cases[activeCase].label}-${src}`} ref={imageIndex === 0 ? galleryFigureRef : undefined}>
+                      <img
+                        src={src}
+                        alt={`${project.cases[activeCase].alt}${sources.length > 1 ? ` ${imageIndex + 1}` : ""}`}
+                        loading="lazy"
+                        onLoad={imageIndex === 0 ? revealSelectedCase : undefined}
+                      />
+                      <figcaption>
+                        {project.cases[activeCase].label}{sources.length > 1 ? ` · ${String(imageIndex + 1).padStart(2, "0")}` : ""} / {project.cases[activeCase].alt}
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </div>
             </div>
             <div className="modal-end shell"><span>END OF PROJECT</span><button onClick={() => setProject(null)}>返回精选作品 ↑</button></div>
           </div>
