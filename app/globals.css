@@ -587,3 +587,104 @@
   .visual-system:before,
   .visual-system:after{animation:none}
 }
+
+/* July 22 final pass: one rectangular radius, separated campaign artwork, quieter contact glow. */
+:root{--radius-rect:14px}
+
+.btn,
+.nav.is-fixed,
+.id-card,
+.project-card,
+.work-manifesto,
+.work-orbit,
+.strength-grid article,
+.strength-grid article>.strength-visual,
+.contact-actions>a,
+.contact-actions>button,
+.close,
+.modal-meta,
+.gallery figure,
+.case-tabs,
+.case-tabs button{
+  border-radius:var(--radius-rect)
+}
+.modal-meta{overflow:hidden}
+
+.campaign-composite{
+  background:
+    radial-gradient(circle at 0 0,rgba(3,232,133,.075),transparent 31%),
+    radial-gradient(circle at 100% 0,rgba(3,232,133,.14),transparent 29%),
+    radial-gradient(circle at 0 100%,rgba(3,232,133,.12),transparent 31%),
+    radial-gradient(circle at 100% 100%,rgba(3,232,133,.22),transparent 34%),
+    radial-gradient(circle at 50% 38%,rgba(3,232,133,.065),transparent 43%),
+    linear-gradient(145deg,#0d1410,#050706 74%)
+}
+.campaign-phone,
+.campaign-tile{
+  top:35%;
+  background-color:transparent;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:contain;
+  box-shadow:none;
+  filter:drop-shadow(0 24px 32px rgba(0,0,0,.44));
+  transform:translateY(-50%)
+}
+.campaign-phone{
+  left:50%;
+  width:auto;
+  height:60%;
+  aspect-ratio:388/757;
+  overflow:visible;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  transform:translate(-50%,-50%)
+}
+.campaign-phone:before{display:none}
+.campaign-screen{
+  inset:0;
+  border-radius:var(--radius-rect);
+  background-image:url("/work/campaign-cover-main-clean.png");
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:contain
+}
+.campaign-tile{
+  width:auto;
+  height:35%;
+  border-radius:var(--radius-rect)
+}
+.campaign-composite .tile-left{
+  left:7%;
+  aspect-ratio:475/690;
+  transform:translateY(-50%)
+}
+.campaign-composite .tile-right{
+  right:7%;
+  aspect-ratio:535/870;
+  transform:translateY(-50%)
+}
+
+.contact-flow{opacity:.68}
+.contact-flow canvas{
+  opacity:.56!important;
+  filter:saturate(1.22) brightness(.88)
+}
+.contact-flow:before{
+  right:-30%;
+  bottom:-44%;
+  left:18%;
+  height:54%;
+  opacity:.28
+}
+.contact-flow:after{opacity:.18}
+
+@media(max-width:760px){
+  .campaign-phone{top:34%;height:55%;border:0;border-radius:0}
+  .campaign-screen{border-radius:var(--radius-rect)}
+  .campaign-tile{top:34%;height:30%}
+  .campaign-composite .tile-left{left:3%}
+  .campaign-composite .tile-right{right:3%}
+  .contact-flow:before{right:-82%;bottom:-13%;left:2%;height:52%;opacity:.24}
+}
