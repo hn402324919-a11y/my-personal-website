@@ -362,3 +362,101 @@
   .tile-right{right:3%}
   .visual-system>img{width:100%;height:100%}
 }
+
+/* July 21 refinements: equal project typography, aligned campaign screens and a compact system cluster. */
+.project-grid .project-card .card-copy strong,
+.project-grid .tilted-card-figure.experience .card-copy strong,
+.project-grid .tilted-card-figure.campaign .card-copy strong,
+.project-grid .tilted-card-figure.enterprise .card-copy strong{
+  max-width:100%;
+  font-size:clamp(22px,1.7vw,28px);
+  font-weight:500;
+  line-height:1.3
+}
+
+.about .lead{
+  font-size:clamp(19px,1.65vw,28px);
+  line-height:1.58
+}
+
+.campaign-composite{
+  background:
+    radial-gradient(circle at 0 0,rgba(3,232,133,.17),transparent 29%),
+    radial-gradient(circle at 100% 0,rgba(3,232,133,.15),transparent 28%),
+    radial-gradient(circle at 0 100%,rgba(3,232,133,.13),transparent 30%),
+    radial-gradient(circle at 100% 100%,rgba(3,232,133,.28),transparent 34%),
+    radial-gradient(circle at 50% 38%,rgba(3,232,133,.08),transparent 42%),
+    linear-gradient(145deg,#101713,#050706 74%);
+  box-shadow:inset 0 0 46px rgba(3,232,133,.075)
+}
+
+.campaign-phone,
+.campaign-tile{
+  top:34%;
+  width:auto;
+  overflow:hidden;
+  background-color:transparent;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:cover
+}
+.campaign-phone{
+  left:50%;
+  width:auto;
+  height:56%;
+  aspect-ratio:450/880;
+  border:5px solid #28312d;
+  border-radius:30px;
+  transform:translate(-50%,-50%)
+}
+.campaign-screen{
+  inset:3px;
+  border-radius:24px;
+  background-image:url("/work/campaign-cover-main-phone.png");
+  background-position:center;
+  background-size:cover
+}
+.campaign-tile{
+  height:40%;
+  border-radius:15px;
+  box-shadow:0 22px 52px rgba(0,0,0,.34);
+  filter:none;
+  transform:translateY(-50%)
+}
+.campaign-composite .tile-left{
+  left:11%;
+  aspect-ratio:475/690;
+  background-image:url("/work/campaign-cover-side-medal.png")
+}
+.campaign-composite .tile-right{
+  right:11%;
+  aspect-ratio:535/870;
+  background-image:url("/work/campaign-cover-side-treasure.png")
+}
+
+/* Keep the original black artwork canvas full-size; scale only its internal tile group. */
+.visual-system{
+  background:#070908!important
+}
+.visual-system>img{
+  width:76%;
+  height:76%;
+  border-radius:0;
+  object-fit:contain;
+  object-position:center;
+  filter:saturate(1.08) contrast(1.04)
+}
+
+@media(max-width:760px){
+  .project-grid .project-card .card-copy strong,
+  .project-grid .tilted-card-figure.experience .card-copy strong,
+  .project-grid .tilted-card-figure.campaign .card-copy strong,
+  .project-grid .tilted-card-figure.enterprise .card-copy strong{font-size:22px}
+  .about .lead{font-size:19px;line-height:1.62}
+  .campaign-phone{top:33%;height:52%;border-width:4px;border-radius:25px}
+  .campaign-screen{border-radius:19px}
+  .campaign-tile{top:33%;height:34%}
+  .campaign-composite .tile-left{left:4%}
+  .campaign-composite .tile-right{right:4%}
+  .visual-system>img{width:76%;height:76%}
+}
