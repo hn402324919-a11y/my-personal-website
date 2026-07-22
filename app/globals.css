@@ -460,3 +460,23 @@
   .campaign-composite .tile-right{right:4%}
   .visual-system>img{width:76%;height:76%}
 }
+
+/* Project detail tags act as quiet metadata instead of outlined controls. */
+.modal-head .tags{
+  align-items:center;
+  gap:0;
+  margin-top:24px
+}
+.modal-head .tags span{
+  border:0;
+  padding:3px 0;
+  color:#78847d;
+  font-size:9px;
+  letter-spacing:.12em;
+  opacity:.72
+}
+.modal-head .tags span+span:before{
+  padding:0 12px;
+  color:#465049;
+  content:"/"
+}

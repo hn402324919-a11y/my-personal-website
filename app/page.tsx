@@ -407,7 +407,7 @@ export default function Home() {
                   </button>
                 </TiltedCard>
               ))}
-              <a className="work-manifesto" href="#contact" data-reveal="scale" data-reveal-order="2">
+              <a className="work-manifesto" href="#strengths" data-reveal="scale" data-reveal-order="2">
                 <SpecularFrame radius={5} proximity={220} intensity={1.2} />
                 <span className="manifesto-kicker">DESIGN POSITION / 09Y</span>
                 <h3>Building clarity for complex products,<br />creating value <em>years ahead.</em></h3>
