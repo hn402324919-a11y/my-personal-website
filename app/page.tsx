@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { useEffect, useState, type CSSProperties, type KeyboardEvent } from "react";
 import SplitText from "./components/SplitText";
 import TiltedCard from "./components/TiltedCard";
 import MagicBento from "./components/MagicBento";
@@ -197,9 +197,6 @@ export default function Home() {
   const [activeCase, setActiveCase] = useState(0);
   const [caseMotion, setCaseMotion] = useState(false);
   const [copied, setCopied] = useState(false);
-  const modalScrollRef = useRef<HTMLDivElement>(null);
-  const galleryFigureRef = useRef<HTMLElement>(null);
-  const caseChangeRequested = useRef(false);
 
   useEffect(() => {
     const update = () => setFixed(window.scrollY > window.innerHeight * 0.78);
@@ -269,16 +266,14 @@ export default function Home() {
   };
 
   const openProject = (item: Project) => {
-    caseChangeRequested.current = false;
     setCaseMotion(false);
     setActiveCase(0);
     setProject(item);
   };
 
-  const selectCase = (index: number, animate = true) => {
+  const selectCase = (index: number) => {
     if (index === activeCase) return;
-    caseChangeRequested.current = animate;
-    setCaseMotion(animate);
+    setCaseMotion(true);
     setActiveCase(index);
   };
 
@@ -292,26 +287,11 @@ export default function Home() {
     if (nextIndex === index) return;
 
     event.preventDefault();
-    selectCase(nextIndex, false);
+    selectCase(nextIndex);
     const buttons = event.currentTarget
       .closest('[role="tablist"]')
       ?.querySelectorAll<HTMLButtonElement>('[role="tab"]');
     buttons?.[nextIndex]?.focus();
-  };
-
-  const revealSelectedCase = () => {
-    if (!caseChangeRequested.current || !project) return;
-    const scroll = modalScrollRef.current;
-    const figure = galleryFigureRef.current;
-    if (!scroll || !figure) return;
-
-    caseChangeRequested.current = false;
-    const selected = project.cases[activeCase];
-    const scrollRect = scroll.getBoundingClientRect();
-    const figureRect = figure.getBoundingClientRect();
-    const focusOffset = figureRect.height * (selected.focus ?? 0);
-    const top = scroll.scrollTop + figureRect.top - scrollRect.top + focusOffset - 96;
-    scroll.scrollTo({ top, behavior: "smooth" });
   };
 
   return (
@@ -487,7 +467,7 @@ export default function Home() {
       {project && (
         <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
           <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><SpecularFrame radius={14} /><span>关闭</span> ×</button>
-          <div className="modal-scroll" ref={modalScrollRef}>
+          <div className="modal-scroll">
             <header className="modal-head shell">
               <p className="eyebrow">PROJECT {project.key} / {project.category}</p><SplitText tag="h2" id="modal-title" text={project.title} rootMargin="0px" /><p className="modal-intro">{project.intro}</p>
               <div className="modal-meta"><div><span>项目职责</span><p>{project.role}</p></div>{project.achievement && <div><span>项目成就</span><p>{project.achievement}</p></div>}</div>
@@ -513,7 +493,7 @@ export default function Home() {
                 itemGap={14}
                 fontSize={0.96}
                 smoothing={90}
-                onItemClick={(index) => selectCase(index, true)}
+                onItemClick={selectCase}
                 onItemKeyDown={handleCaseKeyDown}
               />
               <div className="case-stage">
@@ -525,12 +505,11 @@ export default function Home() {
                   aria-labelledby={`case-tab-${project.id}-${activeCase}`}
                 >
                   {getCaseSources(project.cases[activeCase].src).map((src, imageIndex, sources) => (
-                    <figure key={`${project.cases[activeCase].label}-${src}`} ref={imageIndex === 0 ? galleryFigureRef : undefined}>
+                    <figure key={`${project.cases[activeCase].label}-${src}`}>
                       <img
                         src={src}
                         alt={`${project.cases[activeCase].alt}${sources.length > 1 ? ` ${imageIndex + 1}` : ""}`}
                         loading="lazy"
-                        onLoad={imageIndex === 0 ? revealSelectedCase : undefined}
                       />
                       <figcaption>
                         {project.cases[activeCase].label}{sources.length > 1 ? ` · ${String(imageIndex + 1).padStart(2, "0")}` : ""} / {project.cases[activeCase].alt}
