@@ -383,7 +383,10 @@ export default function Home() {
               <div className="portrait">
                 <img src="/profile/chenynii-photo-2843.jpg" alt="陈旖旎个人照片" />
               </div>
-              <div className="id-name"><div><strong>陈旖旎</strong><span>CHENYNII</span></div><b>30</b></div>
+              <div className="id-name">
+                <div><strong>陈旖旎</strong><span>CHENYNII</span></div>
+                <div className="id-birth"><b>1995年12月</b><small>30</small></div>
+              </div>
               <div className="id-row"><span>杭州电子科技大学</span><span>产品设计</span></div>
               <div className="id-row"><a href="tel:15988806213">159 8880 6213 ↗</a><button onClick={copyWechat}>{copied ? "微信已复制" : "微信 · chenynii"}</button></div>
             </aside>
