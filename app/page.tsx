@@ -149,7 +149,7 @@ function StrengthVisual({ type }: { type: string }) {
         <div className="collage-group">
           <img className="collage-a" src="/work/card-3.jpg" alt="" />
           <img className="collage-b" src="/work/card-5.jpg" alt="" />
-          <img className="collage-c" src="/work/card-9.jpg" alt="" />
+          <img className="collage-c" src="/work/project-esd-audio.jpg" alt="" />
         </div>
       </div>
     );
