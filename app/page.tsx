@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import SplitText from "./components/SplitText";
 import TiltedCard from "./components/TiltedCard";
+import PortfolioMotion from "./components/PortfolioMotion";
 import MagicBento from "./components/MagicBento";
 import ColorBends from "./components/ColorBends";
 import SpecularFrame from "./components/SpecularFrame";
@@ -197,6 +198,31 @@ export default function Home() {
   const [activeCase, setActiveCase] = useState(0);
   const [caseMotion, setCaseMotion] = useState(false);
   const [copied, setCopied] = useState(false);
+  const modalScrollRef = useRef<HTMLDivElement>(null);
+  const caseNavRef = useRef<HTMLDivElement>(null);
+  const caseStageRef = useRef<HTMLDivElement>(null);
+  const shouldAlignCaseRef = useRef(false);
+
+  const alignActiveCase = useCallback(() => {
+    const scroller = modalScrollRef.current;
+    const stage = caseStageRef.current;
+    if (!scroller || !stage) return;
+
+    const scrollerRect = scroller.getBoundingClientRect();
+    const stageRect = stage.getBoundingClientRect();
+    const isMobile = window.matchMedia("(max-width: 900px)").matches;
+    const navigationHeight = isMobile ? (caseNavRef.current?.getBoundingClientRect().height ?? 0) : 0;
+    const topOffset = isMobile ? navigationHeight + 4 : 28;
+    const nextScrollTop = scroller.scrollTop + stageRect.top - scrollerRect.top - topOffset;
+
+    scroller.scrollTop = Math.max(0, nextScrollTop);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!project || !shouldAlignCaseRef.current) return;
+    shouldAlignCaseRef.current = false;
+    alignActiveCase();
+  }, [activeCase, project, alignActiveCase]);
 
   useEffect(() => {
     const update = () => setFixed(window.scrollY > window.innerHeight * 0.78);
@@ -273,6 +299,7 @@ export default function Home() {
 
   const selectCase = (index: number) => {
     if (index === activeCase) return;
+    shouldAlignCaseRef.current = true;
     setCaseMotion(true);
     setActiveCase(index);
   };
@@ -296,6 +323,7 @@ export default function Home() {
 
   return (
     <main>
+      <PortfolioMotion />
       <div className="site-bends">
         <ColorBends
           colors={backgroundColors}
@@ -467,36 +495,38 @@ export default function Home() {
       {project && (
         <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
           <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><SpecularFrame radius={14} /><span>关闭</span> ×</button>
-          <div className="modal-scroll">
+          <div className="modal-scroll" ref={modalScrollRef}>
             <header className="modal-head shell">
               <p className="eyebrow">PROJECT {project.key} / {project.category}</p><SplitText tag="h2" id="modal-title" text={project.title} rootMargin="0px" /><p className="modal-intro">{project.intro}</p>
               <div className="modal-meta"><div><span>项目职责</span><p>{project.role}</p></div>{project.achievement && <div><span>项目成就</span><p>{project.achievement}</p></div>}</div>
               <div className="tags">{project.tags.map((x) => <span key={x}>{x}</span>)}</div>
             </header>
             <div className="case-study-layout shell" data-motion={caseMotion ? "on" : "off"}>
-              <LineSidebar
-                className="project-case-sidebar"
-                items={project.cases.map((item) => item.label)}
-                activeIndex={activeCase}
-                ariaLabel={`${project.title}案例切换`}
-                panelId="active-project-case"
-                tabIdPrefix={`case-tab-${project.id}`}
-                motionEnabled={caseMotion}
-                accentColor="#03E885"
-                textColor="#929b96"
-                markerColor="#33423b"
-                proximityRadius={110}
-                maxShift={18}
-                markerLength={52}
-                markerGap={12}
-                tickScale={0.25}
-                itemGap={14}
-                fontSize={0.96}
-                smoothing={90}
-                onItemClick={selectCase}
-                onItemKeyDown={handleCaseKeyDown}
-              />
-              <div className="case-stage">
+              <div className="project-case-nav" ref={caseNavRef}>
+                <LineSidebar
+                  className="project-case-sidebar"
+                  items={project.cases.map((item) => item.label)}
+                  activeIndex={activeCase}
+                  ariaLabel={`${project.title}案例切换`}
+                  panelId="active-project-case"
+                  tabIdPrefix={`case-tab-${project.id}`}
+                  motionEnabled={caseMotion}
+                  accentColor="#03E885"
+                  textColor="#929b96"
+                  markerColor="#33423b"
+                  proximityRadius={110}
+                  maxShift={18}
+                  markerLength={52}
+                  markerGap={12}
+                  tickScale={0.25}
+                  itemGap={14}
+                  fontSize={0.96}
+                  smoothing={90}
+                  onItemClick={selectCase}
+                  onItemKeyDown={handleCaseKeyDown}
+                />
+              </div>
+              <div className="case-stage" ref={caseStageRef}>
                 <div
                   key={`${project.id}-${activeCase}`}
                   className="gallery"
