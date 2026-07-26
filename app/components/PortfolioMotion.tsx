@@ -38,6 +38,15 @@ const sections: MotionSection[] = [
   },
 ];
 
+const heroSplitParentSelector = ".hero-display .split-parent";
+const heroSplitReadyEvent = "splittext:ready";
+const heroTitleAnimationEvent = "portfolio:hero-title-animation";
+
+function heroSplitTextIsReady() {
+  const parents = Array.from(document.querySelectorAll<HTMLElement>(heroSplitParentSelector));
+  return parents.length > 0 && parents.every((parent) => parent.querySelector(".split-char"));
+}
+
 function buildSectionMotion(section: MotionSection, isDesktop: boolean) {
   const root = document.querySelector<HTMLElement>(section.selector);
   if (!root) return;
@@ -152,6 +161,9 @@ export default function PortfolioMotion() {
 
     const html = document.documentElement;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let active = true;
+    let context: gsap.Context | undefined;
+    let readyFrame: number | undefined;
 
     if (reduceMotion) {
       html.classList.add("motion-reduced");
@@ -161,132 +173,152 @@ export default function PortfolioMotion() {
 
     html.classList.add("motion-ready");
 
-    const context = gsap.context(() => {
-      const opening = gsap.timeline({
-        defaults: { ease: "power4.inOut" },
-        onComplete: () => {
-          gsap.set(".opening-sequence", { display: "none" });
-          ScrollTrigger.refresh();
-        },
-      });
+    const cancelReadyFrame = () => {
+      if (readyFrame === undefined) return;
+      window.cancelAnimationFrame(readyFrame);
+      readyFrame = undefined;
+    };
 
-      gsap.set(
-        [
-          ".nav",
-          ".hero-kickers",
-          ".hero-disciplines",
-          ".hero-lower",
-          ".hero-meta",
-          ".hero-index",
-        ],
-        { autoAlpha: 0 },
-      );
-      gsap.set(".hero-display .split-char", {
-        autoAlpha: 0,
-        yPercent: 145,
-        rotateX: -34,
-        transformOrigin: "50% 100%",
-      });
-      gsap.set(".hero-portrait", { scale: 1.09, transformOrigin: "50% 48%" });
+    const startPortfolioMotion = () => {
+      if (!active || context) return;
+      cancelReadyFrame();
 
-      opening
-        .fromTo(
-          ".opening-mark__line",
-          { yPercent: 125, autoAlpha: 0 },
-          {
-            yPercent: 0,
-            autoAlpha: 1,
-            duration: 0.82,
-            stagger: 0.11,
-            ease: "power4.out",
+      context = gsap.context(() => {
+        const opening = gsap.timeline({
+          defaults: { ease: "power4.inOut" },
+          onComplete: () => {
+            gsap.set(".opening-sequence", { display: "none" });
+            ScrollTrigger.refresh();
           },
-        )
-        .fromTo(
-          ".opening-rail span",
-          { scaleX: 0 },
-          { scaleX: 1, duration: 1.05, transformOrigin: "0% 50%", ease: "power3.inOut" },
-          "-=0.54",
-        )
-        .to(
-          ".opening-mark",
-          { autoAlpha: 0, y: -22, duration: 0.44, ease: "power2.in" },
-          "+=0.22",
-        )
-        .to(
-          ".opening-panel--top",
-          { yPercent: -101, duration: 1.14 },
-          "-=0.1",
-        )
-        .to(
-          ".opening-panel--bottom",
-          { yPercent: 101, duration: 1.14 },
-          "<",
-        )
-        .to(
-          ".hero-portrait",
-          { scale: 1, duration: 1.9, ease: "power3.out" },
-          "-=1.08",
-        )
-        .fromTo(
-          ".nav",
-          { y: -42, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 1.02, ease: "power3.out" },
-          "-=1.48",
-        )
-        .fromTo(
-          ".hero-kickers",
-          { y: -24, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.88, ease: "power3.out" },
-          "-=1.12",
-        )
-        .to(
-          ".hero-display .split-char",
-          {
-            autoAlpha: 1,
-            yPercent: 0,
-            rotateX: 0,
-            duration: 1.18,
-            stagger: 0.035,
-            ease: "power4.out",
-          },
-          "-=0.82",
-        )
-        .fromTo(
-          ".hero-index",
-          { x: -42, autoAlpha: 0 },
-          { x: 0, autoAlpha: 1, duration: 0.72, ease: "power3.out" },
-          "-=0.66",
-        )
-        .fromTo(
-          ".hero-disciplines",
-          { x: 46, autoAlpha: 0 },
-          { x: 0, autoAlpha: 1, duration: 0.82, ease: "power3.out" },
-          "<",
-        )
-        .fromTo(
-          [".hero-lower", ".hero-meta"],
-          { y: 28, autoAlpha: 0 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            duration: 0.82,
-            stagger: 0.12,
-            ease: "power3.out",
-          },
-          "-=0.48",
+        });
+
+        gsap.set(
+          [
+            ".nav",
+            ".hero-kickers",
+            ".hero-disciplines",
+            ".hero-lower",
+            ".hero-meta",
+            ".hero-index",
+          ],
+          { autoAlpha: 0 },
         );
+        gsap.set(".hero-portrait", { scale: 1.09, transformOrigin: "50% 48%" });
 
-      const matchMedia = gsap.matchMedia();
-      matchMedia.add("(min-width: 768px)", () => {
-        sections.forEach((section) => buildSectionMotion(section, true));
+        opening
+          .fromTo(
+            ".opening-mark__line",
+            { yPercent: 125, autoAlpha: 0 },
+            {
+              yPercent: 0,
+              autoAlpha: 1,
+              duration: 0.82,
+              stagger: 0.11,
+              ease: "power4.out",
+            },
+          )
+          .fromTo(
+            ".opening-rail span",
+            { scaleX: 0 },
+            { scaleX: 1, duration: 1.05, transformOrigin: "0% 50%", ease: "power3.inOut" },
+            "-=0.54",
+          )
+          .to(
+            ".opening-mark",
+            { autoAlpha: 0, y: -22, duration: 0.44, ease: "power2.in" },
+            "+=0.22",
+          )
+          .to(
+            ".opening-panel--top",
+            { yPercent: -101, duration: 1.14 },
+            "-=0.1",
+          )
+          .to(
+            ".opening-panel--bottom",
+            { yPercent: 101, duration: 1.14 },
+            "<",
+          )
+          .to(
+            ".hero-portrait",
+            { scale: 1, duration: 1.9, ease: "power3.out" },
+            "-=1.08",
+          )
+          .fromTo(
+            ".nav",
+            { y: -42, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 1.02, ease: "power3.out" },
+            "-=1.48",
+          )
+          .fromTo(
+            ".hero-kickers",
+            { y: -24, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.88, ease: "power3.out" },
+            "-=1.12",
+          )
+          .to(
+            {},
+            {
+              duration: 1.18,
+              onStart: () => {
+                window.dispatchEvent(new CustomEvent(heroTitleAnimationEvent));
+              },
+            },
+            "-=0.82",
+          )
+          .fromTo(
+            ".hero-index",
+            { x: -42, autoAlpha: 0 },
+            { x: 0, autoAlpha: 1, duration: 0.72, ease: "power3.out" },
+            "-=0.66",
+          )
+          .fromTo(
+            ".hero-disciplines",
+            { x: 46, autoAlpha: 0 },
+            { x: 0, autoAlpha: 1, duration: 0.82, ease: "power3.out" },
+            "<",
+          )
+          .fromTo(
+            [".hero-lower", ".hero-meta"],
+            { y: 28, autoAlpha: 0 },
+            {
+              y: 0,
+              autoAlpha: 1,
+              duration: 0.82,
+              stagger: 0.12,
+              ease: "power3.out",
+            },
+            "-=0.48",
+          );
+
+        const matchMedia = gsap.matchMedia();
+        matchMedia.add("(min-width: 768px)", () => {
+          sections.forEach((section) => buildSectionMotion(section, true));
+        });
+        matchMedia.add("(max-width: 767px)", () => {
+          sections.forEach((section) => buildSectionMotion(section, false));
+        });
       });
-      matchMedia.add("(max-width: 767px)", () => {
-        sections.forEach((section) => buildSectionMotion(section, false));
+    };
+
+    const startWhenHeroSplitTextIsReady = () => {
+      cancelReadyFrame();
+      readyFrame = window.requestAnimationFrame(() => {
+        readyFrame = undefined;
+        if (heroSplitTextIsReady()) {
+          startPortfolioMotion();
+        }
       });
-    });
+    };
+
+    const heroDisplay = document.querySelector(".hero-display");
+    heroDisplay?.addEventListener(heroSplitReadyEvent, startWhenHeroSplitTextIsReady);
+    startWhenHeroSplitTextIsReady();
 
     return () => {
-      context.revert();
+      active = false;
+      cancelReadyFrame();
+      heroDisplay?.removeEventListener(heroSplitReadyEvent, startWhenHeroSplitTextIsReady);
+      context?.revert();
       html.classList.remove("motion-ready");
     };
   }, []);

@@ -111,6 +111,9 @@ const strengths = [
 ];
 
 const orbitCopy = "PRODUCT · BRAND · SYSTEM · EXPERIENCE · ";
+const heroTitleAnimationEvent = "portfolio:hero-title-animation";
+const heroTitleFrom = { opacity: 0, yPercent: 145, rotateX: -34, transformOrigin: "50% 100%" };
+const heroTitleTo = { opacity: 1, yPercent: 0, rotateX: 0 };
 
 function ProjectVisual({ item }: { item: Project }) {
   if (item.id === "experience") {
@@ -365,8 +368,29 @@ export default function Home() {
           <div className="hero-editorial">
             <p className="hero-index" aria-hidden="true">2017-2026</p>
             <h1 className="hero-display" aria-label="Digital Designer">
-              <SplitText tag="span" className="hero-digital" text="DIGITAL" delay={62} duration={0.9} rootMargin="0px" />
-              <SplitText tag="span" className="hero-designer" text="Designer" delay={58} duration={0.9} rootMargin="0px" textAlign="right" />
+              <SplitText
+                tag="span"
+                className="hero-digital"
+                text="DIGITAL"
+                delay={62}
+                duration={0.9}
+                rootMargin="0px"
+                from={heroTitleFrom}
+                to={heroTitleTo}
+                startEvent={heroTitleAnimationEvent}
+              />
+              <SplitText
+                tag="span"
+                className="hero-designer"
+                text="Designer"
+                delay={58}
+                duration={0.9}
+                rootMargin="0px"
+                textAlign="right"
+                from={heroTitleFrom}
+                to={heroTitleTo}
+                startEvent={heroTitleAnimationEvent}
+              />
             </h1>
             <div className="hero-disciplines" aria-hidden="true" data-reveal="right" data-reveal-order="1">
               <span>UI/UX DESIGN</span>

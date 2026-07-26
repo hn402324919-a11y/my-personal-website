@@ -1019,9 +1019,13 @@
   box-shadow: 0 0 20px rgba(3, 232, 133, 0.6);
 }
 
-.motion-ready [data-reveal] {
+.motion-ready #content [data-reveal] {
   opacity: 1 !important;
   transform: none !important;
+  transition: none !important;
+}
+
+.motion-ready .hero [data-reveal] {
   transition: none !important;
 }
 

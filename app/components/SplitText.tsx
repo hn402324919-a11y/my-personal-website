@@ -17,12 +17,21 @@ type SplitTextProps = {
   textAlign?: CSSProperties["textAlign"];
   tag?: ElementType;
   id?: string;
+  startEvent?: string;
   onLetterAnimationComplete?: () => void;
 };
 
 type SplitElement = HTMLElement & {
   _rbsplitInstance?: { revert: () => void } | null;
 };
+
+type SplitAnimation = {
+  kill: () => void;
+  scrollTrigger?: { kill: () => void };
+};
+
+const defaultFrom: TweenVars = { opacity: 0, y: 46 };
+const defaultTo: TweenVars = { opacity: 1, y: 0 };
 
 export default function SplitText({
   text,
@@ -31,20 +40,21 @@ export default function SplitText({
   duration = 0.78,
   ease = "power3.out",
   splitType = "chars",
-  from = { opacity: 0, y: 46 },
-  to = { opacity: 1, y: 0 },
+  from = defaultFrom,
+  to = defaultTo,
   threshold = 0.14,
   rootMargin = "-48px",
   textAlign = "left",
   tag = "p",
   id,
+  startEvent,
   onLetterAnimationComplete,
 }: SplitTextProps) {
   const ref = useRef<SplitElement>(null);
-  const animationCompletedRef = useRef(false);
   const onCompleteRef = useRef(onLetterAnimationComplete);
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(
+    () => typeof document !== "undefined" && document.fonts.status === "loaded",
+  );
 
   useEffect(() => {
     onCompleteRef.current = onLetterAnimationComplete;
@@ -52,14 +62,8 @@ export default function SplitText({
 
   useEffect(() => {
     let active = true;
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotion = () => setReduceMotion(motionQuery.matches);
-    updateMotion();
-    motionQuery.addEventListener("change", updateMotion);
 
-    if (document.fonts.status === "loaded") {
-      setFontsLoaded(true);
-    } else {
+    if (!fontsLoaded) {
       document.fonts.ready.then(() => {
         if (active) setFontsLoaded(true);
       });
@@ -67,9 +71,8 @@ export default function SplitText({
 
     return () => {
       active = false;
-      motionQuery.removeEventListener("change", updateMotion);
     };
-  }, []);
+  }, [fontsLoaded]);
 
   useEffect(() => {
     let cancelled = false;
@@ -77,7 +80,10 @@ export default function SplitText({
 
     const setupAnimation = async () => {
       const element = ref.current;
-      if (!element || !text || !fontsLoaded || reduceMotion || animationCompletedRef.current) return;
+      if (!element || !text || !fontsLoaded) return;
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduceMotion) return;
 
       const [{ gsap }, { ScrollTrigger }, { SplitText: GSAPSplitText }] = await Promise.all([
         import("gsap"),
@@ -100,6 +106,8 @@ export default function SplitText({
       const marginUnit = marginMatch?.[2] || "px";
       const sign = marginValue === 0 ? "" : marginValue < 0 ? `-=${Math.abs(marginValue)}${marginUnit}` : `+=${marginValue}${marginUnit}`;
       const start = `top ${startPct}%${sign}`;
+      let animation: SplitAnimation | undefined;
+      let removeStartListener: (() => void) | undefined;
 
       const splitInstance = new GSAPSplitText(element, {
         type: splitType,
@@ -110,6 +118,8 @@ export default function SplitText({
         charsClass: "split-char",
         reduceWhiteSpace: false,
         onSplit: (self) => {
+          element.dispatchEvent(new CustomEvent("splittext:ready", { bubbles: true }));
+
           const targets = splitType.includes("chars") && self.chars.length
             ? self.chars
             : splitType.includes("words") && self.words.length
@@ -120,7 +130,44 @@ export default function SplitText({
             target.style.willChange = "transform, opacity";
           });
 
-          return gsap.fromTo(
+          const clearTargets = () => {
+            targets.forEach((target) => {
+              target.style.willChange = "";
+            });
+          };
+
+          const animateTargets = () => {
+            animation?.kill();
+            animation = gsap.fromTo(
+              targets,
+              { ...from },
+              {
+                ...to,
+                duration,
+                ease,
+                stagger: delay / 1000,
+                force3D: true,
+                onComplete: () => {
+                  clearTargets();
+                  onCompleteRef.current?.();
+                },
+              },
+            );
+
+            return animation;
+          };
+
+          if (startEvent) {
+            gsap.set(targets, { ...from });
+            const startAnimation = () => {
+              if (!cancelled) animateTargets();
+            };
+            window.addEventListener(startEvent, startAnimation, { once: true });
+            removeStartListener = () => window.removeEventListener(startEvent, startAnimation);
+            return undefined;
+          }
+
+          animation = gsap.fromTo(
             targets,
             { ...from },
             {
@@ -137,23 +184,22 @@ export default function SplitText({
                 anticipatePin: 0.4,
               },
               onComplete: () => {
-                targets.forEach((target) => {
-                  target.style.willChange = "";
-                });
-                animationCompletedRef.current = true;
+                clearTargets();
                 onCompleteRef.current?.();
               },
             },
           );
+
+          return animation;
         },
       });
 
       element._rbsplitInstance = splitInstance;
 
       disposeAnimation = () => {
-        ScrollTrigger.getAll().forEach((trigger) => {
-          if (trigger.trigger === element) trigger.kill();
-        });
+        removeStartListener?.();
+        animation?.scrollTrigger?.kill();
+        animation?.kill();
         splitInstance.revert();
         element._rbsplitInstance = null;
       };
@@ -165,7 +211,7 @@ export default function SplitText({
       cancelled = true;
       disposeAnimation?.();
     };
-  }, [text, delay, duration, ease, splitType, JSON.stringify(from), JSON.stringify(to), threshold, rootMargin, fontsLoaded, reduceMotion]);
+  }, [text, delay, duration, ease, splitType, from, to, threshold, rootMargin, fontsLoaded, startEvent]);
 
   const Tag = tag;
   return (
