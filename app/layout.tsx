@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const sans = Geist({ variable: "--sans", subsets: ["latin"] });
-const mono = Geist_Mono({ variable: "--mono", subsets: ["latin"] });
 
 export async function generateMetadata(): Promise<Metadata> {
   const h = await headers();
@@ -26,5 +22,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="zh-CN"><body className={`${sans.variable} ${mono.variable}`}>{children}</body></html>;
+  return <html lang="zh-CN"><body>{children}</body></html>;
 }
