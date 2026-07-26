@@ -455,7 +455,7 @@ export default function Home() {
         <section className="strengths section shell" id="strengths">
           <div className="heading split"><div><p className="eyebrow" data-reveal="fade">WHY ME / CAPABILITIES</p><SplitText tag="h2" text={"从一张界面，\n看到完整业务。"} /></div><p data-reveal="right">不止交付视觉稿，也关注问题如何被定义、<br />方案如何落地，以及价值如何被验证。</p></div>
           <MagicBento className="strength-grid" spotlightRadius={320} particleCount={6}>
-            {strengths.map((item, index) => <div className={`strength-card-shell strength-${item.number}`} key={item.number}><article data-reveal="scale" data-reveal-order={index + 1}><SpecularFrame radius={14} /><span className="strength-index">{item.number}</span><StrengthVisual type={item.visual} /><div className="strength-copy"><h3>{item.title}</h3><p>{item.text}</p></div></article></div>)}
+            {strengths.map((item, index) => <div className={`strength-card-shell strength-${item.number}`} key={item.number}><SpecularFrame radius={14} className="strength-hover-cover" coverParent /><article data-reveal="scale" data-reveal-order={index + 1}><span className="strength-index">{item.number}</span><StrengthVisual type={item.visual} /><div className="strength-copy"><h3>{item.title}</h3><p>{item.text}</p></div></article></div>)}
           </MagicBento>
         </section>
 

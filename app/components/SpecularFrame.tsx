@@ -62,6 +62,7 @@ type SpecularFrameProps = {
   proximity?: number;
   intensity?: number;
   className?: string;
+  coverParent?: boolean;
 };
 
 export default function SpecularFrame({
@@ -69,6 +70,7 @@ export default function SpecularFrame({
   proximity = 170,
   intensity = 1.25,
   className = "",
+  coverParent = false,
 }: SpecularFrameProps) {
   const frameRef = useRef<HTMLSpanElement>(null);
 
@@ -113,15 +115,18 @@ export default function SpecularFrame({
     const mesh = new Mesh(gl, { geometry, program });
     frame.appendChild(gl.canvas);
 
-    const size = { width: 1, height: 1 };
     const resize = () => {
       const rect = target.getBoundingClientRect();
-      size.width = rect.width;
-      size.height = rect.height;
-      renderer.setSize(rect.width + PAD * 2, rect.height + PAD * 2);
-      program.uniforms.uCenter.value = [(PAD + rect.width / 2) * dpr, (PAD + rect.height / 2) * dpr];
-      program.uniforms.uHalfSize.value = [(rect.width / 2) * dpr, (rect.height / 2) * dpr];
-      program.uniforms.uRadius.value = Math.min(radius, rect.width / 2, rect.height / 2) * dpr;
+      const padding = coverParent ? 0 : PAD;
+      const styles = coverParent ? window.getComputedStyle(target) : null;
+      const layoutWidth = styles ? Number.parseFloat(styles.width) : rect.width;
+      const layoutHeight = styles ? Number.parseFloat(styles.height) : rect.height;
+      const width = Number.isFinite(layoutWidth) ? layoutWidth : rect.width;
+      const height = Number.isFinite(layoutHeight) ? layoutHeight : rect.height;
+      renderer.setSize(width + padding * 2, height + padding * 2);
+      program.uniforms.uCenter.value = [(padding + width / 2) * dpr, (padding + height / 2) * dpr];
+      program.uniforms.uHalfSize.value = [(width / 2) * dpr, (height / 2) * dpr];
+      program.uniforms.uRadius.value = Math.min(radius, width / 2, height / 2) * dpr;
     };
 
     const resizeObserver = new ResizeObserver(resize);
@@ -185,7 +190,7 @@ export default function SpecularFrame({
       gl.canvas.remove();
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
-  }, [intensity, proximity, radius]);
+  }, [coverParent, intensity, proximity, radius]);
 
   return <span ref={frameRef} className={`specular-frame ${className}`.trim()} aria-hidden="true" />;
 }
