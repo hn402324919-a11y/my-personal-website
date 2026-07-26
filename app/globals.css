@@ -835,14 +835,36 @@
 }
 
 @media(max-width:760px){
+  .modal-head{
+    width:100%;
+    max-width:calc(100vw - 32px);
+    box-sizing:border-box;
+    overflow:visible
+  }
   .modal-head h2,
   .modal-head h2.split-parent{
     display:block!important;
     width:100%;
     max-width:100%;
+    box-sizing:border-box;
+    overflow:visible!important;
     white-space:normal!important;
     overflow-wrap:break-word;
     word-break:break-word
+  }
+  .modal-head h2 .split-line,
+  .modal-head h2 .split-word,
+  .modal-head h2 .split-char{
+    max-width:100%;
+    box-sizing:border-box;
+    overflow:visible!important;
+    white-space:normal!important;
+    overflow-wrap:break-word;
+    word-break:break-word
+  }
+  .modal-head h2 .split-word,
+  .modal-head h2 .split-char{
+    display:inline!important
   }
 }
 
