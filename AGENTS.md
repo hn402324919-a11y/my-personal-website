@@ -130,3 +130,4 @@ npm test
 - After code changes, commit and push to the main branch.
 - Vercel automatically deploys new commits from the main branch.
 - Do not manually change Vercel Build Command or Output Directory without checking the existing project configuration.
+- After every update that is pushed for deployment, record the deployment/update in `PROJECT_LOG.md` and keep `PROJECT_HISTORY.md` aligned when the change affects project status, structure, deployment rules, design rules, or notable completed work.
