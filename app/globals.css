@@ -848,6 +848,10 @@
     max-width:100%;
     box-sizing:border-box;
     overflow:visible!important;
+    font-size:clamp(44px,4.4vw,84px);
+    font-weight:490;
+    letter-spacing:-.065em;
+    line-height:1.12;
     white-space:normal!important;
     overflow-wrap:break-word;
     word-break:break-word
