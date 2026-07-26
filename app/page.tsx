@@ -494,8 +494,8 @@ export default function Home() {
 
       {project && (
         <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-          <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><SpecularFrame radius={14} /><span>关闭</span> ×</button>
           <div className="modal-scroll" ref={modalScrollRef}>
+            <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><SpecularFrame radius={14} /><span>关闭</span> ×</button>
             <header className="modal-head shell">
               <p className="eyebrow">PROJECT {project.key} / {project.category}</p><SplitText tag="h2" id="modal-title" text={project.title} rootMargin="0px" /><p className="modal-intro">{project.intro}</p>
               <div className="modal-meta"><div><span>项目职责</span><p>{project.role}</p></div>{project.achievement && <div><span>项目成就</span><p>{project.achievement}</p></div>}</div>
