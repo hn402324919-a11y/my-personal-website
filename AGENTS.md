@@ -119,3 +119,14 @@ npm test
 - 不使用破坏性 Git 命令清理用户改动。
 
 完成工作的标准是：用户要求已实现，现有作品内容与关键交互保持正常，没有新增 lint/build/test 回归，并清楚报告所有尚存的已知问题。
+
+
+## Deployment Rules
+
+- This project is deployed on Vercel.
+- The project uses vinext and Vite-based output. Do not switch the Vercel framework preset to Next.js unless the project structure changes.
+- Before pushing changes, always run:
+  npm run build
+- After code changes, commit and push to the main branch.
+- Vercel automatically deploys new commits from the main branch.
+- Do not manually change Vercel Build Command or Output Directory without checking the existing project configuration.
