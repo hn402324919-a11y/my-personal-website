@@ -1,0 +1,14 @@
+# Local build output and caches must never become Vercel build inputs.
+.vercel
+.vinext
+.next
+dist
+.wrangler
+node_modules
+coverage
+outputs
+
+# Local-only files.
+.env*
+*.log
+.DS_Store
