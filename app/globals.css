@@ -951,7 +951,7 @@
   overflow: hidden;
   pointer-events: none;
   color: #eef7f2;
-  background: #020504;
+  background: transparent;
 }
 
 .opening-panel {

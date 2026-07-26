@@ -238,22 +238,23 @@ export default function PortfolioMotion() {
             { yPercent: 101, duration: 1.14 },
             "<",
           )
+          .addLabel("heroEnter", ">-=0.08")
           .to(
             ".hero-portrait",
             { scale: 1, duration: 1.9, ease: "power3.out" },
-            "-=1.08",
+            "heroEnter-=0.5",
           )
           .fromTo(
             ".nav",
             { y: -42, autoAlpha: 0 },
             { y: 0, autoAlpha: 1, duration: 1.02, ease: "power3.out" },
-            "-=1.48",
+            "heroEnter",
           )
           .fromTo(
             ".hero-kickers",
             { y: -24, autoAlpha: 0 },
             { y: 0, autoAlpha: 1, duration: 0.88, ease: "power3.out" },
-            "-=1.12",
+            "heroEnter+=0.1",
           )
           .to(
             {},
@@ -263,19 +264,19 @@ export default function PortfolioMotion() {
                 window.dispatchEvent(new CustomEvent(heroTitleAnimationEvent));
               },
             },
-            "-=0.82",
+            "heroEnter+=0.32",
           )
           .fromTo(
             ".hero-index",
             { x: -42, autoAlpha: 0 },
             { x: 0, autoAlpha: 1, duration: 0.72, ease: "power3.out" },
-            "-=0.66",
+            "heroEnter+=0.92",
           )
           .fromTo(
             ".hero-disciplines",
             { x: 46, autoAlpha: 0 },
             { x: 0, autoAlpha: 1, duration: 0.82, ease: "power3.out" },
-            "<",
+            "heroEnter+=0.92",
           )
           .fromTo(
             [".hero-lower", ".hero-meta"],
@@ -287,7 +288,7 @@ export default function PortfolioMotion() {
               stagger: 0.12,
               ease: "power3.out",
             },
-            "-=0.48",
+            "heroEnter+=1.18",
           );
 
         const matchMedia = gsap.matchMedia();
