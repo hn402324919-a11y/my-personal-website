@@ -39,9 +39,41 @@ const projects: Project[] = [
       "主导整体设计方向与体验策略，搭建 Web & App 双端体验体系；完成 AScoin 钱包、理财、社交聊天等 10 项功能的全链路设计，推动 APP 用户增长至 300,000+，月交易额千万+。",
     tags: ["UX STRATEGY", "APP UI", "DESIGN SYSTEM"],
     cases: [
-      { label: "Heychic 品牌体验升级", src: "/work/project-heychic.jpg", alt: "Heychic 品牌体验升级设计全案" },
-      { label: "AScoin 区块链交易平台", src: "/work/project-3.jpg", alt: "AScoin 区块链交易平台设计全案" },
-      { label: "小 CK 小程序商城方案", src: "/work/project-4.jpg", alt: "CHARLES & KEITH 小程序商城设计全案" },
+      {
+        label: "Heychic 品牌体验升级",
+        src: [
+          "/work/project-heychic-part-01.webp",
+          "/work/project-heychic-part-02.webp",
+          "/work/project-heychic-part-03.webp",
+          "/work/project-heychic-part-04.webp",
+        ],
+        alt: "Heychic 品牌体验升级设计全案",
+      },
+      {
+        label: "AScoin 区块链交易平台",
+        src: [
+          "/work/project-3-part-01.webp",
+          "/work/project-3-part-02.webp",
+          "/work/project-3-part-03.webp",
+          "/work/project-3-part-04.webp",
+          "/work/project-3-part-05.webp",
+          "/work/project-3-part-06.webp",
+          "/work/project-3-part-07.webp",
+          "/work/project-3-part-08.webp",
+        ],
+        alt: "AScoin 区块链交易平台设计全案",
+      },
+      {
+        label: "小 CK 小程序商城方案",
+        src: [
+          "/work/project-4-part-01.webp",
+          "/work/project-4-part-02.webp",
+          "/work/project-4-part-03.webp",
+          "/work/project-4-part-04.webp",
+          "/work/project-4-part-05.webp",
+        ],
+        alt: "CHARLES & KEITH 小程序商城设计全案",
+      },
     ],
   },
   {
@@ -59,11 +91,20 @@ const projects: Project[] = [
       "独立完成 5+ 小程序营销活动；完成 50+ 个伊利、美素佳儿、贝亲日常运营活动海报支持。",
     tags: ["CAMPAIGN", "H5 GAME", "VISUAL DESIGN"],
     cases: [
-      { label: "伊利冬奥新春拉新促活", src: "/work/project-campaign-01-winter-olympics.jpg", alt: "伊利冬奥新春拉新促活设计" },
-      { label: "伊利植选扫码抽奖活动", src: "/work/project-campaign-02-zhixuan.jpg", alt: "伊利植选扫码抽奖活动设计" },
-      { label: "伊利拉新抽红包活动", src: "/work/project-campaign-03-red-packet.jpg", alt: "伊利拉新抽红包活动设计" },
-      { label: "伊利 QQ 星亲子打卡", src: "/work/project-campaign-04-qq-star.jpg", alt: "伊利 QQ 星亲子打卡设计" },
-      { label: "日常UI及运营海报", src: "/work/project-campaign-05-daily-ui.jpg", alt: "日常 UI 及运营海报合集" },
+      {
+        label: "伊利冬奥新春拉新促活",
+        src: [
+          "/work/project-campaign-01-winter-olympics-part-01.webp",
+          "/work/project-campaign-01-winter-olympics-part-02.webp",
+          "/work/project-campaign-01-winter-olympics-part-03.webp",
+          "/work/project-campaign-01-winter-olympics-part-04.webp",
+        ],
+        alt: "伊利冬奥新春拉新促活设计",
+      },
+      { label: "伊利植选扫码抽奖活动", src: "/work/project-campaign-02-zhixuan.webp", alt: "伊利植选扫码抽奖活动设计" },
+      { label: "伊利拉新抽红包活动", src: "/work/project-campaign-03-red-packet.webp", alt: "伊利拉新抽红包活动设计" },
+      { label: "伊利 QQ 星亲子打卡", src: "/work/project-campaign-04-qq-star.webp", alt: "伊利 QQ 星亲子打卡设计" },
+      { label: "日常UI及运营海报", src: "/work/project-campaign-05-daily-ui.webp", alt: "日常 UI 及运营海报合集" },
     ],
   },
   {
@@ -81,17 +122,26 @@ const projects: Project[] = [
       "ESD 官网获得《亚洲网页设计奖》；完成火星人集成灶官网设计；通过设计方案的产出，与比亚迪电子达成项目合作。",
     tags: ["B2B WEB", "INFORMATION ARCHITECTURE", "WEB UI"],
     cases: [
-      { label: "锐鲨企业官网", src: "/work/project-9.jpg", alt: "锐鲨企业官网设计" },
+      { label: "锐鲨企业官网", src: "/work/project-9.webp", alt: "锐鲨企业官网设计" },
       {
         label: "比亚迪电子官网设计方案",
         src: [
-          "/work/project-byd-electronics-01.jpg",
-          "/work/project-byd-electronics-02.jpg",
-          "/work/project-byd-electronics-03.jpg",
+          "/work/project-byd-electronics-01.webp",
+          "/work/project-byd-electronics-02.webp",
+          "/work/project-byd-electronics-03.webp",
         ],
         alt: "比亚迪电子官网设计方案",
       },
-      { label: "ESD 音响官网", src: "/work/project-esd-audio.jpg", alt: "ESD 音响官网设计全案" },
+      {
+        label: "ESD 音响官网",
+        src: [
+          "/work/project-esd-audio-part-01.webp",
+          "/work/project-esd-audio-part-02.webp",
+          "/work/project-esd-audio-part-03.webp",
+          "/work/project-esd-audio-part-04.webp",
+        ],
+        alt: "ESD 音响官网设计全案",
+      },
     ],
   },
 ];
@@ -193,6 +243,11 @@ function StrengthVisual({ type }: { type: string }) {
 const tools = ["Figma", "Sketch", "Photoshop", "Illustrator", "After Effects", "ChatGPT", "Codex", "Figma AI"];
 const backgroundColors = ["#03E885"];
 const getCaseSources = (src: string | string[]) => Array.isArray(src) ? src : [src];
+const isSlicedCaseSources = (src: string | string[]) => {
+  const sources = getCaseSources(src);
+
+  return sources.length > 1 && sources.every((source) => /-part-\d+\.webp$/.test(source));
+};
 
 export default function Home() {
   const [fixed, setFixed] = useState(false);
@@ -553,7 +608,7 @@ export default function Home() {
               <div className="case-stage" ref={caseStageRef}>
                 <div
                   key={`${project.id}-${activeCase}`}
-                  className="gallery"
+                  className={`gallery ${isSlicedCaseSources(project.cases[activeCase].src) ? "is-sliced" : ""}`}
                   id="active-project-case"
                   role="tabpanel"
                   aria-labelledby={`case-tab-${project.id}-${activeCase}`}

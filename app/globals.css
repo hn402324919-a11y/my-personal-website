@@ -805,6 +805,24 @@
   margin-inline:0;
   padding-inline:clamp(0px,1vw,16px)
 }
+.case-study-layout .gallery.is-sliced{
+  gap:0
+}
+.case-study-layout .gallery.is-sliced figure{
+  border-block-width:0;
+  border-radius:0
+}
+.case-study-layout .gallery.is-sliced figure:first-child{
+  border-top-width:1px;
+  border-radius:var(--radius-rect) var(--radius-rect) 0 0
+}
+.case-study-layout .gallery.is-sliced figure:last-child{
+  border-bottom-width:1px;
+  border-radius:0 0 var(--radius-rect) var(--radius-rect)
+}
+.case-study-layout .gallery.is-sliced figure:not(:last-child) figcaption{
+  display:none
+}
 .case-study-layout .gallery figure{animation:none}
 .case-study-layout[data-motion="on"] .gallery{
   animation:case-panel-in 280ms cubic-bezier(.22,1,.36,1) both

@@ -8,6 +8,31 @@
 
 ## 2026-07-27
 
+### 上线记录：项目详情长图 WebP 切片与无缝拼接
+
+- 提交：本次上线提交，push 后以 `origin/main` 最新提交为准。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 将项目详情页中超长作品图从原始 JPG 引用改为 WebP 资源；
+  - 对 Heychic、AScoin、小 CK、伊利冬奥新春、ESD 音响等超长作品图按原始 JPG 宽度重新切成纵向 WebP 分片；
+  - 更新 `app/page.tsx` 的案例 `src` 数据，让页面按原视觉顺序展示所有分片；
+  - 保留原始 JPG 文件，不删除备份素材；
+  - 新增仅识别 `*-part-xx.webp` 的切片样式标记，避免普通多图案例被误判为长图切片；
+  - 对切片案例移除相邻图片间距、中间底部边框和中间说明文字，仅保留最后一张底部圆角/边框/说明，使视觉上接近一整张完整长图；
+  - 未修改页面布局、组件逻辑、案例顺序或部署配置。
+- 验证结果：
+  - `npm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `npm test` 通过，2/2；
+  - `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - 直接执行 `node --test tests/rendered-html.test.mjs` 通过，2/2。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - 本地仍保留未被页面引用的旧版整张长图 WebP 作为废弃文件，未纳入本次上线提交。
+
 ### 上线记录：移动端 skip link 默认隐藏修复
 
 - 功能提交：`f461a1c fix: hide mobile skip link focus issue`。
