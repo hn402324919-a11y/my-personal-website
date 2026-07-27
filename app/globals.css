@@ -949,20 +949,34 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
   color: #eef7f2;
-  background: transparent;
+  background: #020504;
+  isolation: isolate;
+  --opening-left: clamp(32px, 16.7vw, 308px);
+  --opening-right: clamp(24px, 9.8vw, 180px);
+}
+
+.opening-sequence::before {
+  content: "";
+  position: absolute;
+  inset: -30vh -18vw;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 96vw 74vh at 44% 53%, rgba(3, 232, 133, 0.14), rgba(3, 232, 133, 0.055) 32%, rgba(3, 232, 133, 0.018) 58%, transparent 78%),
+    radial-gradient(ellipse 54vw 42vh at 22% 58%, rgba(3, 232, 133, 0.1), rgba(3, 232, 133, 0.032) 48%, transparent 76%);
+  filter: blur(32px);
+  opacity: 0.9;
 }
 
 .opening-panel {
   position: absolute;
   left: 0;
+  z-index: 0;
   width: 100%;
   height: 50.2%;
-  background:
-    radial-gradient(circle at 50% 100%, rgba(3, 232, 133, 0.08), transparent 45%),
-    #020504;
+  background: #020504;
 }
 
 .opening-panel--top {
@@ -977,22 +991,26 @@
 .opening-mark {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: var(--opening-left);
   z-index: 2;
   display: grid;
-  width: min(78vw, 680px);
-  transform: translate(-50%, -50%);
+  justify-items: start;
+  width: calc(100vw - var(--opening-left) - var(--opening-right));
+  transform: translateY(-50%);
   font-family: var(--font-geist-mono), monospace;
   letter-spacing: 0.16em;
+  text-align: left;
   text-transform: uppercase;
 }
 
 .opening-mark__line {
+  justify-self: start;
   display: block;
   overflow: hidden;
   font-size: clamp(24px, 4.5vw, 64px);
   font-weight: 700;
   line-height: 0.96;
+  text-align: left;
 }
 
 .opening-mark__line--accent {
