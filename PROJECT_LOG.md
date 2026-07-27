@@ -8,6 +8,30 @@
 
 ## 2026-07-27
 
+### 上线记录：项目详情图片渐进挂载优化
+
+- 功能提交：`842a0be fix: progressively load project detail images`。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 新增项目详情 `CaseGallery` 渐进图片渲染逻辑；
+  - 切片/多图案例首次打开时只挂载前 2 张真实 `<img>`；
+  - 后续切片先保留等比例占位，进入弹窗滚动视口附近后再通过 IntersectionObserver 挂载真实图片；
+  - 为详情图片补充真实 `width`、`height`，让占位保持原图片比例，减少滚动高度跳动；
+  - 保留原 `gallery is-sliced` 结构和视觉规则，不改变切片顺序、gap、边框、圆角或无缝拼接效果；
+  - 未修改作品内容、图片资源、案例顺序、Vercel 配置或部署配置。
+- 验证结果：
+  - `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `pnpm test` 通过，2/2，构建阶段仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - 本地浏览器验证：Heychic 4 张切片初始只挂载前 2 张 `<img>`，后 2 张为占位；弹窗滚动后后续切片按预期挂载；
+  - 本地浏览器验证：切片 gallery 计算样式保持 `rowGap: 0px`，中间切片无边框，最后一张保留底部边框和圆角。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - 本地仍有 5 个未跟踪旧版整张 WebP 文件，未纳入本次上线提交。
+
 ### 上线记录：项目详情长图 WebP 切片与无缝拼接
 
 - 功能提交：`c598b22 fix: optimize project detail images`。

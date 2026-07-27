@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type RefObject } from "react";
 import SplitText from "./components/SplitText";
 import TiltedCard from "./components/TiltedCard";
 import PortfolioMotion from "./components/PortfolioMotion";
@@ -243,11 +243,133 @@ function StrengthVisual({ type }: { type: string }) {
 const tools = ["Figma", "Sketch", "Photoshop", "Illustrator", "After Effects", "ChatGPT", "Codex", "Figma AI"];
 const backgroundColors = ["#03E885"];
 const getCaseSources = (src: string | string[]) => Array.isArray(src) ? src : [src];
+const initialCaseImageCount = 2;
+const caseImageDimensions: Record<string, { width: number; height: number }> = {
+  "/work/project-heychic-part-01.webp": { width: 2560, height: 3843 },
+  "/work/project-heychic-part-02.webp": { width: 2560, height: 3843 },
+  "/work/project-heychic-part-03.webp": { width: 2560, height: 3843 },
+  "/work/project-heychic-part-04.webp": { width: 2560, height: 3843 },
+  "/work/project-3-part-01.webp": { width: 1600, height: 4868 },
+  "/work/project-3-part-02.webp": { width: 1600, height: 4869 },
+  "/work/project-3-part-03.webp": { width: 1600, height: 4868 },
+  "/work/project-3-part-04.webp": { width: 1600, height: 4869 },
+  "/work/project-3-part-05.webp": { width: 1600, height: 4868 },
+  "/work/project-3-part-06.webp": { width: 1600, height: 4868 },
+  "/work/project-3-part-07.webp": { width: 1600, height: 4869 },
+  "/work/project-3-part-08.webp": { width: 1600, height: 4868 },
+  "/work/project-4-part-01.webp": { width: 1600, height: 4179 },
+  "/work/project-4-part-02.webp": { width: 1600, height: 4178 },
+  "/work/project-4-part-03.webp": { width: 1600, height: 4179 },
+  "/work/project-4-part-04.webp": { width: 1600, height: 4178 },
+  "/work/project-4-part-05.webp": { width: 1600, height: 4179 },
+  "/work/project-campaign-01-winter-olympics-part-01.webp": { width: 1600, height: 4508 },
+  "/work/project-campaign-01-winter-olympics-part-02.webp": { width: 1600, height: 4508 },
+  "/work/project-campaign-01-winter-olympics-part-03.webp": { width: 1600, height: 4508 },
+  "/work/project-campaign-01-winter-olympics-part-04.webp": { width: 1600, height: 4508 },
+  "/work/project-byd-electronics-01.webp": { width: 1920, height: 1820 },
+  "/work/project-byd-electronics-02.webp": { width: 1920, height: 3109 },
+  "/work/project-byd-electronics-03.webp": { width: 1920, height: 5640 },
+  "/work/project-esd-audio-part-01.webp": { width: 1400, height: 4780 },
+  "/work/project-esd-audio-part-02.webp": { width: 1400, height: 4780 },
+  "/work/project-esd-audio-part-03.webp": { width: 1400, height: 4780 },
+  "/work/project-esd-audio-part-04.webp": { width: 1400, height: 4780 },
+};
 const isSlicedCaseSources = (src: string | string[]) => {
   const sources = getCaseSources(src);
 
   return sources.length > 1 && sources.every((source) => /-part-\d+\.webp$/.test(source));
 };
+const getInitialCaseImageIndexes = (count: number) => new Set(
+  Array.from({ length: Math.min(count, initialCaseImageCount) }, (_, index) => index),
+);
+
+function CaseGallery({ project, activeCase, scrollRootRef }: { project: Project; activeCase: number; scrollRootRef: RefObject<HTMLDivElement | null> }) {
+  const caseItem = project.cases[activeCase];
+  const sources = getCaseSources(caseItem.src);
+  const isProgressive = sources.length > initialCaseImageCount;
+  const [loadedImageIndexes, setLoadedImageIndexes] = useState(() => getInitialCaseImageIndexes(sources.length));
+  const placeholderRefs = useRef<Array<HTMLElement | null>>([]);
+
+  useEffect(() => {
+    if (!isProgressive) return;
+    if (!("IntersectionObserver" in window)) {
+      const fallback = window.setTimeout(() => {
+        setLoadedImageIndexes(new Set(sources.map((_, index) => index)));
+      }, 0);
+
+      return () => window.clearTimeout(fallback);
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setLoadedImageIndexes((current) => {
+          let next: Set<number> | null = null;
+
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const imageIndex = Number((entry.target as HTMLElement).dataset.caseImageIndex);
+            if (!Number.isInteger(imageIndex) || current.has(imageIndex)) return;
+
+            next ??= new Set(current);
+            next.add(imageIndex);
+            observer.unobserve(entry.target);
+          });
+
+          return next ?? current;
+        });
+      },
+      { root: scrollRootRef.current, rootMargin: "900px 0px", threshold: 0.01 },
+    );
+
+    placeholderRefs.current.forEach((placeholder, imageIndex) => {
+      if (placeholder && !loadedImageIndexes.has(imageIndex)) observer.observe(placeholder);
+    });
+
+    return () => observer.disconnect();
+  }, [isProgressive, loadedImageIndexes, scrollRootRef, sources]);
+
+  return (
+    <div
+      className={`gallery ${isSlicedCaseSources(caseItem.src) ? "is-sliced" : ""}`}
+      id="active-project-case"
+      role="tabpanel"
+      aria-labelledby={`case-tab-${project.id}-${activeCase}`}
+    >
+      {sources.map((src, imageIndex) => {
+        const isLoaded = loadedImageIndexes.has(imageIndex) || !isProgressive;
+        const dimensions = caseImageDimensions[src];
+
+        return (
+          <figure key={`${caseItem.label}-${src}`}>
+            {isLoaded ? (
+              <img
+                src={src}
+                alt={`${caseItem.alt}${sources.length > 1 ? ` ${imageIndex + 1}` : ""}`}
+                loading={imageIndex < initialCaseImageCount ? "eager" : "lazy"}
+                width={dimensions?.width}
+                height={dimensions?.height}
+              />
+            ) : (
+              <span
+                className="case-image-placeholder"
+                data-case-image-index={imageIndex}
+                ref={(node) => {
+                  placeholderRefs.current[imageIndex] = node;
+                }}
+                style={{
+                  aspectRatio: dimensions ? `${dimensions.width} / ${dimensions.height}` : "4 / 3",
+                }}
+              />
+            )}
+            <figcaption>
+              {caseItem.label}{sources.length > 1 ? ` · ${String(imageIndex + 1).padStart(2, "0")}` : ""} / {caseItem.alt}
+            </figcaption>
+          </figure>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function Home() {
   const [fixed, setFixed] = useState(false);
@@ -606,26 +728,12 @@ export default function Home() {
                 />
               </div>
               <div className="case-stage" ref={caseStageRef}>
-                <div
+                <CaseGallery
                   key={`${project.id}-${activeCase}`}
-                  className={`gallery ${isSlicedCaseSources(project.cases[activeCase].src) ? "is-sliced" : ""}`}
-                  id="active-project-case"
-                  role="tabpanel"
-                  aria-labelledby={`case-tab-${project.id}-${activeCase}`}
-                >
-                  {getCaseSources(project.cases[activeCase].src).map((src, imageIndex, sources) => (
-                    <figure key={`${project.cases[activeCase].label}-${src}`}>
-                      <img
-                        src={src}
-                        alt={`${project.cases[activeCase].alt}${sources.length > 1 ? ` ${imageIndex + 1}` : ""}`}
-                        loading="lazy"
-                      />
-                      <figcaption>
-                        {project.cases[activeCase].label}{sources.length > 1 ? ` · ${String(imageIndex + 1).padStart(2, "0")}` : ""} / {project.cases[activeCase].alt}
-                      </figcaption>
-                    </figure>
-                  ))}
-                </div>
+                  project={project}
+                  activeCase={activeCase}
+                  scrollRootRef={modalScrollRef}
+                />
               </div>
             </div>
             <div className="modal-end shell"><span>END OF PROJECT</span><button onClick={() => setProject(null)}>返回精选作品 ↑</button></div>

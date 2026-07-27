@@ -95,6 +95,34 @@
 /* Selected work: borderless editorial cards with project-authentic device compositions */
 .work .project-card,.work .work-manifesto,.work .work-orbit{border:0}
 .work .specular-frame{display:none}
+.work .project-card{
+  isolation:isolate;
+  box-shadow:
+    0 20px 64px rgba(0,0,0,.38),
+    0 0 0 1px rgba(0,255,136,.035),
+    0 0 24px rgba(0,255,153,.12),
+    0 0 56px rgba(0,255,136,.08)
+}
+.work .project-card:before{
+  position:absolute;
+  z-index:1;
+  inset:0;
+  border-radius:inherit;
+  background:
+    radial-gradient(ellipse at 50% 100%,rgba(0,255,153,.16),transparent 56%),
+    radial-gradient(ellipse at 0 50%,rgba(0,255,136,.08),transparent 45%),
+    radial-gradient(ellipse at 100% 50%,rgba(0,255,153,.08),transparent 45%);
+  content:"";
+  opacity:.72;
+  pointer-events:none
+}
+.work .project-card:hover{
+  box-shadow:
+    0 24px 70px rgba(0,0,0,.36),
+    0 0 0 1px rgba(0,255,136,.035),
+    0 0 24px rgba(0,255,153,.12),
+    0 0 56px rgba(0,255,136,.08)
+}
 .project-composite{position:absolute;inset:0;overflow:hidden;background:#070a09;transition:filter .7s ease,transform .7s ease}
 .project-card:hover .project-composite{filter:saturate(1.08) brightness(1.04);transform:scale(1.015)}
 .experience-composite{background:radial-gradient(circle at 50% 48%,rgba(3,232,133,.22),transparent 34%),radial-gradient(circle at 80% 76%,rgba(3,232,133,.09),transparent 27%),linear-gradient(145deg,#121713,#050706 70%)}
@@ -804,6 +832,11 @@
   max-width:980px;
   margin-inline:0;
   padding-inline:clamp(0px,1vw,16px)
+}
+.case-image-placeholder{
+  display:block;
+  width:100%;
+  background:#101412
 }
 .case-study-layout .gallery.is-sliced{
   gap:0
