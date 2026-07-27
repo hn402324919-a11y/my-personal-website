@@ -8,6 +8,29 @@
 
 ## 2026-07-27
 
+### 上线记录：项目卡片分类标签桌面端左上对齐
+
+- 提交：`8f268c4 fix: move project tags left on desktop`。
+- 分支：`main`。
+- 远端：已 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 定位首页项目模块中的项目卡片分类标签 `.card-top`；
+  - 在桌面断点 `min-width:761px` 下将项目卡片分类文字从右上移动到左上；
+  - 保留原有 `top:24px`、左右边距、字体、字号、颜色、透明度、背景样式、图片和 hover / reveal 动画；
+  - 移动端继续沿用既有右上角位置。
+- 验证结果：
+  - `npm run lint`、`npm run build`、`npm test` 按字面执行失败：当前环境无 `npm` 命令；
+  - 使用 bundled runtime 执行 `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `node --test tests/rendered-html.test.mjs` 通过，2/2；
+  - 本地浏览器桌面端 `1440px` 量测：三个项目标签均为 `justify-content:flex-start`，距卡片左侧 `24px`、顶部 `24px`；
+  - 本地浏览器移动端 `390px` 量测：三个项目标签仍为 `justify-content:flex-end`，距卡片右侧 `24px`、顶部 `24px`。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - 当前工作区另有未暂存的 `app/globals.css` opening sequence 差异，未纳入本次提交。
+
 ### 状态复核：pnpm lint/build 当前真实通过
 
 - 提交：本次为文档状态复核，尚未提交。
