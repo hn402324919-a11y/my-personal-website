@@ -8,6 +8,28 @@
 
 ## 2026-07-27
 
+### 上线记录：营销项目卡片媒体区域下方留白优化
+
+- 功能提交：本次上线提交，push 后以 `origin/main` 最新提交为准。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 仅修改 `app/globals.css` 中「营销 / 运营」项目卡片封面媒体区域的最终生效定位规则；
+  - 将桌面端 `.campaign-phone` 与 `.campaign-tile` 媒体组从 `top:34%` 下移到 `top:41%`；
+  - 将移动端对应媒体组从 `top:33%` 下移到 `top:39%`；
+  - 保持三张图片的宽高、比例、资源路径、排列关系和标题文案不变；
+  - 未裁切或替换作品图片，未修改其他项目卡片、项目详情逻辑、Vercel 配置或部署配置。
+- 验证结果：
+  - `npm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `npm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `npm test` 通过，2/2，构建阶段仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - 本地 dev server 可启动到 `http://localhost:3003/`；受本机 headless Chrome 启动权限限制，未完成 Playwright 截图验证。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`。
+
 ### 上线记录：桌面端项目卡片比例与营销封面完整展示优化
 
 - 功能提交：`f40ceff fix: compact desktop project cards`。

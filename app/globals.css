@@ -743,7 +743,7 @@
 /* Campaign cover correction: use three independent, uncropped artwork slots. */
 .campaign-phone,
 .campaign-tile{
-  top:34%;
+  top:41%;
   width:22%;
   height:38%;
   aspect-ratio:auto;
@@ -801,10 +801,10 @@
 }
 
 @media(max-width:760px){
-  .campaign-phone{top:33%;width:31%;height:50%;border-width:4px;border-radius:24px}
+  .campaign-phone{top:39%;width:31%;height:50%;border-width:4px;border-radius:24px}
   .campaign-phone:before{top:6px;height:9px}
   .campaign-screen{inset:3px;border-radius:19px}
-  .campaign-tile{top:33%;width:23%;height:34%}
+  .campaign-tile{top:39%;width:23%;height:34%}
   .campaign-composite .tile-left{left:7%}
   .campaign-composite .tile-right{right:7%}
 }
