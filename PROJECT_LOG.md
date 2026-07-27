@@ -15,16 +15,18 @@
 - 远端：将 push 到 `origin/main`。
 - 上线方式：Vercel 监听 `main` 自动部署。
 - 修改内容：
-  - 仅修改 `app/globals.css` 中「营销 / 运营」项目卡片封面媒体区域的最终生效定位规则；
-  - 将桌面端 `.campaign-phone` 与 `.campaign-tile` 媒体组从 `top:34%` 下移到 `top:41%`；
-  - 将移动端对应媒体组从 `top:33%` 下移到 `top:39%`；
-  - 保持三张图片的宽高、比例、资源路径、排列关系和标题文案不变；
+  - 仅修改 `app/globals.css` 中项目展示区移动端样式；
+  - 将移动端「体验 / 界面」与「营销 / 运营」项目卡片高度从固定 `520px` 收紧为 `clamp(410px,112vw,440px)`；
+  - 将移动端「B 端 / 网页」项目卡片高度从固定 `320px` 收紧为 `clamp(280px,78vw,310px)`；
+  - 收紧移动端项目卡片分类标签与标题文案的边距和标题/副标题间距；
+  - 仅针对移动端「营销 / 运营」封面媒体组，将 `.campaign-phone` 与 `.campaign-tile` 最终生效位置调整到 `top:42%`，让三张图结束后更自然衔接标题内容；
+  - 保持三张图片的宽高比例、资源路径、排列关系、`background-size` 和标题文案不变；
   - 未裁切或替换作品图片，未修改其他项目卡片、项目详情逻辑、Vercel 配置或部署配置。
 - 验证结果：
   - `npm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
   - `npm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
   - `npm test` 通过，2/2，构建阶段仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
-  - 本地 dev server 可启动到 `http://localhost:3003/`；受本机 headless Chrome 启动权限限制，未完成 Playwright 截图验证。
+  - 曾尝试本地 headless Chrome 移动端截图验证，但现有 `SpecularFrame` / WebGL 在无 WebGL 环境下会触发运行时错误，未扩大本次 CSS 修复范围。
 - 已知遗留问题：
   - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
   - 客户端产物仍有超过 500 kB 的 chunk size warning；
