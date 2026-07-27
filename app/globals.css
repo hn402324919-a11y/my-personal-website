@@ -1042,13 +1042,26 @@
   backface-visibility: hidden;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .opening-mark {
     width: calc(100vw - 56px);
   }
 
   .opening-mark__line {
     font-size: clamp(28px, 11vw, 48px);
+  }
+
+  .opening-mark__line--accent {
+    margin-top: 22px;
+    color: #03e885;
+    font-size: clamp(17px, 5.4vw, 25px);
+    letter-spacing: 0.075em;
+    line-height: 1.22;
+    white-space: nowrap;
+  }
+
+  .opening-rail {
+    margin-top: 46px;
   }
 }
 

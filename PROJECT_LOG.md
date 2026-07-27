@@ -8,6 +8,31 @@
 
 ## 2026-07-27
 
+### 上线记录：移动端开屏文字排版优化
+
+- 提交：本次上线提交，push 后以 `origin/main` 最新提交为准。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 仅修改 `app/globals.css` 中 opening sequence 的移动端断点样式；
+  - 将开场断点从 `max-width: 767px` 对齐为 `max-width: 768px`；
+  - 保持 `CHENYNII` 字号和字重不变，只通过副标题上边距增强与 `PORTFOLIO` 的呼吸感；
+  - 收紧 `PORTFOLIO · 2017—2026` 的移动端字距，调整字号层级，并强制 `white-space: nowrap`；
+  - 增加年份行与底部绿色横线之间的距离；
+  - 未修改桌面端 opening sequence、Hero 内容、动画时间线、作品内容或部署配置。
+- 验证结果：
+  - 本地移动端预览 `390px × 844px`：`PORTFOLIO · 2017—2026` 保持单行且不溢出；
+  - 本地窄屏预览 `320px × 700px`：`PORTFOLIO · 2017—2026` 保持单行且不溢出；
+  - `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `npm test` 按字面执行失败：当前环境无 `npm` 命令；
+  - 直接执行 `node --test tests/rendered-html.test.mjs` 通过，2/2。
+- 已知遗留问题：
+  - 当前环境无 `npm` 命令，项目真实验证继续使用 bundled Node.js 与 `pnpm`；
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning。
+
 ### 上线记录：恢复满意版开屏动画并同步移动端项目标签位置
 
 - 线上状态：Vercel Production 已回滚到 `1612cd8`，该版本的首页开屏动画为当前满意基准。
