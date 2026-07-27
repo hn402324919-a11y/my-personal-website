@@ -10,7 +10,7 @@
 
 ### 上线记录：营销项目卡片媒体区域下方留白优化
 
-- 功能提交：本次上线提交，push 后以 `origin/main` 最新提交为准。
+- 功能提交：`818eba6 fix: compact mobile project cards`。
 - 分支：`main`。
 - 远端：将 push 到 `origin/main`。
 - 上线方式：Vercel 监听 `main` 自动部署。
