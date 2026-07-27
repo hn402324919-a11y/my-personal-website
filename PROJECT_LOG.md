@@ -10,7 +10,7 @@
 
 ### 上线记录：项目详情图片渐进挂载优化
 
-- 功能提交：`842a0be fix: progressively load project detail images`。
+- 功能提交：`1cbd94e fix: progressively load project detail images`。
 - 分支：`main`。
 - 远端：将 push 到 `origin/main`。
 - 上线方式：Vercel 监听 `main` 自动部署。
