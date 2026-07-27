@@ -8,6 +8,29 @@
 
 ## 2026-07-27
 
+### 上线记录：Loading 进度条与文字基准线回归修复
+
+- 提交：`8bd1e43 fix: restore loading rail alignment`。
+- 分支：`main`。
+- 远端：已 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 修复 `.opening-mark` 使用 grid 左对齐后导致 `.opening-rail` 不再 stretch、进度条宽度塌陷的问题；
+  - 将 loading 文字组改为 `flex` 纵向布局，容器自身维持左侧锚点，主标题和副标题共享同一个左侧基准线；
+  - 为 `.opening-rail` 明确设置 `align-self: stretch`、`width: 100%` 和 `min-width: 100%`，恢复原位置、长度和 GSAP scaleX 动画承载面；
+  - 保留已经优化过的绿色 glow 伪元素、`overflow: visible` 和 z-index 层级，不恢复光晕裁切问题；
+  - 未修改 GSAP 动画时间、触发时机和 loading 退出逻辑。
+- 验证结果：
+  - 使用 bundled runtime 执行 `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `pnpm test` 按项目脚本失败：脚本内部调用 `npm run build`，当前环境无 `npm` 命令；
+  - 直接执行 `node --test tests/rendered-html.test.mjs` 通过，2/2；
+  - 本地 dev server `http://localhost:3001/` 已热更新 CSS。
+- 已知遗留问题：
+  - 当前环境无 `npm` 命令，`pnpm test` 脚本仍不能按字面执行；
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning。
+
 ### 上线记录：Loading 光晕与文字左对齐优化
 
 - 提交：`90ee88c fix: refine loading glow alignment`。
