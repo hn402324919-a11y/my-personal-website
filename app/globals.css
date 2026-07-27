@@ -332,7 +332,7 @@
 }
 
 @media(max-width:760px){
-  .laptop-front{top:20%;left:-5%;width:102%}
+  .project-grid .experience .laptop-front{top:20%;left:8%;width:84%}
   .experience-phone-empty{top:7%;right:-2%;width:29%;height:35%;border-width:4px;border-radius:20px}
   .experience-phone-empty span{border-radius:15px}
   .campaign-tile{top:34%;width:30%;height:36%}
