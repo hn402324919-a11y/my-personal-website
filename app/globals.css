@@ -36,7 +36,7 @@
 
 /* Refined project and capability presentation */
 .card-top{justify-content:flex-end}
-@media(min-width:761px){.work .project-card .card-top{justify-content:flex-start}}
+.work .project-card .card-top{right:auto;justify-content:flex-start}
 .work-manifesto h3{font-weight:400}
 .work-orbit{justify-content:center}
 .orbit-mark{display:block;flex:0 0 172px;width:172px;height:172px;padding:0}
@@ -949,34 +949,20 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  overflow: visible;
+  overflow: hidden;
   pointer-events: none;
   color: #eef7f2;
-  background: #020504;
-  isolation: isolate;
-  --opening-left: clamp(32px, 16.7vw, 308px);
-  --opening-right: clamp(24px, 9.8vw, 180px);
-}
-
-.opening-sequence::before {
-  content: "";
-  position: absolute;
-  inset: -30vh -18vw;
-  z-index: 1;
-  background:
-    radial-gradient(ellipse 96vw 74vh at 44% 53%, rgba(3, 232, 133, 0.14), rgba(3, 232, 133, 0.055) 32%, rgba(3, 232, 133, 0.018) 58%, transparent 78%),
-    radial-gradient(ellipse 54vw 42vh at 22% 58%, rgba(3, 232, 133, 0.1), rgba(3, 232, 133, 0.032) 48%, transparent 76%);
-  filter: blur(32px);
-  opacity: 0.9;
+  background: transparent;
 }
 
 .opening-panel {
   position: absolute;
   left: 0;
-  z-index: 0;
   width: 100%;
   height: 50.2%;
-  background: #020504;
+  background:
+    radial-gradient(circle at 50% 100%, rgba(3, 232, 133, 0.08), transparent 45%),
+    #020504;
 }
 
 .opening-panel--top {
@@ -991,28 +977,22 @@
 .opening-mark {
   position: absolute;
   top: 50%;
-  left: var(--opening-left);
+  left: 50%;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: calc(100vw - var(--opening-left) - var(--opening-right));
-  transform: translateY(-50%);
+  display: grid;
+  width: min(78vw, 680px);
+  transform: translate(-50%, -50%);
   font-family: var(--font-geist-mono), monospace;
   letter-spacing: 0.16em;
-  text-align: left;
   text-transform: uppercase;
 }
 
 .opening-mark__line {
   display: block;
-  flex: 0 0 auto;
-  max-width: 100%;
   overflow: hidden;
   font-size: clamp(24px, 4.5vw, 64px);
   font-weight: 700;
   line-height: 0.96;
-  text-align: left;
 }
 
 .opening-mark__line--accent {
@@ -1026,9 +1006,6 @@
 
 .opening-rail {
   display: block;
-  align-self: stretch;
-  width: 100%;
-  min-width: 100%;
   height: 1px;
   margin-top: 30px;
   overflow: hidden;
