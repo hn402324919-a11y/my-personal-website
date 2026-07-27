@@ -8,6 +8,31 @@
 
 ## 2026-07-27
 
+### 上线记录：体验项目卡片移动端 Mockup 留白优化
+
+- 功能提交：`f12bb2b fix: tune mobile experience card mockup`。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 仅修改 `app/globals.css` 中项目展示区移动端样式；
+  - 将移动端「体验 / 界面」项目卡片主笔记本 Mockup 的最终生效宽度从超过卡片的 `102%` 收敛为 `84%`；
+  - 将主笔记本从负向外扩 `left:-5%` 调整为 `left:8%`，让 Mockup 居中并恢复四周绿色背景留白；
+  - 使用 `.project-grid .experience .laptop-front` 限定选择器，确保只影响移动端「体验 / 界面」卡片；
+  - 保持图片完整显示，不裁切内容；
+  - 未修改桌面端样式、其他项目卡片、作品图片、项目详情逻辑、Vercel 配置或部署配置。
+- 验证结果：
+  - `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `pnpm test` 通过，2/2，构建阶段仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `npm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - 曾尝试本地 headless Chrome 移动端截图验证，但现有 `SpecularFrame` / WebGL 在无 WebGL 环境下会触发运行时错误，未扩大本次 CSS 修复范围。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`；
+  - 本地 headless Chrome 无 WebGL 环境下仍可能触发 `SpecularFrame` runtime error。
+
 ### 上线记录：营销项目卡片媒体区域下方留白优化
 
 - 功能提交：`818eba6 fix: compact mobile project cards`。
