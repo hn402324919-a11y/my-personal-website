@@ -8,6 +8,31 @@
 
 ## 2026-07-27
 
+### 上线记录：恢复满意版开屏动画并同步移动端项目标签位置
+
+- 线上状态：Vercel Production 已回滚到 `1612cd8`，该版本的首页开屏动画为当前满意基准。
+- 提交：`67c7684 baseline: restore preferred opening animation`。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 将 `app/globals.css` 中 `.opening-sequence`、`.opening-panel`、`.opening-mark`、`.opening-mark__line`、`.opening-rail` 相关样式恢复到 `1612cd8` 的 opening animation 结构；
+  - 删除后续 loading glow / 左侧锚定优化引入的 `.opening-sequence::before` 光晕层；
+  - 保留项目卡片 `.card-top` 左上角定位修复，并将 `.work .project-card .card-top` 的 `right:auto` 逻辑应用到移动端；
+  - 首页项目模块分类标签 `体验 / 界面`、`营销 / 运营`、`B 端 / 网页` 在 PC 与移动端均锚定到卡片左上角。
+- 验证结果：
+  - 用户确认当前首页开屏动画已经恢复到满意版本；
+  - 本地创建稳定基准 commit `67c7684`；
+  - `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `pnpm test` 按项目脚本失败：脚本内部调用 `npm run build`，当前环境无 `npm` 命令；
+  - 直接执行 `node --test tests/rendered-html.test.mjs` 通过，2/2；
+  - 本地 dev server 已启动到 `http://localhost:3000/` 供上线前预览。
+- 已知遗留问题：
+  - 当前环境无 `npm` 命令，`pnpm test` 脚本仍不能按字面执行；
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning。
+
 ### 上线记录：按预览注释精确锚定项目分类标签
 
 - 提交：`7831472 fix: anchor project tags left on desktop`。
