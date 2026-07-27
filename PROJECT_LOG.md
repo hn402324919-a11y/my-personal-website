@@ -10,9 +10,9 @@
 
 ### 上线记录：项目详情长图 WebP 切片与无缝拼接
 
-- 提交：本次上线提交，push 后以 `origin/main` 最新提交为准。
+- 功能提交：`c598b22 fix: optimize project detail images`。
 - 分支：`main`。
-- 远端：将 push 到 `origin/main`。
+- 远端：已 push 到 `origin/main`。
 - 上线方式：Vercel 监听 `main` 自动部署。
 - 修改内容：
   - 将项目详情页中超长作品图从原始 JPG 引用改为 WebP 资源；
