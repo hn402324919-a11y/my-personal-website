@@ -36,6 +36,7 @@
 
 /* Refined project and capability presentation */
 .card-top{justify-content:flex-end}
+@media(min-width:761px){.work .project-card .card-top{justify-content:flex-start}}
 .work-manifesto h3{font-weight:400}
 .work-orbit{justify-content:center}
 .orbit-mark{display:block;flex:0 0 172px;width:172px;height:172px;padding:0}
