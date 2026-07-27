@@ -8,6 +8,33 @@
 
 ## 2026-07-27
 
+### 上线记录：桌面端项目卡片比例与营销封面完整展示优化
+
+- 功能提交：`f40ceff fix: compact desktop project cards`。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 仅修改 `app/globals.css` 中项目展示区相关桌面端样式；
+  - 在 `min-width:1101px` 下将 Project Cards 调整为更紧凑的 4 列非等高网格；
+  - 缩短项目展示区整体纵向高度，保留大卡偏横向、小卡接近方形或轻微横向的 Masonry / Grid 节奏；
+  - 保持移动端既有 flex 布局和卡片高度规则不变；
+  - 调整「营销 / 运营」封面内部三张图的比例容器与位置；
+  - 主手机 mockup 使用真实 `1074/2326` 比例与 `background-size: contain`，避免作品截图上下裁切；
+  - 左右辅助截图使用各自真实比例容器与 `contain` 完整展示；
+  - 将营销封面三张图整体下移，收紧图片组与底部标题文案之间的空白；
+  - 未修改作品内容、图片资源、项目详情逻辑、Vercel 配置或部署配置。
+- 验证结果：
+  - 本地预览 `http://localhost:3001/` 已启动并由用户确认项目卡片整体高度比例满意；
+  - `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `pnpm test` 通过，2/2，构建阶段仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `npm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`。
+
 ### 上线记录：PROJECT 2 QQ 星亲子打卡图片替换
 
 - 功能提交：`ff16e31 fix: replace qq star campaign detail image`。
