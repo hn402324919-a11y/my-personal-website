@@ -8,6 +8,28 @@
 
 ## 2026-07-27
 
+### 上线记录：PROJECT 2 QQ 星亲子打卡图片替换
+
+- 功能提交：`ff16e31 fix: replace qq star campaign detail image`。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 定位 PROJECT 2「营销 / 运营」中「伊利 QQ 星亲子打卡」案例的图片引用；
+  - 将错误的单张 `/work/project-campaign-04-qq-star.webp` 替换为 4 张新的纵向 WebP 分片；
+  - 新增 `/work/project-campaign-04-qq-star-part-01.webp` 至 `/work/project-campaign-04-qq-star-part-04.webp`；
+  - 为 4 张新切片补充真实 `width`、`height`；
+  - 保留 `CaseGallery`、IntersectionObserver 渐进挂载逻辑和既有 `gallery is-sliced` 无缝拼接规则；
+  - 未修改其他项目内容、其他页面样式、案例顺序、Vercel 配置或部署配置。
+- 验证结果：
+  - `npm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `npm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `npm test` 通过，2/2，构建阶段仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - 静态校验：旧单图不再被页面引用，新切片数组满足 `isSliced: true`，详情页初始仍只挂载前 2 张图片，后续切片保持渐进加载。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning。
+
 ### 上线记录：项目详情图片渐进挂载优化
 
 - 功能提交：`1cbd94e fix: progressively load project detail images`。
