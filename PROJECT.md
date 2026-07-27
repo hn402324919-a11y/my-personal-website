@@ -1,6 +1,6 @@
 # CHENYNII Portfolio 项目说明
 
-> 本文依据 2026-07-26 的当前代码、依赖配置以及本地构建检查整理。
+> 本文依据 2026-07-27 的当前代码、依赖配置以及本地验证结果整理。
 
 ## 1. 网站用途
 
@@ -29,7 +29,7 @@
 ### 样式与视觉
 
 - Tailwind CSS `4.2` 与 PostCSS；当前页面主体仍以 `app/globals.css` 中的手写 CSS 为主
-- `next/font`：加载 Geist 与 Geist Mono
+- 当前字体使用 CSS 系统字体栈，不依赖外部字体加载
 - GSAP、ScrollTrigger、SplitText：首屏、滚动进入、文字拆分和视差动画
 - Motion：项目卡片倾斜和弹簧交互
 - OGL/WebGL：流动背景、卡片高光边框
@@ -46,7 +46,8 @@
 
 - ESLint 9、Next.js Core Web Vitals 和 TypeScript 规则
 - Node.js 内置测试运行器
-- npm/pnpm 脚本均由 `package.json` 定义；仓库目前同时存在 `package-lock.json` 和 `pnpm-lock.yaml`
+- 项目实际验证使用 `pnpm`；当前运行环境没有可用的 `npm` 命令
+- 仓库目前同时存在 `package-lock.json` 和 `pnpm-lock.yaml`，依赖变更前需明确包管理器
 
 ## 3. 已完成的功能
 
@@ -83,25 +84,30 @@
 
 ## 4. 当前存在的问题
 
-### 已通过命令确认的问题
+### 2026-07-27 实际验证状态
 
-1. **Lint 未通过**
-   - `app/components/SplitText.tsx` 在 Effect 内同步调用 `setFontsLoaded`，触发 `react-hooks/set-state-in-effect` 错误；
-   - 同一 Effect 的依赖数组还有 3 条 hooks 警告；
-   - `app/page.tsx` 使用原生 `<img>`，产生 8 条 Next.js 图片优化警告。
+1. **工作区状态**
+   - `git status --short` 无输出，当前工作区 clean。
 
-2. **自动化测试已经过时**
-   - `tests/rendered-html.test.mjs` 仍断言脚手架的 loading skeleton；
-   - 测试引用已不存在的 `app/_sites-preview/`；
-   - 当前结果为 2 个测试全部失败，不能用于保护作品集功能。
+2. **npm 当前不可用**
+   - `npm run lint` 和 `npm run build` 按字面执行均失败，原因是当前环境中 `npm` 命令不存在；
+   - bundled runtime 提供 Node.js 与 `pnpm`，项目当前真实验证以 `pnpm` 为准。
 
-3. **构建虽成功但有警告**
-   - `app/globals.css` 仍包含 4 个已失效的历史图片路径：
-     `campaign-cover-main-phone.png`、`campaign-cover-main-screen.png`、
-     `campaign-cover-main-clean.png`、`campaign-cover-side-treasure.png`；
-   - 客户端产物存在超过 500 kB 的分包警告。
+3. **Lint 通过**
+   - `pnpm run lint` 通过，0 个 error；
+   - 仍有 8 条 `@next/next/no-img-element` warning，均来自 `app/page.tsx` 中的原生 `<img>`。
 
-4. **文档和项目标识仍是脚手架内容**
+4. **Build 通过**
+   - `pnpm run build` 通过；
+   - 当前仍有 Vite chunk size warning：部分客户端 chunk 压缩后超过 500 kB；
+   - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`，属于 vinext 当前静态分析提示；
+   - 本次验证输出中未再出现 CSS 失效历史图片路径 warning。
+
+5. **测试状态未在本次复核**
+   - 本次只按要求验证 `lint` 与 `build`，没有重新运行测试；
+   - 旧文档中“测试全部失败”的记录已视为过期，需要后续单独以当前代码重新验证。
+
+6. **文档和项目标识仍是脚手架内容**
    - `README.md` 仍在介绍 `vinext-starter`，没有说明当前作品集；
    - `package.json` 的包名仍为 `site-creator-vinext-starter`。
 
@@ -111,11 +117,11 @@
 - `app/globals.css` 约 977 行，存在多轮按日期追加、重复覆盖的样式，修改早期规则可能不会产生实际效果；
 - 首页整体使用 `"use client"`，并同时加载 GSAP、Motion、OGL/WebGL 等交互代码，首屏 JavaScript 成本较高；
 - 多张作品图片体积较大，最大文件约 6.2 MB；当前原生 `<img>` 未获得 Next.js 响应式图片优化；
-- CSS 中的历史失效资源虽被后续规则覆盖，仍会产生构建告警并增加维护歧义；
+- 旧文档曾记录 CSS 历史失效资源构建告警；2026-07-27 的 `pnpm run build` 输出中未复现该 warning，但相关样式仍可在后续 CSS 清理时一并核查；
 - 弹窗已具备 ARIA 和键盘切换基础，但尚无完整的焦点捕获、打开后初始聚焦、关闭后焦点恢复；
 - Clipboard API 写入没有错误处理，在非安全上下文或权限被拒绝时没有降级方案；
 - 缺少针对导航、项目弹窗、键盘交互、复制反馈和响应式布局的有效测试；
-- 仓库同时保留 npm 与 pnpm 锁文件，依赖变更时可能出现版本漂移；
+- 仓库同时保留 npm 与 pnpm 锁文件，且当前环境实际只能使用 `pnpm` 验证，依赖变更时可能出现版本漂移；
 - Drizzle、D1 示例、ChatGPT 登录辅助及部分依赖目前未参与业务，应明确保留用途或清理，避免误认为网站已有后端能力；
 - `public/` 中仍有 `.DS_Store`、未被页面使用的素材及较大的源文件，可进一步清理。
 
@@ -123,11 +129,11 @@
 
 ### 第一阶段：恢复工程基线
 
-1. 修复 `SplitText` 的 lint 错误和 hooks 依赖警告；
-2. 将现有测试改写为作品集实际页面的 SSR 与核心内容测试；
-3. 删除失效 CSS 图片引用，合并同一组件的重复覆盖规则；
-4. 更新 `README.md` 和包名，确定唯一包管理器及锁文件；
-5. 保持 `build`、`lint`、`test` 三项检查全部通过。
+1. 将现有测试按当前作品集页面重新验证和必要时改写；
+2. 处理 `app/page.tsx` 中 8 条 `<img>` 图片优化 warning，或明确继续使用原生图片的部署原因；
+3. 针对超过 500 kB 的客户端 chunk 做分包或延迟加载评估；
+4. 更新 `README.md` 和包名，明确项目实际使用 `pnpm`；
+5. 保持 `pnpm run lint` 与 `pnpm run build` 通过，并为测试建立可信基线。
 
 ### 第二阶段：性能优化
 

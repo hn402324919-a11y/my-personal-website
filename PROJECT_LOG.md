@@ -6,6 +6,31 @@
 - 记录内容至少包括：日期、commit hash、是否已 push 到 `main`、Vercel 自动部署触发情况、修改摘要、验证结果和已知遗留问题。
 - 如果更新影响项目状态、结构、部署规则、设计规则或重要已完成功能，需要同步更新 `PROJECT_HISTORY.md`。
 
+## 2026-07-27
+
+### 状态复核：pnpm lint/build 当前真实通过
+
+- 提交：本次为文档状态复核，尚未提交。
+- 分支：`main`。
+- 远端：本次复核时未 push。
+- 上线方式：未触发 Vercel 部署。
+- 修改内容：
+  - 根据 2026-07-27 实际验证结果修正 `PROJECT.md`；
+  - 将旧的 `SplitText` lint error、hooks warning、测试全部失败、CSS 失效图片构建告警记录标注为过期或待重新验证；
+  - 明确当前环境没有可用的 `npm` 命令，项目实际验证使用 bundled Node.js 与 `pnpm`。
+- 验证结果：
+  - `node_modules` 已存在，跳过安装；
+  - `npm run lint` 按字面执行失败：`npm` command not found；
+  - `npm run build` 按字面执行失败：`npm` command not found；
+  - `pnpm run lint` 通过，0 个 error，仍有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `git status --short` 在验证前后均无输出，工作区 clean。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - README 与包名仍保留脚手架标识；
+  - 测试未在本次复核中重新运行，需要后续单独确认。
+
 ## 2026-07-26
 
 ### 上线记录：首屏 Hero 动画可见性修复
@@ -81,12 +106,12 @@
 - Vercel 会从 `main` 自动部署上述提交。
 - 本次补充日志前，`PROJECT_HISTORY.md` 和 `PROJECT_LOG.md` 为未跟踪文档；后续需要纳入版本控制，保证上线记录随仓库保存。
 
-### 下一步待办事项
+### 下一步待办事项（已部分过期，见 2026-07-27 状态复核）
 
 - 对当前首屏动画改动运行验证：
-  - `npm run lint`
-  - `npm run build`
-  - `npm test`
+  - 当前环境应使用 `pnpm run lint`；
+  - 当前环境应使用 `pnpm run build`；
+  - 测试需后续单独复核。
 - 本地浏览器检查首屏加载和开场动画：
   - 普通模式下 `DIGITAL / Designer` 是否按顺序进入；
   - 刷新页面时标题是否稳定显示；
