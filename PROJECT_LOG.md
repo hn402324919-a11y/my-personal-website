@@ -8,6 +8,30 @@
 
 ## 2026-07-27
 
+### 上线记录：移动端 skip link 默认隐藏修复
+
+- 功能提交：`f461a1c fix: hide mobile skip link focus issue`。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 定位首页无障碍跳转链接 `<a className="skip" href="#content">跳到主要内容</a>`；
+  - 将 `.skip` 默认隐藏方式从单纯 `transform` 位移改为视觉裁剪隐藏；
+  - 保留键盘可见焦点时的 skip link 显示能力；
+  - 增加 `.skip:focus:not(:focus-visible)`，避免移动端触屏滚动或普通 focus 状态让绿色按钮露出；
+  - 未修改导航、页面布局、作品内容、动画时间线或部署配置。
+- 验证结果：
+  - 本地移动端预览 `390px × 844px` 首屏：`.skip` 保持 `1px × 1px`、`opacity:0`、`pointer-events:none`；
+  - 本地移动端预览滚动到第二屏：`.nav is-fixed` 正常出现，`.skip` 仍保持隐藏；
+  - `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `pnpm test` 按项目脚本失败：脚本内部调用 `npm run build`，当前环境无 `npm` 命令；
+  - 直接执行 `node --test tests/rendered-html.test.mjs` 通过，2/2。
+- 已知遗留问题：
+  - 当前环境无 `npm` 命令，`pnpm test` 脚本仍不能按字面执行；
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning。
+
 ### 上线记录：移动端导航左右安全距离对齐
 
 - 提交：本次上线提交，push 后以 `origin/main` 最新提交为准。
