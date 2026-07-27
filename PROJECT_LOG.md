@@ -8,6 +8,29 @@
 
 ## 2026-07-27
 
+### 上线记录：移动端导航左右安全距离对齐
+
+- 提交：本次上线提交，push 后以 `origin/main` 最新提交为准。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 仅修改 `app/globals.css` 中移动端导航宽度规则；
+  - 在 `max-width: 768px` 下让 `.nav` 与 `.nav.is-fixed` 使用 `var(--shell)`；
+  - 将既有 `max-width: 760px` 移动端导航宽度从 `calc(100vw - 24px)` 同步为 `var(--shell)`；
+  - 使移动端顶部导航与下方个人信息卡片、正文内容使用一致的左右安全距离；
+  - 保持导航圆角、背景、按钮尺寸、内部 padding 和桌面端样式不变。
+- 验证结果：
+  - 本地预览 `http://localhost:3001/` 已启动并由用户确认可以；
+  - `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `pnpm test` 按项目脚本失败：脚本内部调用 `npm run build`，当前环境无 `npm` 命令；
+  - 直接执行 `node --test tests/rendered-html.test.mjs` 通过，2/2。
+- 已知遗留问题：
+  - 当前环境无 `npm` 命令，`pnpm test` 脚本仍不能按字面执行；
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning。
+
 ### 上线记录：移动端开屏文字排版优化
 
 - 提交：本次上线提交，push 后以 `origin/main` 最新提交为准。
