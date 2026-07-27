@@ -8,6 +8,28 @@
 
 ## 2026-07-27
 
+### 上线记录：Loading 光晕与文字左对齐优化
+
+- 提交：`90ee88c fix: refine loading glow alignment`。
+- 分支：`main`。
+- 远端：已 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 将 `.opening-sequence` 顶层容器从 `overflow:hidden` 调整为 `overflow:visible`，避免首屏绿色光晕在视口边缘出现硬裁切；
+  - 将绿色光晕从上下幕布背景中拆出，改为顶层伪元素的大范围柔和 `radial-gradient` 与 blur，保持黑底绿光风格；
+  - 保留上下幕布、进度条样式与 GSAP timeline，不改变 loading 整体时长、触发逻辑和后续 Hero 入场；
+  - 将 loading 文字容器改为桌面左侧锚点，并对标题、副标题行显式设置左对齐和左侧自对齐。
+- 验证结果：
+  - 使用 bundled runtime 执行 `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `pnpm test` 按项目脚本失败：脚本内部调用 `npm run build`，当前环境无 `npm` 命令；
+  - 直接执行 `node --test tests/rendered-html.test.mjs` 通过，2/2；
+  - 本地 dev server 可启动到 `http://localhost:3001/`，但 Playwright 浏览器二进制未安装，未完成自动截图。
+- 已知遗留问题：
+  - 当前环境无 `npm` 命令，`pnpm test` 脚本仍不能按字面执行；
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning。
+
 ### 上线记录：项目卡片分类标签桌面端左上对齐
 
 - 提交：`8f268c4 fix: move project tags left on desktop`。
