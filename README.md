@@ -1,98 +1,96 @@
-# vinext-starter
+# Chenynii Personal Website
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+This is the personal portfolio website for Chenynii. It contains the homepage, portfolio project sections, motion components, and public media assets needed to restore and continue development on a new computer.
 
-## Prerequisites
+## Tech Stack
+
+- Vinext / Next.js
+- React
+- TypeScript
+- Vite
+- GSAP, Motion, Three.js, OGL
+- Tailwind CSS / PostCSS
+- Vercel deployment config
+
+## Requirements
 
 - Node.js `>=22.13.0`
+- npm
 
-## Quick Start
+## Install
 
 ```bash
+git clone https://github.com/hn402324919-a11y/my-personal-website.git
+cd my-personal-website
 npm install
+```
+
+## Local Development
+
+```bash
 npm run dev
+```
+
+## Build Check
+
+```bash
 npm run build
 ```
 
-This starter does not use `wrangler.jsonc`.
+For the full project check, run:
 
-## Included Shape
-
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```bash
+npm test
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+## Project Structure
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+- `app/`: main website routes, layout, styles, and page code
+- `app/components/`: reusable visual and motion components
+- `public/`: static images, videos, icons, Open Graph images, and portfolio media
+- `tests/`: rendered HTML checks
+- `build/`: build-related helper code
+- `db/`, `drizzle/`, `worker/`, `examples/`: platform and optional data/runtime support
+- `.openai/hosting.json`: OpenAI Sites hosting metadata
+- `vercel.json`, `.vercelignore`: Vercel deployment configuration
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
+## Public Assets
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
+All website images and videos that must be restored on a new computer live under `public/` and are tracked by Git.
 
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
+Important asset folders:
 
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
+- `public/hero/`: hero images
+- `public/media/`: video media
+- `public/profile/`: profile photo
+- `public/work/`: portfolio project images
 
-## Useful Commands
+Do not move or rename these files without also updating the paths used in the site code.
 
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
+## Environment Variables
 
-## Learn More
+No required local `.env` file is currently needed for basic development and build checks.
 
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+Local and deployment tooling may set variables such as `VERCEL`, `NITRO_PRESET`, `WRANGLER_LOG_PATH`, and `CODEX_SANDBOX`. These are handled by scripts or the hosting environment.
+
+## Vercel Deployment
+
+The project is connected to this GitHub repository:
+
+```text
+https://github.com/hn402324919-a11y/my-personal-website.git
+```
+
+For Vercel, import or connect the GitHub repository, use Node.js `>=22.13.0`, and keep the existing deployment config files:
+
+- `vercel.json`
+- `.vercelignore`
+- `package.json`
+- `package-lock.json`
+
+Before deploying from a new computer, verify locally with:
+
+```bash
+npm install
+npm run build
+```
