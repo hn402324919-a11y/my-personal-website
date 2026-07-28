@@ -643,7 +643,7 @@ export default function Home() {
               <a className="work-manifesto" href="#strengths" data-reveal="scale" data-reveal-order="2">
                 <SpecularFrame radius={5} proximity={220} intensity={1.2} />
                 <span className="manifesto-kicker">DESIGN POSITION / 09Y</span>
-                <h3>Building clarity for complex products,<br />creating value <em>years ahead.</em></h3>
+                <h3>Building clarity for complex<br className="manifesto-mobile-break" /> products,<br className="manifesto-desktop-break" /> creating value <em>years ahead.</em></h3>
                 <span className="manifesto-foot">PRODUCT × EXPERIENCE × BRAND <b>↗</b></span>
               </a>
               <article className="work-orbit" data-reveal="scale" data-reveal-order="3">
