@@ -6,6 +6,33 @@
 - 记录内容至少包括：日期、commit hash、是否已 push 到 `main`、Vercel 自动部署触发情况、修改摘要、验证结果和已知遗留问题。
 - 如果更新影响项目状态、结构、部署规则、设计规则或重要已完成功能，需要同步更新 `PROJECT_HISTORY.md`。
 
+## 2026-07-28
+
+### 上线记录：桌面端项目模块高度与绿色标题排版优化
+
+- 功能提交：`9461395 fix: tune desktop project layout`。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 仅修改 `app/globals.css` 中桌面端项目展示区样式；
+  - 在 `min-width:1101px` 下用响应式平均值统一项目网格第 1 行和第 3 行高度；
+  - 让左上「体验 / 界面」大卡片高度与右下「营销 / 运营」大卡片高度一致；
+  - 同步压缩左下绿色圆形视觉卡片和「B 端 / 网页」卡片所在行高度；
+  - 保持项目模块总行高、列宽、间距、圆角和移动端布局不变；
+  - 优化绿色 `DESIGN POSITION / 09Y` 模块主标题桌面端排版，隐藏桌面强制换行并限制标题宽度，让英文自然换行；
+  - 未修改英文文案、字体、字号、字重、移动端样式、作品图片、项目详情逻辑、Vercel 配置或部署配置。
+- 验证结果：
+  - `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - `pnpm test` 通过，2/2，构建阶段仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - 本地预览曾启动于 `http://localhost:3001/` 供检查，未部署前已停止。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`；
+  - Playwright 包存在但本机缺少浏览器二进制，未执行自动截图测量。
+
 ## 2026-07-27
 
 ### 上线记录：体验项目卡片移动端 Mockup 留白优化
