@@ -30,7 +30,7 @@ const projects: Project[] = [
     category: "体验 / 界面",
     title: "从复杂系统到直觉体验",
     subtitle: "品牌体验升级 × Web3 聚合资产平台 × 品牌定制小程序",
-    cover: "/work/card-3.jpg",
+    cover: "/optimized/work/card-3-cover.webp",
     intro:
       "覆盖多种行业场景，在复杂业务约束中建立清晰、可信且可扩展的产品体验。",
     role:
@@ -82,7 +82,7 @@ const projects: Project[] = [
     category: "营销 / 运营",
     title: "让品牌活动被看见、被参与",
     subtitle: "伊利及旗下品牌 × 5 款营销互动游戏",
-    cover: "/work/card-5.jpg",
+    cover: "/optimized/work/card-5-cover.webp",
     intro:
       "围绕节点营销、会员运营与品牌传播，建立从活动机制、视觉概念到多触点物料的一致体验。",
     role:
@@ -122,7 +122,7 @@ const projects: Project[] = [
     category: "B 端 / 网页",
     title: "把企业能力转译为清晰价值",
     subtitle: "数字增长服务平台 × 企业官网体系",
-    cover: "/work/card-9.jpg",
+    cover: "/optimized/work/card-9-cover.webp",
     intro:
       "面向企业客户重新组织服务能力、产品价值与信任信息，用清晰的页面秩序支撑获客与品牌表达。",
     role:
@@ -210,9 +210,9 @@ function StrengthVisual({ type }: { type: string }) {
     return (
       <div className="strength-visual visual-collage" aria-hidden="true">
         <div className="collage-group">
-          <img className="collage-a" src="/work/card-3.jpg" alt="" />
-          <img className="collage-b" src="/work/card-5.jpg" alt="" />
-          <img className="collage-c" src="/work/project-esd-audio.jpg" alt="" />
+          <img className="collage-a" src="/optimized/work/card-3-cover.webp" alt="" />
+          <img className="collage-b" src="/optimized/work/card-5-cover.webp" alt="" />
+          <img className="collage-c" src="/optimized/work/project-esd-audio-collage.webp" alt="" />
         </div>
       </div>
     );
@@ -546,7 +546,13 @@ export default function Home() {
 
       <header className="hero" id="top">
         <div className="hero-portrait" aria-hidden="true">
-          <img src="/hero/chenynii-editorial-v2.png" alt="" />
+          <img
+            src="/optimized/hero/chenynii-editorial-desktop.webp"
+            srcSet="/optimized/hero/chenynii-editorial-mobile.webp 760w, /optimized/hero/chenynii-editorial-desktop.webp 1440w"
+            sizes="100vw"
+            alt=""
+            fetchPriority="high"
+          />
         </div>
         <div className="veil" />
         <div className="hero-content shell">
@@ -603,7 +609,7 @@ export default function Home() {
           <div className="about-layout">
             <aside className="id-card" data-reveal="left">
               <div className="portrait">
-                <img src="/profile/chenynii-photo-2843.jpg" alt="陈旖旎个人照片" />
+                <img src="/optimized/profile/chenynii-photo-720.webp" alt="陈旖旎个人照片" />
               </div>
               <div className="id-name">
                 <div><strong>陈旖旎</strong><span>CHENYNII</span></div>

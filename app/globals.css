@@ -146,14 +146,14 @@
 .laptop{position:absolute;aspect-ratio:1.5;border-radius:13px 13px 8px 8px;background:linear-gradient(145deg,#303632,#090b0a 58%,#363b38);box-shadow:0 34px 70px rgba(0,0,0,.72),0 0 60px rgba(3,232,133,.08);transform-style:preserve-3d}
 .laptop:before{position:absolute;inset:3% 3.5% 7%;border-radius:7px;background:#020303;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);content:""}
 .laptop:after{position:absolute;right:-5%;bottom:-8%;left:-5%;height:10%;border-radius:4px 4px 14px 14px;background:linear-gradient(180deg,#4a504d,#171a18 55%,#090a09);box-shadow:0 10px 22px rgba(0,0,0,.52);content:"";transform:perspective(220px) rotateX(60deg);transform-origin:top}
-.laptop-screen{position:absolute;z-index:1;inset:4.5% 5% 9%;border-radius:5px;background-image:linear-gradient(rgba(0,0,0,.04),rgba(0,0,0,.04)),url("/work/project-3.jpg");background-position:center top;background-size:cover;box-shadow:inset 0 0 24px rgba(2,32,18,.5)}
+.laptop-screen{position:absolute;z-index:1;inset:4.5% 5% 9%;border-radius:5px;background-image:linear-gradient(rgba(0,0,0,.04),rgba(0,0,0,.04)),url("/optimized/work/project-3-laptop-cover.webp");background-position:center top;background-size:cover;box-shadow:inset 0 0 24px rgba(2,32,18,.5)}
 .laptop-back{top:-10%;right:-15%;width:55%;opacity:.62;transform:perspective(1100px) rotateX(9deg) rotateY(-26deg) rotateZ(17deg)}
 .laptop-front{top:15%;left:8%;width:78%;transform:perspective(1100px) rotateX(6deg) rotateY(-15deg) rotateZ(-4deg)}
 .campaign-composite{background:radial-gradient(circle at 50% 35%,rgba(3,232,133,.22),transparent 38%),linear-gradient(145deg,#18241d,#070a09 72%)}
 .campaign-composite:before{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 52px,rgba(3,232,133,.025) 53px),repeating-linear-gradient(0deg,transparent 0 52px,rgba(3,232,133,.025) 53px);content:""}
 .campaign-phone{position:absolute;z-index:2;top:7%;left:50%;width:42%;height:73%;border:7px solid #090b0a;border-radius:34px;background:#0a0c0b;box-shadow:0 28px 70px rgba(0,0,0,.65),0 0 44px rgba(3,232,133,.13);transform:translateX(-50%)}
 .campaign-phone:before{position:absolute;z-index:2;top:7px;left:50%;width:34%;height:16px;border-radius:12px;background:#050605;content:"";transform:translateX(-50%)}
-.campaign-screen,.campaign-tile{position:absolute;display:block;background-image:url("/work/project-campaign-01-winter-olympics.jpg");background-repeat:no-repeat;background-size:cover}
+.campaign-screen,.campaign-tile{position:absolute;display:block;background-image:url("/optimized/work/project-campaign-winter-cover.webp");background-repeat:no-repeat;background-size:cover}
 .campaign-screen{inset:4px;border-radius:25px;background-position:center top}
 .campaign-tile{z-index:1;top:34%;width:31%;height:38%;border-radius:16px;box-shadow:0 24px 55px rgba(0,0,0,.52)}
 .tile-left{left:-4%;background-position:center 18%;transform:rotate(-4deg)}
@@ -174,16 +174,16 @@
 .campaign-composite{background:radial-gradient(circle at 50% 42%,rgba(3,232,133,.1),transparent 42%),#070a09}
 .campaign-phone{top:5%;width:40%;height:76%;border:0;border-radius:0;background:transparent;box-shadow:none}
 .campaign-phone:before{display:none}
-.campaign-screen{inset:0;border-radius:0;background-image:url("/work/campaign-cover-main-device.png");background-position:center;background-size:contain;filter:drop-shadow(0 26px 38px rgba(0,0,0,.54))}
+.campaign-screen{inset:0;border-radius:0;background-image:url("/optimized/work/campaign-cover-main-device.webp");background-position:center;background-size:contain;filter:drop-shadow(0 26px 38px rgba(0,0,0,.54))}
 .campaign-tile{top:27%;width:31%;height:49%;border-radius:18px;background-color:transparent;background-position:center;background-size:contain;box-shadow:none;filter:drop-shadow(0 24px 30px rgba(0,0,0,.42))}
-.tile-left{left:-1%;background-image:url("/work/campaign-cover-side-medal.png");transform:rotate(-3deg)}
-.tile-right{right:-1%;background-image:url("/work/campaign-cover-side-treasure-final.png");transform:rotate(3deg)}
+.tile-left{left:-1%;background-image:url("/optimized/work/campaign-cover-side-medal.webp");transform:rotate(-3deg)}
+.tile-right{right:-1%;background-image:url("/optimized/work/campaign-cover-side-treasure-final.webp");transform:rotate(3deg)}
 .enterprise-composite{background:radial-gradient(circle at 54% 42%,rgba(3,232,133,.1),transparent 38%),linear-gradient(145deg,#101713,#050706 72%)}
 .enterprise-composite:before{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 42px,rgba(3,232,133,.025) 43px),repeating-linear-gradient(0deg,transparent 0 42px,rgba(3,232,133,.025) 43px);content:""}
 .enterprise-monitor{position:absolute;top:10%;left:8%;width:84%;aspect-ratio:1.5;border:7px solid #111513;border-radius:9px;background:#050706;box-shadow:0 24px 55px rgba(0,0,0,.62),0 0 32px rgba(3,232,133,.08)}
 .enterprise-monitor:before{position:absolute;z-index:-1;bottom:-25%;left:50%;width:22%;height:25%;background:linear-gradient(90deg,#111513,#3c4440 52%,#101311);content:"";transform:translateX(-50%);clip-path:polygon(36% 0,64% 0,76% 82%,100% 100%,0 100%,24% 82%)}
 .enterprise-monitor:after{position:absolute;z-index:-1;bottom:-28%;left:50%;width:44%;height:5%;border-radius:50%;background:#2d3430;box-shadow:0 7px 18px rgba(0,0,0,.48);content:"";transform:translateX(-50%)}
-.enterprise-screen{position:absolute;inset:2px;display:block;border-radius:3px;background-image:url("/work/project-byd-electronics-01.jpg");background-position:center top;background-size:cover}
+.enterprise-screen{position:absolute;inset:2px;display:block;border-radius:3px;background-image:url("/optimized/work/project-byd-electronics-cover.webp");background-position:center top;background-size:cover}
 
 /* Value awareness: disperse the four labels around readable orbital paths. */
 .visual-value{position:relative;isolation:isolate;background:#070a09!important}
@@ -464,7 +464,7 @@
 .campaign-screen{
   inset:3px;
   border-radius:24px;
-  background-image:url("/work/campaign-cover-main-device.png");
+  background-image:url("/optimized/work/campaign-cover-main-device.webp");
   background-position:center;
   background-size:cover
 }
@@ -478,12 +478,12 @@
 .campaign-composite .tile-left{
   left:11%;
   aspect-ratio:475/690;
-  background-image:url("/work/campaign-cover-side-medal.png")
+  background-image:url("/optimized/work/campaign-cover-side-medal.webp")
 }
 .campaign-composite .tile-right{
   right:11%;
   aspect-ratio:535/870;
-  background-image:url("/work/campaign-cover-side-treasure-final.png")
+  background-image:url("/optimized/work/campaign-cover-side-treasure-final.webp")
 }
 
 /* Keep the original black artwork canvas full-size; scale only its internal tile group. */
@@ -547,7 +547,7 @@
     linear-gradient(145deg,#0d1410,#050706 74%)
 }
 .campaign-screen{
-  background-image:url("/work/campaign-cover-main-device.png");
+  background-image:url("/optimized/work/campaign-cover-main-device.webp");
   background-position:center top;
   background-size:cover
 }
@@ -700,7 +700,7 @@
 .campaign-screen{
   inset:0;
   border-radius:var(--radius-rect);
-  background-image:url("/work/campaign-cover-main-device.png");
+  background-image:url("/optimized/work/campaign-cover-main-device.webp");
   background-position:center;
   background-repeat:no-repeat;
   background-size:contain
@@ -788,7 +788,7 @@
   inset:4px;
   border-radius:22px;
   background-color:#fff;
-  background-image:url("/work/campaign-cover-main-device.png");
+  background-image:url("/optimized/work/campaign-cover-main-device.webp");
   background-position:center top;
   background-repeat:no-repeat;
   background-size:cover;
@@ -803,7 +803,7 @@
   right:12%;
   aspect-ratio:auto;
   border-radius:0;
-  background-image:url("/work/campaign-cover-side-treasure-final.png")
+  background-image:url("/optimized/work/campaign-cover-side-treasure-final.webp")
 }
 
 @media(max-width:760px){
