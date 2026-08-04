@@ -1190,3 +1190,16 @@
     transform:rotate(var(--orbit-angle)) translateY(-53px)
   }
 }
+
+@media print{
+  @page{size:1280px 5922px;margin:0}
+  html,body{width:1280px;min-width:1280px;background:var(--ink)!important;overflow:visible!important;scrollbar-width:none}
+  body::-webkit-scrollbar,html::-webkit-scrollbar,*::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+  .nav,.hero-lower>div,.opening-sequence{display:none!important}
+  *,*:before,*:after{animation:none!important;transition:none!important;caret-color:transparent!important}
+  .split-char,.split-word,.split-line,.split-parent{opacity:1!important;transform:none!important;visibility:visible!important}
+  .reveal-ready [data-reveal],.reveal-ready [data-reveal="left"],.reveal-ready [data-reveal="right"],.reveal-ready [data-reveal="scale"]{opacity:1!important;transform:none!important;transition:none!important}
+  .site-bends{opacity:.5!important}
+  .project-card:hover,.project-card:hover img,.project-card:hover .project-composite,.timeline article:hover,.chips span:hover,.strength-grid article:hover,.work-manifesto:hover{transform:none!important;filter:none!important}
+  .hero,.section,.contact{break-inside:avoid}
+}

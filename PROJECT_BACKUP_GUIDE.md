@@ -77,7 +77,7 @@ Do not deploy local-only folders such as `node_modules/`, `dist/`, `.vercel/`, `
 ## 9. Current Version Notes
 
 - Current branch: `main`
-- Latest recorded commit: `7b429a9 docs: record mobile experience card deployment`
+- Latest deployment records: see `PROJECT_LOG.md`
 - Remote repository: `https://github.com/hn402324919-a11y/my-personal-website.git`
 - Public website assets are stored under `public/` and tracked by Git.
 - No required local `.env` file is currently needed for basic development and build checks.

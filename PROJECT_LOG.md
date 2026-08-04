@@ -6,6 +6,44 @@
 - 记录内容至少包括：日期、commit hash、是否已 push 到 `main`、Vercel 自动部署触发情况、修改摘要、验证结果和已知遗留问题。
 - 如果更新影响项目状态、结构、部署规则、设计规则或重要已完成功能，需要同步更新 `PROJECT_HISTORY.md`。
 
+## 2026-08-04
+
+### 上线记录：首页 opening sequence 时间压缩
+
+- 功能提交：本条记录所在提交。
+- 分支：`main`。
+- 远端：将 push 到站点托管源仓库；如 GitHub 凭据可用，同步 push 到 `origin/main`。
+- 上线方式：OpenAI Sites 生产部署。
+- 修改内容：
+  - 仅修改首页 opening sequence 的 GSAP 时间参数；
+  - 将首屏开场完成时间从约 `5.18s` 压缩到约 `3.46s`，减少约 `33.1%`；
+  - 保持元素出现顺序、动画属性、动画曲线、视觉层级和设计节奏不变；
+  - 保留当前工作区已有的打印预览样式，用于生成首页长图 / PDF 时禁用开场层与动态效果。
+- 具体时间调整：
+  - `.opening-mark__line`：`duration 0.82 -> 0.56`，`stagger 0.11 -> 0.075`；
+  - `.opening-rail span`：`duration 1.05 -> 0.72`，timeline overlap `-=0.54 -> -=0.37`；
+  - `.opening-mark` 退场：`duration 0.44 -> 0.30`，delay `+=0.22 -> +=0.14`；
+  - `.opening-panel--top / bottom`：`duration 1.14 -> 0.78`，overlap `-=0.10 -> -=0.07`；
+  - `heroEnter` label：`>-=0.08 -> >-=0.05`；
+  - `.hero-portrait`：`duration 1.90 -> 1.24`，start `heroEnter-=0.50 -> heroEnter-=0.32`；
+  - `.nav`：`duration 1.02 -> 0.66`；
+  - `.hero-kickers`：`duration 0.88 -> 0.57`，delay `+=0.10 -> +=0.06`；
+  - Hero title trigger hold：`duration 1.18 -> 0.77`，delay `+=0.32 -> +=0.21`；
+  - `.hero-index`：`duration 0.72 -> 0.47`，delay `+=0.92 -> +=0.60`；
+  - `.hero-disciplines`：`duration 0.82 -> 0.53`，delay `+=0.92 -> +=0.60`；
+  - `.hero-lower / .hero-meta`：`duration 0.82 -> 0.53`，`stagger 0.12 -> 0.08`，delay `+=1.18 -> +=0.77`。
+- 验证结果：
+  - `npm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `npm run build` 通过，仍有既有 Vite chunk size warning 与 vinext route classification `Unknown` 提示；
+  - 本地预览启动于 `http://localhost:3002/`，首页可访问。
+- 备份记录：
+  - 已创建本次上线源码快照与 Git bundle 备份；
+  - 备份目录：`backups/opening-sequence-timing-2026-08-04`。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`。
+
 ## 2026-07-28
 
 ### 上线记录：桌面端项目模块高度与绿色标题排版优化

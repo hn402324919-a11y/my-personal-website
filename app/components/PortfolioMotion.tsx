@@ -212,71 +212,71 @@ export default function PortfolioMotion() {
             {
               yPercent: 0,
               autoAlpha: 1,
-              duration: 0.82,
-              stagger: 0.11,
+              duration: 0.56,
+              stagger: 0.075,
               ease: "power4.out",
             },
           )
           .fromTo(
             ".opening-rail span",
             { scaleX: 0 },
-            { scaleX: 1, duration: 1.05, transformOrigin: "0% 50%", ease: "power3.inOut" },
-            "-=0.54",
+            { scaleX: 1, duration: 0.72, transformOrigin: "0% 50%", ease: "power3.inOut" },
+            "-=0.37",
           )
           .to(
             ".opening-mark",
-            { autoAlpha: 0, y: -22, duration: 0.44, ease: "power2.in" },
-            "+=0.22",
+            { autoAlpha: 0, y: -22, duration: 0.3, ease: "power2.in" },
+            "+=0.14",
           )
           .to(
             ".opening-panel--top",
-            { yPercent: -101, duration: 1.14 },
-            "-=0.1",
+            { yPercent: -101, duration: 0.78 },
+            "-=0.07",
           )
           .to(
             ".opening-panel--bottom",
-            { yPercent: 101, duration: 1.14 },
+            { yPercent: 101, duration: 0.78 },
             "<",
           )
-          .addLabel("heroEnter", ">-=0.08")
+          .addLabel("heroEnter", ">-=0.05")
           .to(
             ".hero-portrait",
-            { scale: 1, duration: 1.9, ease: "power3.out" },
-            "heroEnter-=0.5",
+            { scale: 1, duration: 1.24, ease: "power3.out" },
+            "heroEnter-=0.32",
           )
           .fromTo(
             ".nav",
             { y: -42, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 1.02, ease: "power3.out" },
+            { y: 0, autoAlpha: 1, duration: 0.66, ease: "power3.out" },
             "heroEnter",
           )
           .fromTo(
             ".hero-kickers",
             { y: -24, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.88, ease: "power3.out" },
-            "heroEnter+=0.1",
+            { y: 0, autoAlpha: 1, duration: 0.57, ease: "power3.out" },
+            "heroEnter+=0.06",
           )
           .to(
             {},
             {
-              duration: 1.18,
+              duration: 0.77,
               onStart: () => {
                 window.dispatchEvent(new CustomEvent(heroTitleAnimationEvent));
               },
             },
-            "heroEnter+=0.32",
+            "heroEnter+=0.21",
           )
           .fromTo(
             ".hero-index",
             { x: -42, autoAlpha: 0 },
-            { x: 0, autoAlpha: 1, duration: 0.72, ease: "power3.out" },
-            "heroEnter+=0.92",
+            { x: 0, autoAlpha: 1, duration: 0.47, ease: "power3.out" },
+            "heroEnter+=0.6",
           )
           .fromTo(
             ".hero-disciplines",
             { x: 46, autoAlpha: 0 },
-            { x: 0, autoAlpha: 1, duration: 0.82, ease: "power3.out" },
-            "heroEnter+=0.92",
+            { x: 0, autoAlpha: 1, duration: 0.53, ease: "power3.out" },
+            "heroEnter+=0.6",
           )
           .fromTo(
             [".hero-lower", ".hero-meta"],
@@ -284,11 +284,11 @@ export default function PortfolioMotion() {
             {
               y: 0,
               autoAlpha: 1,
-              duration: 0.82,
-              stagger: 0.12,
+              duration: 0.53,
+              stagger: 0.08,
               ease: "power3.out",
             },
-            "heroEnter+=1.18",
+            "heroEnter+=0.77",
           );
 
         const matchMedia = gsap.matchMedia();
