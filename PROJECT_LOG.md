@@ -10,10 +10,10 @@
 
 ### 上线记录：首页作品集 PDF / 长图导出产物
 
-- 功能提交：本条记录所在提交。
+- 功能提交：`f6bd80b Add portfolio export assets`。
 - 分支：`main`。
-- 远端：push 到 `origin/main` 时 GitHub HTTPS RPC 连接中断；本地 `main` 暂时领先 `origin/main` 1 个提交。
-- 上线方式：Vercel 监听 `main` 自动部署；本次新增导出脚本与静态产物，不修改 Vercel 配置；待 push 成功后自动触发 Vercel 部署。
+- 远端：已 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署；本次新增导出脚本与静态产物，不修改 Vercel 配置。
 - 修改内容：
   - 新增 `scripts/generate-portfolio-assets.mjs`，用于通过本地页面生成首页完整长图与单页 PDF；
   - 新增 `portfolio-homepage.png`，尺寸为 `2880 x 11980`；
@@ -34,7 +34,6 @@
   - `pnpm test` 通过，2/2，测试阶段构建仍有上述既有提示；
   - 静态文件检查确认 `portfolio-homepage.pdf` 为 1 页 PDF，`portfolio-homepage.png` 为 `2880 x 11980` PNG，渲染校验图为 `960 x 3994` PNG。
 - 已知遗留问题：
-  - 本次收尾推送遇到 GitHub HTTPS RPC 断开，远端尚未更新到本地提交；
   - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
   - 客户端产物仍有超过 500 kB 的 chunk size warning；
   - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`；
