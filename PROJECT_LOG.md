@@ -8,6 +8,39 @@
 
 ## 2026-08-04
 
+### 上线记录：首页作品集 PDF / 长图导出产物
+
+- 功能提交：本条记录所在提交。
+- 分支：`main`。
+- 远端：push 到 `origin/main` 时 GitHub HTTPS RPC 连接中断；本地 `main` 暂时领先 `origin/main` 1 个提交。
+- 上线方式：Vercel 监听 `main` 自动部署；本次新增导出脚本与静态产物，不修改 Vercel 配置；待 push 成功后自动触发 Vercel 部署。
+- 修改内容：
+  - 新增 `scripts/generate-portfolio-assets.mjs`，用于通过本地页面生成首页完整长图与单页 PDF；
+  - 新增 `portfolio-homepage.png`，尺寸为 `2880 x 11980`；
+  - 新增 `portfolio-homepage.pdf`，为首页长图生成的 1 页 PDF；
+  - 新增 `tmp/pdfs/portfolio-homepage-render.png`，作为 PDF 渲染校验图；
+  - 导出脚本会等待图片与字体加载，滚动触发懒加载内容，并在截图前隐藏开场动画、滚动条和光标，稳定页面最终展示状态；
+  - 未修改首页交互、视觉样式、Vercel 配置、依赖或生产运行逻辑。
+- 涉及文件：
+  - `scripts/generate-portfolio-assets.mjs`；
+  - `portfolio-homepage.png`；
+  - `portfolio-homepage.pdf`；
+  - `tmp/pdfs/portfolio-homepage-render.png`；
+  - `PROJECT_LOG.md`；
+  - `PROJECT_HISTORY.md`。
+- 验证结果：
+  - `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning、vinext route classification `Unknown` 提示，以及 Node `punycode` deprecation / experimental `glob` 提示；
+  - `pnpm test` 通过，2/2，测试阶段构建仍有上述既有提示；
+  - 静态文件检查确认 `portfolio-homepage.pdf` 为 1 页 PDF，`portfolio-homepage.png` 为 `2880 x 11980` PNG，渲染校验图为 `960 x 3994` PNG。
+- 已知遗留问题：
+  - 本次收尾推送遇到 GitHub HTTPS RPC 断开，远端尚未更新到本地提交；
+  - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`；
+  - 构建过程中仍出现 Node `punycode` deprecation warning 与 experimental `glob` warning；
+  - 导出脚本依赖本机 Codex runtime 中的 Playwright 与 `pdf-lib` 路径，换机或 CI 使用前需要确认 runtime 路径可用。
+
 ### 上线记录：首页 opening sequence 时间压缩
 
 - 功能提交：本条记录所在提交。

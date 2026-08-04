@@ -73,6 +73,26 @@
 - 最新待上线修改：桌面端项目模块高度关系与绿色 `Design Position` 标题排版优化。
 - 本次推送后，Vercel 会从 `main` 自动部署项目展示区桌面端视觉调整：左上「体验 / 界面」大卡片高度与右下「营销 / 运营」大卡片高度一致，左下两个小卡片所在行同步变矮，绿色 `Design Position` 模块主标题改为自然换行；移动端样式不受影响。
 
+# 2026-08-04 更新记录
+
+## 首页作品集 PDF / 长图导出工作流
+
+- 新增 `scripts/generate-portfolio-assets.mjs`，用于从本地运行中的首页生成可交付的完整页面长图和单页 PDF。
+- 脚本默认读取 `http://localhost:3001/`，也支持通过第一个命令行参数传入其他本地预览地址。
+- 导出流程会：
+  - 等待页面图片和字体加载完成；
+  - 滚动整页触发懒加载内容；
+  - 在截图前隐藏 opening sequence、滚动条和光标；
+  - 强制已揭示内容进入最终可见状态；
+  - 输出 `portfolio-homepage.png`；
+  - 基于该 PNG 生成 `portfolio-homepage.pdf`。
+- 当前随仓库保留的导出产物：
+  - `portfolio-homepage.png`：`2880 x 11980`；
+  - `portfolio-homepage.pdf`：1 页 PDF；
+  - `tmp/pdfs/portfolio-homepage-render.png`：PDF 渲染校验图。
+- 该工作流不影响线上运行逻辑，也不改变 Vercel 部署规则；推送到 `main` 后仍由 Vercel 自动部署。
+- 注意：脚本当前依赖本机 Codex runtime 中的 Playwright 与 `pdf-lib` 路径，迁移到其他机器或 CI 前需要调整为项目级依赖或确认 runtime 路径存在。
+
 # 2026-07-28 更新记录
 
 ## 桌面端项目模块排版优化
