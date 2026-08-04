@@ -12,8 +12,8 @@
 
 - 功能提交：本条记录所在提交。
 - 分支：`main`。
-- 远端：将 push 到站点托管源仓库；如 GitHub 凭据可用，同步 push 到 `origin/main`。
-- 上线方式：OpenAI Sites 生产部署。
+- 远端：已 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
 - 修改内容：
   - 仅修改首页 opening sequence 的 GSAP 时间参数；
   - 将首屏开场完成时间从约 `5.18s` 压缩到约 `3.46s`，减少约 `33.1%`；
@@ -39,6 +39,9 @@
 - 备份记录：
   - 已创建本次上线源码快照与 Git bundle 备份；
   - 备份目录：`backups/opening-sequence-timing-2026-08-04`。
+- 发布备注：
+  - 本地 `.openai/hosting.json` 中的 Sites 项目 ID 在当前账号下不可见；
+  - 按 `PROJECT_HISTORY.md` 中记录的当前上线规则，本次通过 GitHub `main` 触发 Vercel 自动部署。
 - 已知遗留问题：
   - `app/page.tsx` 仍使用原生 `<img>`，产生 8 条 Next.js 图片优化 warning；
   - 客户端产物仍有超过 500 kB 的 chunk size warning；
