@@ -86,11 +86,12 @@
   - 强制已揭示内容进入最终可见状态；
   - 输出 `portfolio-homepage.png`；
   - 基于该 PNG 生成 `portfolio-homepage.pdf`。
-- 当前随仓库保留的导出产物：
+- 当前导出产物仅本地保留，不纳入 Git 或线上站点：
   - `portfolio-homepage.png`：`2880 x 11980`；
   - `portfolio-homepage.pdf`：1 页 PDF；
   - `tmp/pdfs/portfolio-homepage-render.png`：PDF 渲染校验图。
-- 该工作流不影响线上运行逻辑，也不改变 Vercel 部署规则；推送到 `main` 后仍由 Vercel 自动部署。
+- `.gitignore` 与 `.vercelignore` 已排除首页导出的 PDF、PNG 和 PDF 渲染校验图，避免它们更新到 `https://www.chenynii.cn`。
+- 该工作流不影响线上运行逻辑，也不改变 Vercel 部署规则；推送到 `main` 后仍由 Vercel 自动部署代码与文档变更。
 - 注意：脚本当前依赖本机 Codex runtime 中的 Playwright 与 `pdf-lib` 路径，迁移到其他机器或 CI 前需要调整为项目级依赖或确认 runtime 路径存在。
 
 # 2026-07-28 更新记录

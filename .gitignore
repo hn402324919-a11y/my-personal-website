@@ -40,3 +40,8 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# local portfolio export artifacts
+/portfolio-homepage.pdf
+/portfolio-homepage.png
+/tmp/pdfs/
