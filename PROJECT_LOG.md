@@ -643,3 +643,36 @@
   - 桌面端与移动端 Hero 排版是否保持稳定。
 - 如果验证通过，提交并推送到 `main`，等待 Vercel 自动部署。
 - 后续可考虑把当前仍是脚手架内容的 `README.md` 更新为 CHENYNII Portfolio 正式项目说明。
+
+## 2026-08-05 Contact 标题比例上线记录
+
+- 功能提交：`6ca30b8`
+- 提交说明：`fix: tune contact heading scale`
+- 分支：`main`
+- 发布方式：推送到 `origin/main`，按现有规则触发 Vercel 自动部署。
+- 本地预览：`http://localhost:3000/`
+- 线上域名：`chenynii.cn`
+
+### 本次上线内容
+
+- 仅调整 `app/globals.css` 中 CONTACT 模块标题 `.contact h2` 的桌面端响应式字号比例。
+- 将 CONTACT 标题字号从 `clamp(72px,10vw,190px)` 调整为 `clamp(64px,8.4vw,150px)`。
+- 保持字体风格、字重和整体章节标题定位不变。
+- 不影响 HERO 的 `DIGITAL` 标题，也不调整其他模块标题。
+
+### 字号与视觉层级复核
+
+- 桌面 1440px 实测：
+  - `DIGITAL`：`184.32px` / font-weight `770` / letter-spacing `-1.8432px`。
+  - 「期待您的联系」修改前：`144px` / font-weight `480` / letter-spacing `-12.24px`。
+  - 「期待您的联系」修改后：`120.96px` / font-weight `480` / letter-spacing `-10.2816px`。
+- 移动 390px 实测：
+  - `DIGITAL`：`91.26px`。
+  - 「期待您的联系」：`44px`。
+- 修改后 `DIGITAL` 继续作为全站最大视觉标题，CONTACT 标题保持章节标题层级。
+
+### 检查结果
+
+- `git diff --check -- app/globals.css`：通过。
+- `npm run build`：通过。
+- 已知非新增提醒：Vite chunk size warning、vinext route classification `Unknown`、Node `punycode` deprecation、experimental `glob` 提示。
