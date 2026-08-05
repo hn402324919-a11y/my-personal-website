@@ -41,10 +41,226 @@ const sections: MotionSection[] = [
 const heroSplitParentSelector = ".hero-display .split-parent";
 const heroSplitReadyEvent = "splittext:ready";
 const heroTitleAnimationEvent = "portfolio:hero-title-animation";
+const cardRevealEase = "power3.out";
 
 function heroSplitTextIsReady() {
   const parents = Array.from(document.querySelectorAll<HTMLElement>(heroSplitParentSelector));
   return parents.length > 0 && parents.every((parent) => parent.querySelector(".split-char"));
+}
+
+function addDesktopParallax(root: HTMLElement, isDesktop: boolean) {
+  if (!isDesktop) return;
+
+  const parallaxImages = gsap.utils.toArray<HTMLImageElement>(
+    ".portrait img, .project-card img, .strength-visual img",
+    root,
+  );
+
+  parallaxImages.forEach((image) => {
+    gsap.fromTo(
+      image,
+      { yPercent: -2, scale: 1.025 },
+      {
+        yPercent: 3,
+        scale: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: image.closest(".portrait, .project-card, .strength-visual") ?? image,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.25,
+        },
+      },
+    );
+  });
+}
+
+function buildProfileMotion(
+  root: HTMLElement,
+  title: HTMLElement | null,
+  visuals: HTMLElement[],
+  trigger: HTMLElement,
+  isDesktop: boolean,
+) {
+  const idCard = root.querySelector<HTMLElement>(".id-card");
+  const content = root.querySelector<HTMLElement>(".about-layout > div");
+  const lead = root.querySelector<HTMLElement>(".lead");
+  const timelineGroup = root.querySelector<HTMLElement>(".timeline");
+  const experienceRows = gsap.utils.toArray<HTMLElement>(".timeline article", root);
+  const supportRows = gsap.utils.toArray<HTMLElement>(".subrow", root);
+
+  const titleDuration = isDesktop ? 1.25 : 0.92;
+  const profileEnterAt = title ? (isDesktop ? 0.78 : 0.46) : 0;
+  const timeline = gsap.timeline({
+    defaults: { ease: "power4.out" },
+    scrollTrigger: {
+      trigger,
+      start: isDesktop ? "top 84%" : "top 90%",
+      once: true,
+    },
+  });
+
+  if (title) {
+    timeline.fromTo(
+      title,
+      {
+        autoAlpha: 0,
+        yPercent: isDesktop ? 88 : 58,
+        rotateX: isDesktop ? -16 : -8,
+        clipPath: "inset(100% 0 0 0)",
+        transformOrigin: "50% 100%",
+        willChange: "transform, opacity, clip-path",
+      },
+      {
+        autoAlpha: 1,
+        yPercent: 0,
+        rotateX: 0,
+        clipPath: "inset(0% 0 0 0)",
+        duration: titleDuration,
+        clearProps: "willChange",
+      },
+    );
+  }
+
+  if (idCard) {
+    timeline.fromTo(
+      idCard,
+      {
+        autoAlpha: 0,
+        x: isDesktop ? -34 : 0,
+        y: isDesktop ? 0 : 24,
+        scale: isDesktop ? 0.975 : 0.985,
+        willChange: "transform, opacity",
+      },
+      {
+        autoAlpha: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        duration: isDesktop ? 0.82 : 0.72,
+        ease: cardRevealEase,
+        clearProps: "willChange",
+      },
+      profileEnterAt,
+    );
+  }
+
+  if (content) {
+    timeline.fromTo(
+      content,
+      {
+        autoAlpha: 0,
+        y: isDesktop ? 30 : 22,
+        willChange: "transform, opacity",
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: isDesktop ? 0.88 : 0.76,
+        ease: cardRevealEase,
+        clearProps: "willChange",
+      },
+      profileEnterAt + (isDesktop ? 0.08 : 0.04),
+    );
+  }
+
+  if (lead) {
+    timeline.fromTo(
+      lead,
+      {
+        autoAlpha: 0,
+        y: isDesktop ? 24 : 18,
+        willChange: "transform, opacity",
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: isDesktop ? 0.72 : 0.62,
+        ease: cardRevealEase,
+        clearProps: "willChange",
+      },
+      profileEnterAt + (isDesktop ? 0.18 : 0.1),
+    );
+  }
+
+  if (timelineGroup) {
+    timeline.fromTo(
+      timelineGroup,
+      {
+        autoAlpha: 0,
+        y: isDesktop ? 24 : 18,
+        willChange: "transform, opacity",
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: isDesktop ? 0.72 : 0.62,
+        ease: cardRevealEase,
+        clearProps: "willChange",
+      },
+      profileEnterAt + (isDesktop ? 0.26 : 0.16),
+    );
+  }
+
+  if (experienceRows.length) {
+    timeline.fromTo(
+      experienceRows,
+      {
+        autoAlpha: 0,
+        y: isDesktop ? 18 : 14,
+        willChange: "transform, opacity",
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: isDesktop ? 0.66 : 0.58,
+        stagger: isDesktop ? 0.09 : 0.08,
+        ease: cardRevealEase,
+        clearProps: "willChange",
+      },
+      profileEnterAt + (isDesktop ? 0.34 : 0.22),
+    );
+  }
+
+  if (supportRows.length) {
+    timeline.fromTo(
+      supportRows,
+      {
+        autoAlpha: 0,
+        y: isDesktop ? 18 : 14,
+        willChange: "transform, opacity",
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: isDesktop ? 0.62 : 0.54,
+        stagger: isDesktop ? 0.08 : 0.07,
+        ease: cardRevealEase,
+        clearProps: "willChange",
+      },
+      profileEnterAt + (isDesktop ? 0.48 : 0.34),
+    );
+  }
+
+  if (visuals.length) {
+    timeline.fromTo(
+      visuals,
+      {
+        clipPath: isDesktop
+          ? "inset(9% 6% 9% 6% round 18px)"
+          : "inset(6% 4% 6% 4% round 14px)",
+        willChange: "clip-path",
+      },
+      {
+        clipPath: "inset(0% 0% 0% 0% round 0px)",
+        duration: isDesktop ? 0.74 : 0.58,
+        stagger: isDesktop ? 0.08 : 0.06,
+        ease: "power3.inOut",
+        clearProps: "willChange",
+      },
+      profileEnterAt + (isDesktop ? 0.12 : 0.08),
+    );
+  }
 }
 
 function buildSectionMotion(section: MotionSection, isDesktop: boolean) {
@@ -55,6 +271,12 @@ function buildSectionMotion(section: MotionSection, isDesktop: boolean) {
   const cards = gsap.utils.toArray<HTMLElement>(section.cards, root);
   const visuals = gsap.utils.toArray<HTMLElement>(section.visuals, root);
   const trigger = title ?? root;
+
+  if (section.selector === "#about") {
+    buildProfileMotion(root, title, visuals, trigger, isDesktop);
+    addDesktopParallax(root, isDesktop);
+    return;
+  }
 
   const timeline = gsap.timeline({
     defaults: { ease: "power4.out" },
@@ -102,7 +324,7 @@ function buildSectionMotion(section: MotionSection, isDesktop: boolean) {
         scale: 1,
         duration: isDesktop ? 1.18 : 0.88,
         stagger: isDesktop ? 0.17 : 0.11,
-        ease: "power3.out",
+        ease: cardRevealEase,
         clearProps: "willChange",
       },
       title ? "-=0.62" : 0,
@@ -129,30 +351,7 @@ function buildSectionMotion(section: MotionSection, isDesktop: boolean) {
     );
   }
 
-  if (!isDesktop) return;
-
-  const parallaxImages = gsap.utils.toArray<HTMLImageElement>(
-    ".portrait img, .project-card img, .strength-visual img",
-    root,
-  );
-
-  parallaxImages.forEach((image) => {
-    gsap.fromTo(
-      image,
-      { yPercent: -2, scale: 1.025 },
-      {
-        yPercent: 3,
-        scale: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: image.closest(".portrait, .project-card, .strength-visual") ?? image,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.25,
-        },
-      },
-    );
-  });
+  addDesktopParallax(root, isDesktop);
 }
 
 export default function PortfolioMotion() {
