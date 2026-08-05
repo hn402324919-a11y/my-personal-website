@@ -10,9 +10,9 @@
 
 ### 上线记录：Contact 联系卡片出场动画对齐
 
-- 功能提交：本条记录所在提交。
+- 功能提交：`f179125 fix: align contact card reveal motion`。
 - 分支：`main`。
-- 远端：待 push 到 `origin/main`。
+- 远端：已 push 到 `origin/main`。
 - 上线方式：当前 `.openai/hosting.json` 中的 Sites 项目 ID 在当前账号下不可见，本次按项目既有生产规则通过 GitHub `main` 触发 Vercel 自动部署。
 - 修改内容：
   - 分析第四模块 Strengths 的卡片动画系统，确认其使用 `PortfolioMotion` 中的 GSAP timeline + ScrollTrigger；
