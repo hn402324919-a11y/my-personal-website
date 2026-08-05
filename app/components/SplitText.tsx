@@ -32,6 +32,7 @@ type SplitAnimation = {
 
 const defaultFrom: TweenVars = { opacity: 0, y: 46 };
 const defaultTo: TweenVars = { opacity: 1, y: 0 };
+const getStartEventKey = (eventName: string) => `__splitTextStart:${eventName}`;
 
 export default function SplitText({
   text,
@@ -158,7 +159,19 @@ export default function SplitText({
           };
 
           if (startEvent) {
+            const startState = (window as Window & Record<string, boolean | "skip" | undefined>)[getStartEventKey(startEvent)];
+
+            if (startState === "skip") {
+              clearTargets();
+              return undefined;
+            }
+
             gsap.set(targets, { ...from });
+
+            if (startState) {
+              return animateTargets();
+            }
+
             const startAnimation = () => {
               if (!cancelled) animateTargets();
             };

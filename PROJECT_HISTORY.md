@@ -70,10 +70,19 @@
 - Vercel 安装命令：`npm ci`。
 - 已绑定自定义域名：`chenynii.cn`。
 - Vercel 会从 `main` 分支自动部署新提交。
-- 最新待上线修改：桌面端项目模块高度关系与绿色 `Design Position` 标题排版优化。
-- 本次推送后，Vercel 会从 `main` 自动部署项目展示区桌面端视觉调整：左上「体验 / 界面」大卡片高度与右下「营销 / 运营」大卡片高度一致，左下两个小卡片所在行同步变矮，绿色 `Design Position` 模块主标题改为自然换行；移动端样式不受影响。
+- 最新待上线修改：首页首屏 opening sequence 加载体验优化，以及 Contact/MagicBento 动画生命周期副作用修复。
+- 本次推送后，Vercel 会从 `main` 自动部署首屏加载优化：Opening 不再等待 Hero SplitText 准备完成，约 `1.7s` 完成品牌开场并进入 Hero；Section ScrollTrigger 在 Opening 完成后初始化，Contact/MagicBento 继续保留原有绿色边框、发光和 hover 效果。
 
 # 2026-08-05 更新记录
+
+## 首页首屏加载与动画生命周期修复
+
+- Opening 阶段只负责品牌开场、进度线、遮罩退场和 Hero 进入触发。
+- Hero 在 Opening 期间初始化，不再反向阻塞 Opening。
+- Section ScrollTrigger 在 Opening 完成后统一初始化，避免提前写入后续模块的 transform / autoAlpha 状态。
+- Contact/MagicBento 在 Contact section 进入视口后接管卡片出场与 hover 效果，动画结束后清理 `transform` 和 `will-change`。
+- CSS opening fallback 负责 JS 慢启动时的首屏兜底，避免首次访问长时间停在黑色 Opening 页面。
+- `.motion-ready` 的可见性兜底已收窄到 Hero，不再覆盖 Contact、Profile、Strengths 或其他 section。
 
 ## Contact 联系卡片动画对齐
 

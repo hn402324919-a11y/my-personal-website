@@ -1107,24 +1107,109 @@
   box-shadow: 0 0 20px rgba(3, 232, 133, 0.6);
 }
 
-.motion-ready #content [data-reveal] {
+html:not(.motion-ready):not(.motion-reduced) .opening-sequence {
+  animation: css-opening-hide 0.01s linear 1.72s both;
+}
+
+html:not(.motion-ready):not(.motion-reduced) .opening-mark__line {
+  animation: css-opening-line 0.46s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+html:not(.motion-ready):not(.motion-reduced) .opening-mark__line--accent {
+  animation-delay: 0.055s;
+}
+
+html:not(.motion-ready):not(.motion-reduced) .opening-rail span {
+  animation: css-opening-rail 0.58s cubic-bezier(0.65, 0, 0.35, 1) 0.18s both;
+  transform-origin: 0% 50%;
+}
+
+html:not(.motion-ready):not(.motion-reduced) .opening-mark {
+  animation: css-opening-mark-out 0.24s cubic-bezier(0.4, 0, 1, 1) 0.9s both;
+}
+
+html:not(.motion-ready):not(.motion-reduced) .opening-panel--top {
+  animation: css-opening-panel-top 0.62s cubic-bezier(0.76, 0, 0.24, 1) 1.08s both;
+}
+
+html:not(.motion-ready):not(.motion-reduced) .opening-panel--bottom {
+  animation: css-opening-panel-bottom 0.62s cubic-bezier(0.76, 0, 0.24, 1) 1.08s both;
+}
+
+@keyframes css-opening-line {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 125%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes css-opening-rail {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes css-opening-mark-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - 22px));
+  }
+}
+
+@keyframes css-opening-panel-top {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, -101%, 0);
+  }
+}
+
+@keyframes css-opening-panel-bottom {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 101%, 0);
+  }
+}
+
+@keyframes css-opening-hide {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.motion-ready .hero [data-reveal] {
   opacity: 1 !important;
   transform: none !important;
   transition: none !important;
 }
 
-.motion-ready .hero [data-reveal] {
-  transition: none !important;
-}
-
-.motion-ready .split-char {
+.motion-ready .hero .split-char {
   opacity: 1;
   transform: none;
   transition: none !important;
 }
 
-.motion-ready .heading h2,
-.motion-ready .contact-content h2 {
+.motion-ready .hero-display {
   perspective: 900px;
   backface-visibility: hidden;
 }

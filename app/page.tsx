@@ -568,8 +568,8 @@ export default function Home() {
                 tag="span"
                 className="hero-digital"
                 text="DIGITAL"
-                delay={62}
-                duration={0.9}
+                delay={42}
+                duration={0.72}
                 rootMargin="0px"
                 from={heroTitleFrom}
                 to={heroTitleTo}
@@ -579,8 +579,8 @@ export default function Home() {
                 tag="span"
                 className="hero-designer"
                 text="Designer"
-                delay={58}
-                duration={0.9}
+                delay={40}
+                duration={0.72}
                 rootMargin="0px"
                 textAlign="right"
                 from={heroTitleFrom}

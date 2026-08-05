@@ -38,15 +38,9 @@ const sections: MotionSection[] = [
   },
 ];
 
-const heroSplitParentSelector = ".hero-display .split-parent";
-const heroSplitReadyEvent = "splittext:ready";
 const heroTitleAnimationEvent = "portfolio:hero-title-animation";
+const heroTitleAnimationStartedKey = `__splitTextStart:${heroTitleAnimationEvent}`;
 const cardRevealEase = "power3.out";
-
-function heroSplitTextIsReady() {
-  const parents = Array.from(document.querySelectorAll<HTMLElement>(heroSplitParentSelector));
-  return parents.length > 0 && parents.every((parent) => parent.querySelector(".split-char"));
-}
 
 function addDesktopParallax(root: HTMLElement, isDesktop: boolean) {
   if (!isDesktop) return;
@@ -325,7 +319,7 @@ function buildSectionMotion(section: MotionSection, isDesktop: boolean) {
         duration: isDesktop ? 1.18 : 0.88,
         stagger: isDesktop ? 0.17 : 0.11,
         ease: cardRevealEase,
-        clearProps: "willChange",
+        clearProps: "transform,willChange",
       },
       title ? "-=0.62" : 0,
     );
@@ -370,6 +364,13 @@ export default function PortfolioMotion() {
       return () => html.classList.remove("motion-reduced");
     }
 
+    const openingElement = document.querySelector<HTMLElement>(".opening-sequence");
+    const openingStyle = openingElement ? window.getComputedStyle(openingElement) : null;
+    const openingAlreadyFinished =
+      (typeof performance !== "undefined" && performance.now() > 2400) ||
+      openingStyle?.visibility === "hidden" ||
+      openingStyle?.opacity === "0";
+
     html.classList.add("motion-ready");
 
     const cancelReadyFrame = () => {
@@ -383,11 +384,30 @@ export default function PortfolioMotion() {
       cancelReadyFrame();
 
       context = gsap.context(() => {
+        const buildResponsiveSectionMotion = () => {
+          const matchMedia = gsap.matchMedia();
+          matchMedia.add("(min-width: 768px)", () => {
+            sections.forEach((section) => buildSectionMotion(section, true));
+          });
+          matchMedia.add("(max-width: 767px)", () => {
+            sections.forEach((section) => buildSectionMotion(section, false));
+          });
+          ScrollTrigger.refresh();
+        };
+
+        if (openingAlreadyFinished) {
+          (window as Window & Record<string, boolean | "skip">)[heroTitleAnimationStartedKey] = "skip";
+          gsap.set(".opening-sequence", { display: "none" });
+          buildResponsiveSectionMotion();
+
+          return;
+        }
+
         const opening = gsap.timeline({
           defaults: { ease: "power4.inOut" },
           onComplete: () => {
             gsap.set(".opening-sequence", { display: "none" });
-            ScrollTrigger.refresh();
+            buildResponsiveSectionMotion();
           },
         });
 
@@ -411,71 +431,73 @@ export default function PortfolioMotion() {
             {
               yPercent: 0,
               autoAlpha: 1,
-              duration: 0.56,
-              stagger: 0.075,
+              duration: 0.46,
+              stagger: 0.055,
               ease: "power4.out",
             },
           )
           .fromTo(
             ".opening-rail span",
             { scaleX: 0 },
-            { scaleX: 1, duration: 0.72, transformOrigin: "0% 50%", ease: "power3.inOut" },
-            "-=0.37",
+            { scaleX: 1, duration: 0.58, transformOrigin: "0% 50%", ease: "power3.inOut" },
+            "-=0.3",
           )
           .to(
             ".opening-mark",
-            { autoAlpha: 0, y: -22, duration: 0.3, ease: "power2.in" },
-            "+=0.14",
+            { autoAlpha: 0, y: -22, duration: 0.24, ease: "power2.in" },
+            "+=0.1",
           )
           .to(
             ".opening-panel--top",
-            { yPercent: -101, duration: 0.78 },
-            "-=0.07",
+            { yPercent: -101, duration: 0.62 },
+            "-=0.05",
           )
           .to(
             ".opening-panel--bottom",
-            { yPercent: 101, duration: 0.78 },
+            { yPercent: 101, duration: 0.62 },
             "<",
           )
+          .set(".opening-sequence", { display: "none" })
           .addLabel("heroEnter", ">-=0.05")
           .to(
             ".hero-portrait",
-            { scale: 1, duration: 1.24, ease: "power3.out" },
-            "heroEnter-=0.32",
+            { scale: 1, duration: 0.95, ease: "power3.out" },
+            "heroEnter-=0.26",
           )
           .fromTo(
             ".nav",
             { y: -42, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.66, ease: "power3.out" },
+            { y: 0, autoAlpha: 1, duration: 0.5, ease: "power3.out" },
             "heroEnter",
           )
           .fromTo(
             ".hero-kickers",
             { y: -24, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.57, ease: "power3.out" },
-            "heroEnter+=0.06",
+            { y: 0, autoAlpha: 1, duration: 0.45, ease: "power3.out" },
+            "heroEnter+=0.04",
           )
           .to(
             {},
             {
-              duration: 0.77,
+              duration: 0.52,
               onStart: () => {
+                (window as Window & Record<string, boolean>)[heroTitleAnimationStartedKey] = true;
                 window.dispatchEvent(new CustomEvent(heroTitleAnimationEvent));
               },
             },
-            "heroEnter+=0.21",
+            "heroEnter+=0.16",
           )
           .fromTo(
             ".hero-index",
             { x: -42, autoAlpha: 0 },
-            { x: 0, autoAlpha: 1, duration: 0.47, ease: "power3.out" },
-            "heroEnter+=0.6",
+            { x: 0, autoAlpha: 1, duration: 0.4, ease: "power3.out" },
+            "heroEnter+=0.44",
           )
           .fromTo(
             ".hero-disciplines",
             { x: 46, autoAlpha: 0 },
-            { x: 0, autoAlpha: 1, duration: 0.53, ease: "power3.out" },
-            "heroEnter+=0.6",
+            { x: 0, autoAlpha: 1, duration: 0.44, ease: "power3.out" },
+            "heroEnter+=0.44",
           )
           .fromTo(
             [".hero-lower", ".hero-meta"],
@@ -483,41 +505,21 @@ export default function PortfolioMotion() {
             {
               y: 0,
               autoAlpha: 1,
-              duration: 0.53,
-              stagger: 0.08,
+              duration: 0.45,
+              stagger: 0.06,
               ease: "power3.out",
             },
-            "heroEnter+=0.77",
+            "heroEnter+=0.56",
           );
 
-        const matchMedia = gsap.matchMedia();
-        matchMedia.add("(min-width: 768px)", () => {
-          sections.forEach((section) => buildSectionMotion(section, true));
-        });
-        matchMedia.add("(max-width: 767px)", () => {
-          sections.forEach((section) => buildSectionMotion(section, false));
-        });
       });
     };
 
-    const startWhenHeroSplitTextIsReady = () => {
-      cancelReadyFrame();
-      readyFrame = window.requestAnimationFrame(() => {
-        readyFrame = undefined;
-        if (heroSplitTextIsReady()) {
-          startPortfolioMotion();
-        }
-      });
-    };
-
-    const heroDisplay = document.querySelector(".hero-display");
-    heroDisplay?.addEventListener(heroSplitReadyEvent, startWhenHeroSplitTextIsReady);
-    startWhenHeroSplitTextIsReady();
+    readyFrame = window.requestAnimationFrame(startPortfolioMotion);
 
     return () => {
       active = false;
       cancelReadyFrame();
-      heroDisplay?.removeEventListener(heroSplitReadyEvent, startWhenHeroSplitTextIsReady);
       context?.revert();
       html.classList.remove("motion-ready");
     };

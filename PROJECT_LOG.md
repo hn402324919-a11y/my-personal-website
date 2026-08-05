@@ -8,6 +8,35 @@
 
 ## 2026-08-05
 
+### 上线记录：首页首屏加载与动画生命周期修复
+
+- 功能提交：本条记录所在提交。
+- 分支：`main`。
+- 远端：本次记录提交后 push 到 `origin/main`。
+- 上线方式：不新建 Sites 项目；当前 `.openai/hosting.json` 中的 Sites 项目 ID 在当前账号下不可见，本次继续按项目既有生产规则通过 GitHub `main` 触发 Vercel 自动部署。
+- 修改内容：
+  - 优化 `PortfolioMotion` 的 opening sequence 启动时机，不再等待 Hero SplitText 准备完成才启动开场；
+  - 将 opening 动画时长压缩到约 `1.7s`，并保留品牌标题、进度线和上下遮罩退场；
+  - 为无 JS / JS 慢启动场景增加 CSS opening fallback，避免首次访问长时间停留在黑色 Opening 页面；
+  - 修复 Hero SplitText 事件竞态，避免标题动画错过启动事件；
+  - 将 `.motion-ready` 的即时可见规则收窄到 Hero，避免影响 Contact/MagicBento；
+  - Section ScrollTrigger 改为 Opening 完成后初始化，Contact/MagicBento 由 section reveal 接管，卡片动画结束后清理 `transform` 和 `will-change`。
+- 根因说明：
+  - 10 秒停顿的主要原因不是 GSAP timeline 本身，而是首屏 motion 曾等待 Hero SplitText ready 后才开始，首次加载时 JS / hydration / SplitText 准备慢会让 Opening 遮罩持续停留；
+  - Contact 多层边框是首屏优化中曾经使用过宽的 `.motion-ready #content [data-reveal]` / `.motion-ready .split-char` 全局规则，以及 ScrollTrigger 初始化提前，影响了 Contact 卡片自身的边框与 hover 合成层。
+- 动画生命周期：
+  - Opening：负责品牌标题、年份、进度线、遮罩退场与 Hero 进入触发；
+  - Hero：在 Opening 期间初始化，不再阻塞 Opening；
+  - Section ScrollTrigger：Opening 完成后统一初始化并 refresh；
+  - Contact/MagicBento：等 Contact section 进入视口后由 section reveal 接管，MagicBento 只负责 hover / spotlight / particles。
+- 验证结果：
+  - `npm run build` 通过，仍有既有 Vite chunk size warning、vinext route classification `Unknown` 提示，以及 Node `punycode` deprecation / experimental `glob` 提示；
+  - 本地预览使用 `http://localhost:3001/` 检查，未上线到新的 Sites 项目。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，会产生既有 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`。
+
 ### 上线记录：Profile 模块整体展开动效优化
 
 - 功能提交：`f85d924 fix: tune profile reveal motion`。
