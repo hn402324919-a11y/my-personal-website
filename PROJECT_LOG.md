@@ -8,6 +8,41 @@
 
 ## 2026-08-05
 
+### 收尾记录：动画生命周期架构文档归档
+
+- 功能提交：本条记录所在提交。
+- 分支：`main`。
+- 远端：本次记录提交后 push 到 `origin/main`。
+- 上线方式：Vercel 监听 GitHub `main` 自动部署；项目配置中 `vercel.json` 使用 `npm ci` 安装、`npm run build:vercel` 构建。
+- 修改内容：
+  - 新增 `docs/animation-lifecycle.md`，归档首页 Opening、Hero、Section Reveal、Contact/MagicBento/SpecularFrame 的动画生命周期边界；
+  - 明确 `motion-ready` 只允许作为 Hero 首屏兜底，不应扩展到全站 `[data-reveal]` 或 `.split-char`；
+  - 记录 Section ScrollTrigger 必须在 Opening 完成并隐藏覆盖层后初始化；
+  - 记录 Contact 视觉异常的排查优先级，避免后续通过删除边框、伪元素或 canvas 光效来规避生命周期问题；
+  - 更新 `PROJECT_HISTORY.md`，把动画生命周期文档纳入当前架构说明。
+- 今日代码修改摘要：
+  - `f71dfeb` 修复 Profile 桌面端图片裁切与圆角贴合；
+  - `f179125` 对齐 Contact 联系卡片与 Strengths 卡片的 reveal 动效；
+  - `f85d924` 优化 Profile 模块整体展开节奏；
+  - `6ca30b8` 微调 Contact 标题字号；
+  - `b59c243` 优化首页 opening sequence 启动时机、CSS fallback、Hero SplitText 事件竞态和后续 section reveal 生命周期。
+- 涉及文件：
+  - `docs/animation-lifecycle.md`；
+  - `PROJECT_LOG.md`；
+  - `PROJECT_HISTORY.md`；
+  - 今日前序代码提交涉及 `app/components/PortfolioMotion.tsx`、`app/components/SplitText.tsx`、`app/globals.css`、`app/page.tsx`。
+- 验证结果：
+  - `pnpm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `pnpm run build` 通过，仍有既有 Vite chunk size warning、vinext route classification `Unknown` 提示，以及 Node `punycode` deprecation / experimental `glob` 提示；
+  - `pnpm test` 串行重跑通过，2/2；
+  - 曾并行运行 `pnpm run build` 与 `pnpm test`，测试内置构建一度因同时清理 `dist/client/work` 出现 EACCES；串行重跑后通过，判断为并发构建输出目录冲突，不是代码失败。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，会产生既有 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`；
+  - 构建过程中仍出现 Node `punycode` deprecation warning 与 experimental `glob` warning；
+  - 未通过 Vercel API 或后台确认生产部署最终状态，推送后需以 Vercel 自动部署结果为准。
+
 ### 上线记录：首页首屏加载与动画生命周期修复
 
 - 功能提交：本条记录所在提交。

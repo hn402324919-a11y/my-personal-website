@@ -83,6 +83,7 @@
 - Contact/MagicBento 在 Contact section 进入视口后接管卡片出场与 hover 效果，动画结束后清理 `transform` 和 `will-change`。
 - CSS opening fallback 负责 JS 慢启动时的首屏兜底，避免首次访问长时间停在黑色 Opening 页面。
 - `.motion-ready` 的可见性兜底已收窄到 Hero，不再覆盖 Contact、Profile、Strengths 或其他 section。
+- 动画生命周期架构已归档到 `docs/animation-lifecycle.md`，后续修改 Opening、Hero、Section Reveal、Contact/MagicBento/SpecularFrame 前应先对照该文档。
 
 ## Contact 联系卡片动画对齐
 
