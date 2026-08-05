@@ -10,7 +10,7 @@
 
 ### 收尾记录：动画生命周期架构文档归档
 
-- 功能提交：本条记录所在提交。
+- 功能提交：`530502e docs: record animation lifecycle closeout`。
 - 分支：`main`。
 - 远端：本次记录提交后 push 到 `origin/main`。
 - 上线方式：Vercel 监听 GitHub `main` 自动部署；项目配置中 `vercel.json` 使用 `npm ci` 安装、`npm run build:vercel` 构建。
