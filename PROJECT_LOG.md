@@ -8,6 +8,35 @@
 
 ## 2026-08-05
 
+### 上线记录：Profile 模块整体展开动效优化
+
+- 功能提交：`f85d924 fix: tune profile reveal motion`。
+- 分支：`main`。
+- 远端：本次记录提交后 push 到 `origin/main`。
+- 上线方式：当前 `.openai/hosting.json` 中的 Sites 项目 ID 在当前账号下不可见，本次按项目既有生产规则通过 GitHub `main` 触发 Vercel 自动部署。
+- 修改内容：
+  - 仅调整 `app/components/PortfolioMotion.tsx` 中 PROFILE 对应 motion 逻辑；
+  - 为 `#about` 增加专用 `buildProfileMotion()`，其他模块继续使用原有 `buildSectionMotion()` 通用动画；
+  - 抽出 `cardRevealEase = "power3.out"`，复用能力模块卡片 reveal 的 easing；
+  - 左侧 `.id-card` 保留左向进入，但将 desktop duration 调整为 `0.82s`，并提前进入、提前结束；
+  - 右侧 PROFILE 内容改为容器、介绍文字、经历 group、经历行轻微 stagger 的整体浮现；
+  - 经历行 stagger 收紧到 desktop `0.09s` / mobile `0.08s`，避免逐条硬切；
+  - `.portrait` clip reveal 仅压缩 timing / duration / overlap，没有新增 parallax 或独立图片动画。
+- 动画时长变化：
+  - desktop PROFILE 估算完成时间：约 `3.26s` → `2.05s`，缩短约 `37%`；
+  - mobile PROFILE 估算完成时间：约 `1.86s` → `1.50s`。
+- 验证结果：
+  - `git diff --check -- app/components/PortfolioMotion.tsx` 通过；
+  - `npm run build` 通过，仍有既有 Vite chunk size warning、vinext route classification `Unknown` 提示，以及 Node `punycode` deprecation / experimental `glob` 提示；
+  - 本地预览 `http://localhost:3000/` 已启动用于检查首页。
+- 发布备注：
+  - 曾尝试读取 `.openai/hosting.json` 中的 Sites 项目 `appgprj_6a5c769de46481919ddc58b44cfacadd`，返回 `Sites project not found`；
+  - 因此本次保持现有线上链路，通过 push 到 `origin/main` 触发 Vercel 自动部署。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，会产生既有 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`。
+
 ### 上线记录：Contact 联系卡片出场动画对齐
 
 - 功能提交：`f179125 fix: align contact card reveal motion`。
