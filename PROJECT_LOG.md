@@ -8,6 +8,39 @@
 
 ## 2026-08-05
 
+### 上线记录：Contact 联系卡片出场动画对齐
+
+- 功能提交：本条记录所在提交。
+- 分支：`main`。
+- 远端：待 push 到 `origin/main`。
+- 上线方式：当前 `.openai/hosting.json` 中的 Sites 项目 ID 在当前账号下不可见，本次按项目既有生产规则通过 GitHub `main` 触发 Vercel 自动部署。
+- 修改内容：
+  - 分析第四模块 Strengths 的卡片动画系统，确认其使用 `PortfolioMotion` 中的 GSAP timeline + ScrollTrigger；
+  - 将 Contact 模块卡片 selector 从 `.contact-actions > *` 收窄为 `.contact-actions > .magic-bento-card`，避免内部 spotlight 层参与 stagger；
+  - 移除两个 Contact 联系卡片上的独立 `data-reveal="fade"`，让电话和微信卡片只走与 Strengths 相同的 cards reveal；
+  - 将 Contact 的 `MagicBento` hover 参数对齐 Strengths，复用同一套 hover motion language；
+  - 保持 Contact 卡片尺寸、布局、颜色、边框、内容和联系方式不变。
+- 动画方案：
+  - Trigger：GSAP `ScrollTrigger`，标题进入视口后触发，`once:true`；
+  - Initial：`autoAlpha:0`、desktop `y:78` / mobile `y:46`、desktop `scale:0.965` / mobile `scale:0.985`；
+  - Animate：`autoAlpha:1`、`y:0`、`scale:1`；
+  - Duration：desktop `1.18s` / mobile `0.88s`；
+  - Stagger：desktop `0.17s` / mobile `0.11s`；
+  - Ease：`power3.out`。
+- 验证结果：
+  - `npm run lint` 通过，仍有既有 8 条 `@next/next/no-img-element` warning；
+  - `npm run build` 通过，仍有既有 Vite chunk size warning、vinext route classification `Unknown` 提示，以及 Node `punycode` deprecation / experimental `glob` 提示；
+  - `npm test` 串行重跑通过，2/2；
+  - 本地预览 `http://localhost:3000/` 已检查 Contact 模块：电话卡片先出现，微信卡片按相同 stagger 跟进，hover magnetism / particles 正常；
+  - 浏览器采样确认 Contact 两个真实卡片和 Strengths 卡片共享相同 initial transform / opacity，且两个 Contact 卡片不再带独立 `data-reveal`。
+- 发布备注：
+  - 曾尝试读取 `.openai/hosting.json` 中的 Sites 项目 `appgprj_6a5c769de46481919ddc58b44cfacadd`，返回 `Sites project not found`；
+  - 因此本次保持现有线上链路，通过 push 到 `origin/main` 触发 Vercel 自动部署。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，会产生既有 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`。
+
 ### 上线记录：Profile 模块桌面端图片贴合修复
 
 - 功能提交：`f71dfeb fix: align desktop profile image`。

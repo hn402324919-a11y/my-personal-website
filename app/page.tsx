@@ -703,9 +703,9 @@ export default function Home() {
             <p className="eyebrow" data-reveal="fade">OPEN FOR A CONVERSATION</p>
             <h2><SplitText tag="span" text="期待您的联系" /><SplitText tag="span" className="split-accent" text="。" delay={0} /></h2>
             <p data-reveal data-reveal-order="1">如果你正在寻找一位理解产品、业务与品牌的设计伙伴，我们可以从一次对话开始。</p>
-            <MagicBento className="contact-actions" spotlightRadius={360} particleCount={4} clickEffect>
-              <a href="tel:15988806213" data-reveal="fade" data-reveal-order="2"><SpecularFrame radius={14} /><span className="contact-label">电话</span><strong>159 8880 6213</strong><i>↗</i></a>
-              <button onClick={copyWechat} data-reveal="fade" data-reveal-order="3"><SpecularFrame radius={14} /><span className="contact-label">微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
+            <MagicBento className="contact-actions" spotlightRadius={320} particleCount={6}>
+              <a href="tel:15988806213"><SpecularFrame radius={14} /><span className="contact-label">电话</span><strong>159 8880 6213</strong><i>↗</i></a>
+              <button onClick={copyWechat}><SpecularFrame radius={14} /><span className="contact-label">微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
             </MagicBento>
           </div>
           <footer className="shell" data-reveal="fade" data-reveal-order="4"><span>CHENYNII · UI / BRAND DESIGNER</span><span>UI × BRAND × EXPERIENCE</span><span>© 2026 ALL RIGHTS RESERVED</span></footer>

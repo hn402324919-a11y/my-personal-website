@@ -33,7 +33,7 @@ const sections: MotionSection[] = [
   {
     selector: "#contact",
     title: ".contact-content h2",
-    cards: ".contact-actions > *",
+    cards: ".contact-actions > .magic-bento-card",
     visuals: ".contact-actions",
   },
 ];

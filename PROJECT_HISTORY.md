@@ -73,6 +73,16 @@
 - 最新待上线修改：桌面端项目模块高度关系与绿色 `Design Position` 标题排版优化。
 - 本次推送后，Vercel 会从 `main` 自动部署项目展示区桌面端视觉调整：左上「体验 / 界面」大卡片高度与右下「营销 / 运营」大卡片高度一致，左下两个小卡片所在行同步变矮，绿色 `Design Position` 模块主标题改为自然换行；移动端样式不受影响。
 
+# 2026-08-05 更新记录
+
+## Contact 联系卡片动画对齐
+
+- Contact 模块两个联系方式卡片已接入与 Strengths 模块四张能力卡片相同的 `PortfolioMotion` cards reveal。
+- Contact 卡片不再使用独立 `data-reveal="fade"`，避免同时生硬 fade-in。
+- Contact 的 motion selector 收窄为 `.contact-actions > .magic-bento-card`，只让电话和微信两张真实卡片参与 stagger，内部 spotlight 层不再参与出场节奏。
+- Contact 的 `MagicBento` hover 参数已与 Strengths 对齐，共享 spotlight、magnetism 和 particles 的 hover motion language。
+- 本次未修改 Contact 的尺寸、布局、颜色、边框、文案或联系方式。
+
 # 2026-08-04 更新记录
 
 ## 首页作品集 PDF / 长图导出工作流
