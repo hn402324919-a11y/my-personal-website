@@ -6,6 +6,35 @@
 - 记录内容至少包括：日期、commit hash、是否已 push 到 `main`、Vercel 自动部署触发情况、修改摘要、验证结果和已知遗留问题。
 - 如果更新影响项目状态、结构、部署规则、设计规则或重要已完成功能，需要同步更新 `PROJECT_HISTORY.md`。
 
+## 2026-08-05
+
+### 上线记录：Profile 模块桌面端图片贴合修复
+
+- 功能提交：本条记录所在提交。
+- 分支：`main`。
+- 远端：将 push 到 `origin/main`。
+- 上线方式：Vercel 监听 `main` 自动部署。
+- 修改内容：
+  - 仅修改 `app/globals.css` 中 Profile 模块桌面端图片区域样式；
+  - 在 `min-width:761px` 下为 `.portrait` 明确 `overflow:hidden`，并同步顶部圆角为 `var(--radius-rect) var(--radius-rect) 0 0`；
+  - 在 `min-width:761px` 下为 `.portrait img` 明确 `display:block`、`width:100%`、`height:100%`、`border-radius:inherit` 与 `object-fit:cover`；
+  - 让个人照片以 full-bleed image 方式完整覆盖卡片图片区域，并严格裁切在圆角范围内；
+  - 保持 Profile 卡片尺寸、比例、动效、图片资源、文案和移动端布局不变。
+- 问题原因：
+  - 后续统一圆角规则将 `.id-card` 圆角提升为 `var(--radius-rect)`，但 Profile 图片容器和图片本身未同步桌面端裁切圆角；
+  - 图片虽然已有绝对定位与 `object-fit:cover`，但桌面端父子裁切边界不一致，导致卡片背景在顶部和左右圆角内侧可见。
+- 验证结果：
+  - 本地预览启动于 `http://localhost:3000/` 并完成桌面端 Profile 卡片视觉检查；
+  - 桌面端计算样式确认 `.portrait` 为 `overflow:hidden`，`.portrait img` 为 `display:block`、`object-fit:cover`，图片区域覆盖容器并由父级裁切；
+  - `npm run build` 通过，仍有既有 Vite chunk size warning、vinext route classification `Unknown` 提示，以及 Node `punycode` deprecation / experimental `glob` 提示。
+- 发布备注：
+  - 本地 `.openai/hosting.json` 中的 Sites 项目 ID 在当前账号下不可见；
+  - 按既有上线规则，本次通过 GitHub `main` 触发 Vercel 自动部署。
+- 已知遗留问题：
+  - `app/page.tsx` 仍使用原生 `<img>`，会产生既有 Next.js 图片优化 warning；
+  - 客户端产物仍有超过 500 kB 的 chunk size warning；
+  - vinext 仍提示 `/` 路由在构建时分类为 `Unknown`。
+
 ## 2026-08-04
 
 ### 上线记录：首页作品集 PDF / 长图导出工具
