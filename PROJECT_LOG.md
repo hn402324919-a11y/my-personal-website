@@ -10,9 +10,9 @@
 
 ### 上线记录：Profile 模块桌面端图片贴合修复
 
-- 功能提交：本条记录所在提交。
+- 功能提交：`f71dfeb fix: align desktop profile image`。
 - 分支：`main`。
-- 远端：将 push 到 `origin/main`。
+- 远端：已 push 到 `origin/main`。
 - 上线方式：Vercel 监听 `main` 自动部署。
 - 修改内容：
   - 仅修改 `app/globals.css` 中 Profile 模块桌面端图片区域样式；
