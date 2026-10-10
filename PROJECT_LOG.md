@@ -740,3 +740,15 @@
 - `git diff --check -- app/globals.css`：通过。
 - `npm run build`：通过。
 - 已知非新增提醒：Vite chunk size warning、vinext route classification `Unknown`、Node `punycode` deprecation、experimental `glob` 提示。
+
+## 2026-10-10 主题与作品展示更新发布
+
+- 用户明确确认推送至 GitHub origin/main，触发 Vercel 正式上线；沿用现有配置。
+- 全站主题更新为 #C0F63E，同步 Hero 素材；保留原有交互。
+- SELECTED WORK 删除指定描述，分类更新为「产品 / 体验」「品牌 / 营销」「企业 / 平台」；产品和企业卡片展示图缩小 20%，光晕调整至背景层。
+- PROFILE 删除左侧英文名与年龄，生日与中文姓名居中对齐。
+- CAPABILITIES 03 使用用户原始图片，完整展示，无额外滤镜。
+- CONTACT 移除电话及微信内部重复描边，保留外层边框与发光。
+- 验证：npm test（含生产构建）及 2 项测试通过；npm run build:vercel 通过；lint 无错误，保留 8 条既有图片警告和既有构建提示。
+- 发布提交标题：feat: refresh portfolio theme and presentation。
+- 本记录随功能提交推送 main；部署完成状态以发布后线上检查为准。

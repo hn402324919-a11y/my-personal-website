@@ -27,7 +27,7 @@ const projects: Project[] = [
   {
     id: "experience",
     key: "1",
-    category: "体验 / 界面",
+    category: "产品 / 体验",
     title: "从复杂系统到直觉体验",
     subtitle: "品牌体验升级 × Web3 聚合资产平台 × 品牌定制小程序",
     cover: "/optimized/work/card-3-cover.webp",
@@ -79,7 +79,7 @@ const projects: Project[] = [
   {
     id: "campaign",
     key: "2",
-    category: "营销 / 运营",
+    category: "品牌 / 营销",
     title: "让品牌活动被看见、被参与",
     subtitle: "伊利及旗下品牌 × 5 款营销互动游戏",
     cover: "/optimized/work/card-5-cover.webp",
@@ -119,7 +119,7 @@ const projects: Project[] = [
   {
     id: "enterprise",
     key: "3",
-    category: "B 端 / 网页",
+    category: "企业 / 平台",
     title: "把企业能力转译为清晰价值",
     subtitle: "数字增长服务平台 × 企业官网体系",
     cover: "/optimized/work/card-9-cover.webp",
@@ -178,8 +178,10 @@ function ProjectVisual({ item }: { item: Project }) {
   if (item.id === "experience") {
     return (
       <div className="project-composite experience-composite" aria-hidden="true">
-        <div className="experience-phone-empty"><span /></div>
-        <div className="laptop laptop-front"><span className="laptop-screen" /></div>
+        <div className="project-device-group">
+          <div className="experience-phone-empty"><span /></div>
+          <div className="laptop laptop-front"><span className="laptop-screen" /></div>
+        </div>
       </div>
     );
   }
@@ -197,7 +199,9 @@ function ProjectVisual({ item }: { item: Project }) {
   if (item.id === "enterprise") {
     return (
       <div className="project-composite enterprise-composite" aria-hidden="true">
-        <div className="enterprise-monitor"><span className="enterprise-screen" /></div>
+        <div className="project-device-group">
+          <div className="enterprise-monitor"><span className="enterprise-screen" /></div>
+        </div>
       </div>
     );
   }
@@ -250,7 +254,7 @@ function StrengthVisual({ type }: { type: string }) {
 }
 
 const tools = ["Figma", "Sketch", "Photoshop", "Illustrator", "After Effects", "ChatGPT", "Codex", "Figma AI"];
-const backgroundColors = ["#03E885"];
+const backgroundColors = ["#C0F63E"];
 const getCaseSources = (src: string | string[]) => Array.isArray(src) ? src : [src];
 const initialCaseImageCount = 2;
 const caseImageDimensions: Record<string, { width: number; height: number }> = {
@@ -612,8 +616,8 @@ export default function Home() {
                 <img src="/optimized/profile/chenynii-photo-720.webp" alt="陈旖旎个人照片" />
               </div>
               <div className="id-name">
-                <div><strong>陈旖旎</strong><span>CHENYNII</span></div>
-                <div className="id-birth"><b>1995年12月</b><small>30</small></div>
+                <div><strong>陈旖旎</strong></div>
+                <div className="id-birth"><b>1995年12月</b></div>
               </div>
               <div className="id-row"><span>杭州电子科技大学</span><span>产品设计</span></div>
               <div className="id-row"><a href="tel:15988806213">159 8880 6213 ↗</a><button onClick={copyWechat}>{copied ? "微信已复制" : "微信 · chenynii"}</button></div>
@@ -641,7 +645,7 @@ export default function Home() {
                     <SpecularFrame radius={5} proximity={220} intensity={1.35} />
                     <ProjectVisual item={item} /><span className="shade" />
                     <span className="card-top"><span>{item.category}</span></span>
-                    <span className="card-copy"><strong>{item.title}</strong><small>{item.subtitle}</small></span>
+                    <span className="card-copy"><small>{item.subtitle}</small></span>
                     <span className="card-open">打开项目 ↗</span>
                   </button>
                 </TiltedCard>
@@ -704,8 +708,8 @@ export default function Home() {
             <h2><SplitText tag="span" text="期待您的联系" /><SplitText tag="span" className="split-accent" text="。" delay={0} /></h2>
             <p data-reveal data-reveal-order="1">如果你正在寻找一位理解产品、业务与品牌的设计伙伴，我们可以从一次对话开始。</p>
             <MagicBento className="contact-actions" spotlightRadius={320} particleCount={6}>
-              <a href="tel:15988806213"><SpecularFrame radius={14} /><span className="contact-label">电话</span><strong>159 8880 6213</strong><i>↗</i></a>
-              <button onClick={copyWechat}><SpecularFrame radius={14} /><span className="contact-label">微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
+              <a href="tel:15988806213"><span className="contact-label">电话</span><strong>159 8880 6213</strong><i>↗</i></a>
+              <button onClick={copyWechat}><span className="contact-label">微信</span><strong>{copied ? "已复制 chenynii" : "chenynii"}</strong><i>↗</i></button>
             </MagicBento>
           </div>
           <footer className="shell" data-reveal="fade" data-reveal-order="4"><span>CHENYNII · UI / BRAND DESIGNER</span><span>UI × BRAND × EXPERIENCE</span><span>© 2026 ALL RIGHTS RESERVED</span></footer>
@@ -731,7 +735,7 @@ export default function Home() {
                   panelId="active-project-case"
                   tabIdPrefix={`case-tab-${project.id}`}
                   motionEnabled={caseMotion}
-                  accentColor="#03E885"
+                  accentColor="#C0F63E"
                   textColor="#929b96"
                   markerColor="#33423b"
                   proximityRadius={110}

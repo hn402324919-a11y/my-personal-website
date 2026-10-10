@@ -45,7 +45,7 @@ type SidebarStyle = CSSProperties & Record<`--${string}`, string | number>;
 export default function LineSidebar({
   items,
   activeIndex,
-  accentColor = "#03E885",
+  accentColor = "#C0F63E",
   textColor = "#929b96",
   markerColor = "#33423b",
   proximityRadius = 110,
