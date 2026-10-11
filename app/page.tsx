@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type RefObject } from "react";
+import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type RefObject } from "react";
 import SplitText from "./components/SplitText";
 import TiltedCard from "./components/TiltedCard";
 import PortfolioMotion from "./components/PortfolioMotion";
@@ -28,15 +28,15 @@ const projects: Project[] = [
     id: "experience",
     key: "1",
     category: "产品 / 体验",
-    title: "从复杂系统到直觉体验",
+    title: "多端产品与体验设计",
     subtitle: "品牌体验升级 × Web3 聚合资产平台 × 品牌定制小程序",
     cover: "/optimized/work/card-3-cover.webp",
     intro:
-      "覆盖多种行业场景，在复杂业务约束中建立清晰、可信且可扩展的产品体验。",
+      "涵盖品牌官网、钱包与交易 App、电商小程序，针对品牌展示、资产管理与商品购买等不同场景，梳理信息结构与操作流程，完成交互、UI 设计及开发落地跟进。",
     role:
       "独立负责金融行业、女装行业等全站设计，为提升界面美观与用户体验，独立完成方案输出到项目落地工作，并与各方团队保持紧密协作，高效协调资源分配。",
     achievement:
-      "主导整体设计方向与体验策略，搭建 Web & App 双端体验体系；完成 AScoin 钱包、理财、社交聊天等 10 项功能的全链路设计，推动 APP 用户增长至 300,000+，月交易额千万+。",
+      "完成 Heychic 官网初建与后续品牌升级改版；完成 AScoin 钱包、理财、社交聊天等 10 项功能的全链路界面设计；完成小 CK 整个电商小程序的 UI 设计与落地跟进。",
     tags: ["UX STRATEGY", "APP UI", "DESIGN SYSTEM"],
     cases: [
       {
@@ -80,15 +80,15 @@ const projects: Project[] = [
     id: "campaign",
     key: "2",
     category: "品牌 / 营销",
-    title: "让品牌活动被看见、被参与",
+    title: "品牌营销与互动设计",
     subtitle: "伊利及旗下品牌 × 5 款营销互动游戏",
     cover: "/optimized/work/card-5-cover.webp",
     intro:
-      "围绕节点营销、会员运营与品牌传播，建立从活动机制、视觉概念到多触点物料的一致体验。",
+      "围绕品牌日常运营与节日营销需求，将活动机制转化为清晰的互动界面和统一的视觉表达。",
     role:
-      "配合运营及品牌商家完成日常与节日营销推广设计，覆盖互动小游戏、小程序 Banner、活动专题页、线上社群海报与线下宣传物料。",
+      "根据运营与品牌需求，完成互动小游戏、小程序 Banner、活动专题页、社群海报及线下宣传物料设计，配合不同营销节点推进交付。",
     achievement:
-      "独立完成 5+ 小程序营销活动；完成 50+ 个伊利、美素佳儿、贝亲日常运营活动海报支持。",
+      "独立负责小 CK 整个电商小程序的 UI 设计；完成 40+ 种独立营销玩法的 UI 页面设计；独立负责 5 款伊利及旗下品牌营销互动小游戏的设计。",
     tags: ["CAMPAIGN", "H5 GAME", "VISUAL DESIGN"],
     cases: [
       {
@@ -120,15 +120,15 @@ const projects: Project[] = [
     id: "enterprise",
     key: "3",
     category: "企业 / 平台",
-    title: "把企业能力转译为清晰价值",
+    title: "企业与品牌官网设计",
     subtitle: "数字增长服务平台 × 企业官网体系",
     cover: "/optimized/work/card-9-cover.webp",
     intro:
-      "面向企业客户重新组织服务能力、产品价值与信任信息，用清晰的页面秩序支撑获客与品牌表达。",
+      "结合企业与品牌的业务需求，组织官网内容、视觉表达与交互动效，支持品牌及产品信息展示。",
     role:
-      "梳理产品与服务信息架构，完成官网视觉体系、核心页面与多业务场景页面设计，并在设计规范下保持内容扩展的一致性。",
+      "参与项目前期沟通，对接品牌负责人，根据业务需求与品牌定位制定设计方案；与研发团队协作制定交互动效方案，跟进开发实现与设计还原。",
     achievement:
-      "ESD 官网获得《亚洲网页设计奖》；完成火星人集成灶官网设计；通过设计方案的产出，与比亚迪电子达成项目合作。",
+      "独立设计的 ESD 官网获得“亚洲网页设计奖”；为比亚迪电子项目输出设计方案，助力公司达成项目合作。",
     tags: ["B2B WEB", "INFORMATION ARCHITECTURE", "WEB UI"],
     cases: [
       { label: "锐鲨企业官网", src: "/work/project-9.webp", alt: "锐鲨企业官网设计" },
@@ -258,10 +258,10 @@ const backgroundColors = ["#C0F63E"];
 const getCaseSources = (src: string | string[]) => Array.isArray(src) ? src : [src];
 const initialCaseImageCount = 2;
 const caseImageDimensions: Record<string, { width: number; height: number }> = {
-  "/work/project-heychic-part-01.webp": { width: 2560, height: 3843 },
-  "/work/project-heychic-part-02.webp": { width: 2560, height: 3843 },
-  "/work/project-heychic-part-03.webp": { width: 2560, height: 3843 },
-  "/work/project-heychic-part-04.webp": { width: 2560, height: 3843 },
+  "/work/project-heychic-part-01.webp": { width: 1280, height: 1928 },
+  "/work/project-heychic-part-02.webp": { width: 1280, height: 1927 },
+  "/work/project-heychic-part-03.webp": { width: 1280, height: 1928 },
+  "/work/project-heychic-part-04.webp": { width: 1280, height: 1927 },
   "/work/project-3-part-01.webp": { width: 1600, height: 4868 },
   "/work/project-3-part-02.webp": { width: 1600, height: 4869 },
   "/work/project-3-part-03.webp": { width: 1600, height: 4868 },
@@ -629,7 +629,7 @@ export default function Home() {
                   <article key={period} data-reveal data-reveal-order={index + 1}><p>{period}</p><div><h3>{company}</h3><span>{detail}</span></div><strong>{role}</strong></article>
                 ))}
               </div>
-              <div className="subrow" data-reveal><p className="eyebrow">EDUCATION / 2013—2017</p><div><h3>杭州电子科技大学 · 产品设计</h3><p>学院文艺部学生会 · 科技创新奖 · 优秀毕业设计</p></div></div>
+              <div className="subrow education-row" data-reveal><p className="eyebrow">EDUCATION<br /><span className="education-period">2013—2017</span></p><div><h3>杭州电子科技大学 · 产品设计</h3><p>学院文艺部学生会 · 科技创新奖 · 优秀毕业设计</p></div></div>
               <div className="subrow" data-reveal data-reveal-order="1"><p className="eyebrow">SELECTED TOOLS</p><div className="chips">{tools.map((x) => <span key={x}>{x}</span>)}</div></div>
             </div>
           </div>
@@ -722,7 +722,7 @@ export default function Home() {
             <button className="close" onClick={() => setProject(null)} aria-label="关闭项目详情"><SpecularFrame radius={14} /><span>关闭</span> ×</button>
             <header className="modal-head shell">
               <p className="eyebrow">PROJECT {project.key} / {project.category}</p><SplitText tag="h2" id="modal-title" text={project.title} rootMargin="0px" /><p className="modal-intro">{project.intro}</p>
-              <div className="modal-meta"><div><span>项目职责</span><p>{project.role}</p></div>{project.achievement && <div><span>项目成就</span><p>{project.achievement}</p></div>}</div>
+              <div className="modal-meta"><div><span>项目职责</span><p>{project.role}</p></div>{project.achievement && <div><span>项目成就</span><p>{project.achievement.split("；").map((item, index, items) => <Fragment key={item}>{index > 0 && <br />}• {item}{index < items.length - 1 ? "；" : ""}</Fragment>)}</p></div>}</div>
               <div className="tags">{project.tags.map((x) => <span key={x}>{x}</span>)}</div>
             </header>
             <div className="case-study-layout shell" data-motion={caseMotion ? "on" : "off"}>

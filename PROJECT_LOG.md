@@ -752,3 +752,24 @@
 - 验证：npm test（含生产构建）及 2 项测试通过；npm run build:vercel 通过；lint 无错误，保留 8 条既有图片警告和既有构建提示。
 - 发布提交标题：feat: refresh portfolio theme and presentation。
 - 本记录随功能提交推送 main；部署完成状态以发布后线上检查为准。
+
+### 发布进度补充
+
+- 功能提交 `14c4006`（feat: refresh portfolio theme and presentation）已成功推送 origin/main。
+- GitHub CLI 账号授权已验证正常。
+- 推送后检查暂未发现该提交的 Vercel deployment/check/status；正式域名仍返回旧版分类。尚不能确认上线完成。
+- Vercel 控制台需要登录，待检查仓库连接及自动部署状态。
+
+### 上线确认
+
+- 用户提供的 Vercel chenynii-portfolio 部署截图确认：提交 `14c4006` 状态 Ready，当前 Production，构建耗时 55 秒。
+- 正式域名 https://www.chenynii.cn 已返回新版三个项目分类；此次功能更新上线完成。
+
+## 2026-10-11 本地最新版本统一发布
+
+- 发布分支：`main`；沿用 GitHub 推送触发 Vercel 的既有流程。
+- 纳入全部本地页面、样式、人物视差调整和 4 张 Heychic 更新图片，保留本地设计、文案及交互。
+- 52 个代码引用静态资源均存在且已纳入 Git；未发现遗漏的未跟踪图片。
+- `npm run lint`：0 错误、8 条既有图片优化警告；`npm test`（包含 `npm run build`）：2/2 通过；`npm run build:vercel`：通过。保留既有 chunk size、Unknown 路由及 Node 提示。
+- 远程 main 与本地 HEAD 一致；无数据库业务、数据迁移或数据覆盖操作。未更改域名、环境变量和部署配置。
+- 发布提交标题：`chore: publish latest portfolio updates`。推送及线上验证结果在发布后补记。

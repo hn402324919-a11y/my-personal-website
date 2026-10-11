@@ -46,7 +46,7 @@ function addDesktopParallax(root: HTMLElement, isDesktop: boolean) {
   if (!isDesktop) return;
 
   const parallaxImages = gsap.utils.toArray<HTMLImageElement>(
-    ".portrait img, .project-card img, .strength-visual img",
+    ".project-card img, .strength-visual img",
     root,
   );
 
@@ -59,7 +59,7 @@ function addDesktopParallax(root: HTMLElement, isDesktop: boolean) {
         scale: 1,
         ease: "none",
         scrollTrigger: {
-          trigger: image.closest(".portrait, .project-card, .strength-visual") ?? image,
+          trigger: image.closest(".project-card, .strength-visual") ?? image,
           start: "top bottom",
           end: "bottom top",
           scrub: 1.25,
