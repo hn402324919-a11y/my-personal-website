@@ -341,3 +341,13 @@
 - `npm run lint`：0 错误、8 条既有图片优化警告；`npm test`（包含 `npm run build`）：2/2 通过；`npm run build:vercel`：通过。保留既有 chunk size、Unknown 路由及 Node 提示。
 - 远程 main 与本地 HEAD 一致；无数据库业务、数据迁移或数据覆盖操作。未更改域名、环境变量和部署配置。
 - 发布提交标题：`chore: publish latest portfolio updates`。推送及线上验证结果在发布后补记。
+
+### 2026-10-11 上线验证结果
+
+- 内容发布提交：`900ca27a1622faf4489b0c78391192c24ab3b8a9`（`chore: publish latest portfolio updates`），已推送 `origin/main`。
+- GitHub 回传两个现有 Vercel 项目均为 `success / Deployment has completed`；正式站项目为 `chenynii-portfolio`。
+- 正式网站：https://www.chenynii.cn 。部署详情：https://vercel.com/chen-y-ni-i/chenynii-portfolio/C2YUDXn2DdL7V82dMLeWyKzsJVYc 。
+- 52 个代码引用的线上静态资源全部读取成功，SHA-256 与本地一致，包含 4 张新 Heychic 图片。
+- 线上浏览器验证：1440px 桌面、820px 平板、390px 手机；三类项目详情可打开和关闭，全部 11 个案例可切换；方向键切换及 Escape 关闭通过；更新后的文案、教育排版和 Heychic 图片已生效；未发现浏览器 console error。
+- 已发现且保留的布局问题：390px 手机首页 PROFILE / SELECTED WORK 章节标题区域右缘约 427px，存在约 37px 横向溢出；项目详情自身宽度为 390px。按本次保留现有设计的范围未额外修改此处，不能将手机首页声明为完全无问题。
+- 本次验证记录另作纯文档提交；网站代码、图片、域名、环境变量及部署配置不再变更。
