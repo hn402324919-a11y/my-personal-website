@@ -258,10 +258,10 @@ const backgroundColors = ["#C0F63E"];
 const getCaseSources = (src: string | string[]) => Array.isArray(src) ? src : [src];
 const initialCaseImageCount = 2;
 const caseImageDimensions: Record<string, { width: number; height: number }> = {
-  "/work/project-heychic-part-01.webp": { width: 1280, height: 1928 },
-  "/work/project-heychic-part-02.webp": { width: 1280, height: 1927 },
-  "/work/project-heychic-part-03.webp": { width: 1280, height: 1928 },
-  "/work/project-heychic-part-04.webp": { width: 1280, height: 1927 },
+  "/work/project-heychic-part-01.webp": { width: 2000, height: 4191 },
+  "/work/project-heychic-part-02.webp": { width: 2000, height: 4191 },
+  "/work/project-heychic-part-03.webp": { width: 2000, height: 4191 },
+  "/work/project-heychic-part-04.webp": { width: 2000, height: 4191 },
   "/work/project-3-part-01.webp": { width: 1600, height: 4868 },
   "/work/project-3-part-02.webp": { width: 1600, height: 4869 },
   "/work/project-3-part-03.webp": { width: 1600, height: 4868 },
